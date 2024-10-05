@@ -41,9 +41,51 @@ public abstract class RegisterUser {
     /**
      * Validates the address
      * @return true if address is valid, false otherwise
+     * @param streetAddress must contain street number and street name.
+     * @param city must be alphabetic.
+     * @param postalCode must be 6 characters and have correct letter/number sequence (ie. A1B 2C3 or A1B2C3).
+     * @param province must be alphabetic.
+     * @param country must be alphabetic.
      */
-    public boolean validateAddress() {
-        return true;
+    public boolean validateAddress(String streetAddress, String city, String postalCode, String province, String country) {
+        // make sure city, province, and country is alphabetic
+        if (!isAlphabetic(city) || !isAlphabetic(province) || !isAlphabetic(country)) {
+            return false;
+        }
+
+        // make sure postal code is valid
+        postalCode = postalCode.replace(" ", ""); // gets rid of any spaces in postalCode
+        if (postalCode.length() != 6)
+            return false;
+        char[] postalCodeCharArray = postalCode.toCharArray();
+        for (int i = 0; i < 6; i++) {
+            String c = String.valueOf(postalCodeCharArray[i]);
+            if (i % 2 == 0 && !isAlphabetic(c)) { // if it should be a letter and it is not
+                return false;
+            } else if (Integer.getInteger(c) == null) { // if it should be a number and it is not
+                    return false;
+            }
+            // else it is valid
+        }
+
+        // make sure streetAddress is valid
+        char[] streetAddressArray = streetAddress.replace(" ", "").toCharArray();
+        int j = 0; // this will track where the first letter is in streetAddress
+        for (int i = 0; i < streetAddressArray.length; i++) {
+            String c = String.valueOf(postalCodeCharArray[i]);
+            if (isAlphabetic(c)) {
+                j = i;
+            }
+        }
+        if (j == 0) {
+            return false; // this would mean streetAddress contains no numbers
+        } else { // streetAddress contains numbers
+            String streetName = streetAddress.substring(j); // gets streetName from streetAddress
+            if (!isAlphabetic(streetName)) { // if the streetName is not alphabetic, return false
+                return false;
+            }
+        }
+        return true; // this statement is reached if every test is passed
     }
 
     /**
@@ -122,6 +164,9 @@ public abstract class RegisterUser {
      * @return true if s is alphabetic, false otherwise
      */
     private boolean isAlphabetic(String s) {
+        if (s.isEmpty())
+            return false;
+
         Pattern pattern = Pattern.compile("^[A-Za-z]$");
         Matcher matcher = pattern.matcher(s);
         return matcher.find();
