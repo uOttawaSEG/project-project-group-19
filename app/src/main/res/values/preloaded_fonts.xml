@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/anybody_medium</item>
+        <item>@font/castoro_titling</item>
+        <item>@font/gothic_a1_extrabold</item>
+        <item>@font/instrument_sans_medium</item>
+        <item>@font/montserrat_medium</item>
+        <item>@font/public_sans_medium</item>
+        <item>@font/roboto_light</item>
+        <item>@font/roboto_medium</item>
+        <item>@font/source_sans_3_semibold</item>
+    </array>
+</resources>
