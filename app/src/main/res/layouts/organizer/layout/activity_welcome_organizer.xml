@@ -39,8 +39,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:fontFamily="cursive"
-            android:text="WELCOME ATTENDEE"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="WELCOME!"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="38sp" />
+
+        <TextView
+            android:id="@+id/welcomeTextMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="You are logged in as Organizer"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="38sp" />

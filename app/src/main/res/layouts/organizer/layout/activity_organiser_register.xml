@@ -153,14 +153,14 @@
             android:inputType="text" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="40dp"
-            android:text="Login"
+            android:text="Confirm"
             android:background = "#1D6BB8"
             />
 
