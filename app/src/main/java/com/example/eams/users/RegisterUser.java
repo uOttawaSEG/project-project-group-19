@@ -151,7 +151,7 @@ public abstract class RegisterUser extends LoginUser {
      * @return the postal code of the user.
      */
     public String getPostalCode() {
-        return streetAddress;
+        return postalCode;
     }
 
     /**
