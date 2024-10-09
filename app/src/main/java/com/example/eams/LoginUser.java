@@ -20,9 +20,12 @@ public abstract class LoginUser {
     /**
      * Validates the password
      * @return true if password is valid, false otherwise
+     * password must have 1 lowercase letter, 1 uppercase letter, 1 number, one special character, min length of 8 characters
      */
     public boolean validatePassword() {
-       return true;
+       Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+       Matcher matcher = pattern.matcher(password);
+       return matcher.find();
     }
 
     public static boolean validateLogin(String email, String password) {

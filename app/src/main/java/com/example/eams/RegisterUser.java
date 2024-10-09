@@ -55,35 +55,17 @@ public abstract class RegisterUser {
 
         // make sure postal code is valid
         postalCode = postalCode.replace(" ", ""); // gets rid of any spaces in postalCode
-        if (postalCode.length() != 6)
+        Pattern postalCodePattern = Pattern.compile("^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]\\d$");
+        Matcher postalCodeMatcher = postalCodePattern.matcher(postalCode);
+        if (!postalCodeMatcher.find()) {
             return false;
-        char[] postalCodeCharArray = postalCode.toCharArray();
-        for (int i = 0; i < 6; i++) {
-            String c = String.valueOf(postalCodeCharArray[i]);
-            if (i % 2 == 0 && !isAlphabetic(c)) { // if it should be a letter and it is not
-                return false;
-            } else if (Integer.getInteger(c) == null) { // if it should be a number and it is not
-                    return false;
-            }
-            // else it is valid
         }
 
         // make sure streetAddress is valid
-        char[] streetAddressArray = streetAddress.replace(" ", "").toCharArray();
-        int j = 0; // this will track where the first letter is in streetAddress
-        for (int i = 0; i < streetAddressArray.length; i++) {
-            String c = String.valueOf(postalCodeCharArray[i]);
-            if (isAlphabetic(c)) {
-                j = i;
-            }
-        }
-        if (j == 0) {
-            return false; // this would mean streetAddress contains no numbers
-        } else { // streetAddress contains numbers
-            String streetName = streetAddress.substring(j); // gets streetName from streetAddress
-            if (!isAlphabetic(streetName)) { // if the streetName is not alphabetic, return false
-                return false;
-            }
+        Pattern streetAddressPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+$");
+        Matcher streetAddressMatcher = streetAddressPattern.matcher(postalCode);
+        if (!streetAddressMatcher.find()) {
+            return false;
         }
         return true; // this statement is reached if every test is passed
     }
