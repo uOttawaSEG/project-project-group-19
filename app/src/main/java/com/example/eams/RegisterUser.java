@@ -10,7 +10,10 @@ public abstract class RegisterUser {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String address;
+    private String streetAddress;
+    private String city;
+    private String province;
+    private String postalCode;
 
     /**
      * Validates the first name
@@ -41,15 +44,10 @@ public abstract class RegisterUser {
     /**
      * Validates the address
      * @return true if address is valid, false otherwise
-     * @param streetAddress must contain street number and street name.
-     * @param city must be alphabetic.
-     * @param postalCode must be 6 characters and have correct letter/number sequence (ie. A1B 2C3 or A1B2C3).
-     * @param province must be alphabetic.
-     * @param country must be alphabetic.
      */
-    public boolean validateAddress(String streetAddress, String city, String postalCode, String province, String country) {
-        // make sure city, province, and country is alphabetic
-        if (!isAlphabetic(city) || !isAlphabetic(province) || !isAlphabetic(country)) {
+    public boolean validateAddress() {
+        // make sure city and province is alphabetic
+        if (!isAlphabetic(city) || !isAlphabetic(province)) {
             return false;
         }
 
@@ -125,19 +123,49 @@ public abstract class RegisterUser {
     }
 
     /**
-     * Gets the address of the user.
-     * @return the address of the user.
+     * Gets the street address of the user.
+     * @return the street address of the user.
      */
-    public String getAddress() {
-        return address;
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    /**
+     * Gets the city of the user.
+     * @return the city of the user.
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Gets the province of the user.
+     * @return the province of the user.
+     */
+    public String getProvince() {
+        return province;
+    }
+
+    /**
+     * Gets the postal code of the user.
+     * @return the postal code of the user.
+     */
+    public String getPostalCode() {
+        return streetAddress;
     }
 
     /**
      * Sets the address of the user.
-     * @param address the address to set.
+     * @param streetAddress the address to set.
+     * @param city the address to set.
+     * @param province the address to set.
+     * @param postalCode the address to set.
      */
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String streetAddress, String city, String province, String postalCode) {
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
     }
 
     /**
