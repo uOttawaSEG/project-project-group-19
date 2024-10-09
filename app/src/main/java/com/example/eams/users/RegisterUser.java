@@ -1,4 +1,4 @@
-package com.example.eams;
+package com.example.eams.users;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * An abstract class to enforce the register method and to store common instance variables
  */
-public abstract class RegisterUser {
+public abstract class RegisterUser extends LoginUser {
     private String firstName;
     private String lastName;
     private String phoneNumber;

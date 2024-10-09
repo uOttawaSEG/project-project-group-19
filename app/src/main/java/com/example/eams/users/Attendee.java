@@ -1,4 +1,4 @@
-package com.example.eams;
+package com.example.eams.users;
 
 /**
  * A class representing a user who is an attendee
