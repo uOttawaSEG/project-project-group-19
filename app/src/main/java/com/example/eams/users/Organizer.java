@@ -1,4 +1,4 @@
-package com.example.eams;
+package com.example.eams.users;
 
 public class Organizer extends RegisterUser {
     private String organizationName;

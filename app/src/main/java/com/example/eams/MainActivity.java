@@ -1,6 +1,5 @@
 package com.example.eams;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.admin.AdminLoginActivity;
-import com.example.eams.attendee.AttendeeLoginActivity;
-import com.example.eams.organizer.OrganizerLoginActivity;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 //    Button attendeeLoginButton;

@@ -1,4 +1,4 @@
-package com.example.eams;
+package com.example.eams.users;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
