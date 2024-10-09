@@ -9,9 +9,8 @@ import java.util.regex.Pattern;
 public abstract class LoginUser {
     private String email;
     private String password;
-    static Task<DataSnapshot> a;
 
-    enum UserType {
+    public enum UserType {
         ADMINISTRATOR,
         ATTENDEE,
         ORGANIZER
@@ -40,7 +39,7 @@ public abstract class LoginUser {
         return matcher.find();
     }
 
-    public static boolean attemptLogin(UserType userType, String email, String password) {
-
+    public static boolean attemptLogin(String email, String password) {
+        return false;
     }
 }

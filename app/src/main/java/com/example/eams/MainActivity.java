@@ -14,21 +14,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.eams.admin.AdminLoginActivity;
+import com.example.eams.users.LoginUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-//    Button attendeeLoginButton;
-//    Button organizerLoginButton;
-//    Button adminLoginButton;
-    Button registerButton;
+    // Views
+    private Button loginButton;
+    private Button registerButton;
+
+    // Database variables
+    private DatabaseReference databaseRef;
+    private String userType;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -37,56 +42,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // Set up dropdown menu to choose from Administrator, Organizer, and Attendee
         Spinner spinner = (Spinner) findViewById(R.id.userSelectSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.spinner_items, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        /* Find all the buttons by their IDs */
-        //attendeeLoginButton = findViewById(R.id.button_attendee_login);
-        //organizerLoginButton = findViewById(R.id.button_organizer_login);
-        //adminLoginButton = findViewById(R.id.button_admin_login);
+        // Get reference of data of correct user type
+        databaseRef = FirebaseDatabase.getInstance().getReference(userType);
 
-        /*
-        Links the buttons to their corresponding activities
-        attendeeLoginButton  -> AttendeeLoginActivity
-        organizerLoginButton -> OrganizerLoginActivity
-        adminLoginButton     -> AdminLoginActivity
-         */
-//        attendeeLoginButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, AttendeeLoginActivity.class);
-//            startActivity(intent);
-//        });
-//
-//        organizerLoginButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, OrganizerLoginActivity.class);
-//            startActivity(intent);
-//        });
-//
-//        adminLoginButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, AdminLoginActivity.class);
-//            startActivity(intent);
-//        });
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
-        String selectedUserType = (String) parent.getItemAtPosition(pos);
-        if(selectedUserType.equals("Administrator")){
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        userType = ((String) parent.getItemAtPosition(pos)).toLowerCase();
+        if (userType.equals("administrator")) {
             CharSequence text = "I'm an Administrator!";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
-        } else if(selectedUserType.equals("Organizer")){
+        } else if (userType.equals("organizer")) {
             CharSequence text = "I'm an Organizer!";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
-        } else if(selectedUserType.equals("Attendee")){
+        } else if (userType.equals("attendee")) {
             CharSequence text = "I'm an Attendee!";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
-        } else{
+        } else {
             CharSequence text = "Must select a user type!";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(this, text, duration);
@@ -95,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void onNothingSelected(AdapterView<?> parent){
+    public void onNothingSelected(AdapterView<?> parent) {
         return;
     }
 }
