@@ -22,9 +22,6 @@ import com.example.eams.organizer.OrganizerWelcomeActivity;
 import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    // Views
-    private Button loginButton;
-    private Button registerButton;
 
     // Database variables
     private DatabaseReference databaseRef;
@@ -43,60 +40,58 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return insets;
         });
 
-        // Set up dropdown menu to choose from Administrator, Organizer, and Attendee
-        Spinner spinner = (Spinner) findViewById(R.id.userSelectSpinner);
+        // Initialize refs to Views
+        Spinner spinner = findViewById(R.id.userSelectSpinner); // For selecting user type
+        Button registerButton = findViewById(R.id.registerButton); // For Going to registration page for attendee/organizer
+        Button loginButton = findViewById(R.id.loginButton); // For attempting to process login
+
+        // Set up spinner to choose from Administrator, Organizer, and Attendee
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        //Register button to bring to registration page for attendee or organizer
-        registerButton = findViewById(R.id.registerButton);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userType.equals("attendee")){
+        // When the user presses the registerButton
+        registerButton.setOnClickListener(v -> {
+            switch (userType) {
+                case "attendee": {
                     Intent intent = new Intent(MainActivity.this, AttendeeRegisterActivity.class);
                     startActivity(intent);
+                    break;
                 }
-                else if (userType.equals("organizer")){
+                case "organizer": {
                     Intent intent = new Intent(MainActivity.this, OrganizerRegisterActivity.class);
                     startActivity(intent);
+                    break;
                 }
-                else if (userType.equals("administrator")) {
+                case "administrator":
                     CharSequence text = "No registration needed. Proceed to login ";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(MainActivity.this, text, duration);
                     toast.show();
-                }
             }
-
-
         });
 
-        //Login to take to welcome page
-
-        View LoginButton = findViewById(R.id.loginButton);
-
-        LoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userType.equals("attendee")){
-                    Intent intent = new Intent(MainActivity.this, AttendeeWelcomeActivity.class);
-                    startActivity(intent);
+        // When the user presses the loginButton
+        loginButton.setOnClickListener(v -> {
+            Intent intent = null;
+            switch (userType) {
+                case "attendee": {
+                    intent = new Intent(MainActivity.this, AttendeeWelcomeActivity.class);
+                    break;
                 }
-                else if (userType.equals("organizer")){
-                    Intent intent = new Intent(MainActivity.this, OrganizerWelcomeActivity.class);
-                    startActivity(intent);
+                case "organizer": {
+                    intent = new Intent(MainActivity.this, OrganizerWelcomeActivity.class);
+                    break;
                 }
-                else if (userType.equals("administrator")) {
-                    Intent intent = new Intent(MainActivity.this, AdministratorWelcomeActivity.class);
-                    startActivity(intent);
+                case "administrator": {
+                    intent = new Intent(MainActivity.this, AdministratorWelcomeActivity.class);
                 }
             }
-
-
+            if (intent != null) {
+                startActivity(intent);
+            }
         });
 
 
@@ -105,39 +100,43 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    //Validating sign in
 
-
-
-
-
+    // When the user selects an item on the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         userType = ((String) parent.getItemAtPosition(pos)).toLowerCase();
-        if (userType.equals("administrator")) {
-            CharSequence text = "I'm an Administrator!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        } else if (userType.equals("organizer")) {
-            CharSequence text = "I'm an Organizer!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        } else if (userType.equals("attendee")) {
-            CharSequence text = "I'm an Attendee!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        } else {
-            CharSequence text = "Must select a user type!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
+        switch (userType) {
+            case "administrator": {
+                CharSequence text = "I'm an Administrator!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+                break;
+            }
+            case "organizer": {
+                CharSequence text = "I'm an Organizer!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+                break;
+            }
+            case "attendee": {
+                CharSequence text = "I'm an Attendee!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+                break;
+            }
+            default: {
+                CharSequence text = "Must select a user type!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+            }
         }
 
     }
 
+    // Unused interface callback
     public void onNothingSelected(AdapterView<?> parent) {
-        return;
     }
 }
