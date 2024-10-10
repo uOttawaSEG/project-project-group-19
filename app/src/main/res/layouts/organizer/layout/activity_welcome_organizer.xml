@@ -38,7 +38,7 @@
             android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="WELCOME!"
             android:textAlignment="center"
@@ -49,7 +49,7 @@
             android:id="@+id/welcomeTextMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="You are logged in as Organizer"
             android:textAlignment="center"
@@ -59,11 +59,22 @@
         <ImageView
             android:id="@+id/welcomeImage"
             android:layout_width="match_parent"
-            android:layout_height="279dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="198dp"
+            android:layout_marginTop="-10dp"
             app:srcCompat="@drawable/penguin_waving"
             tools:layout_editor_absoluteX="-8dp"
             tools:layout_editor_absoluteY="3dp" />
+
+        <Button
+            android:id="@+id/logoffButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="100dp"
+            android:background="#1D6BB8"
+            android:text="Log off" />
 
 
     </LinearLayout>

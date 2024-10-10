@@ -105,6 +105,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    //Validating sign in
+
+
+
 
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

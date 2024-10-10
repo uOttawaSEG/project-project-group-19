@@ -13,8 +13,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.eams.MainActivity;
 import com.example.eams.R;
 import com.example.eams.attendee.AttendeeRegisterActivity;
+import com.example.eams.users.Attendee;
+import com.example.eams.users.LoginUser;
+import com.example.eams.users.Organizer;
+import com.example.eams.users.RegisterUser;
 
-public class OrganizerRegisterActivity extends AppCompatActivity {
+public class OrganizerRegisterActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,4 +43,5 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
 }
