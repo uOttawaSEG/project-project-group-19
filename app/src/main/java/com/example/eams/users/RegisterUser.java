@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * An abstract class to enforce the register method and to store common instance variables
  */
-public abstract class RegisterUser extends LoginUser {
+public abstract class RegisterUser extends User {
     private String firstName;
     private String lastName;
     private String phoneNumber;

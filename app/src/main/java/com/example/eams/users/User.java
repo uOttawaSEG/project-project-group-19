@@ -1,19 +1,19 @@
 package com.example.eams.users;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class LoginUser {
+public class User {
+
     private String email;
     private String password;
 
-    public enum UserType {
-        ADMINISTRATOR,
-        ATTENDEE,
-        ORGANIZER
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -39,7 +39,4 @@ public abstract class LoginUser {
         return matcher.find();
     }
 
-    public static boolean attemptLogin(String email, String password) {
-        return false;
-    }
 }

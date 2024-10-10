@@ -12,9 +12,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.MainActivity;
 import com.example.eams.R;
-import com.example.eams.organizer.OrganizerRegisterActivity;
-import com.example.eams.users.Attendee;
-import com.example.eams.users.LoginUser;
 
 public class AttendeeRegisterActivity extends AppCompatActivity {
 
