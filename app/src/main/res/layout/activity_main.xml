@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/appLogo"
+        android:id="@+id/ivAppLogo"
         android:layout_width="match_parent"
         android:layout_height="279dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/signInText"
+            android:id="@+id/tvSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -45,7 +45,7 @@
             android:textSize="38sp" />
 
         <Spinner
-            android:id="@+id/userSelectSpinner"
+            android:id="@+id/spinnerUserSelect"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="40dp"
@@ -55,7 +55,7 @@
             android:fontFamily="@font/roboto_light"/>
 
         <EditText
-            android:id="@+id/userEmail"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -68,7 +68,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -81,7 +81,7 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -93,7 +93,7 @@
             />
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"

@@ -2,8 +2,8 @@
 <resources>
     <string-array name="spinner_items">
         <item>Select User Type:</item>
-        <item>Administrator</item>
-        <item>Organizer</item>
         <item>Attendee</item>
+        <item>Organizer</item>
+        <item>Administrator</item>
     </string-array>
 </resources>
