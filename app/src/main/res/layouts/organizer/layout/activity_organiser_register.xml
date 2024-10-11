@@ -60,7 +60,8 @@
             android:ems="10"
             android:fontFamily="@font/roboto_light"
             android:hint="Last Name"
-            android:inputType="textPersonName" /><EditText
+            android:inputType="textPersonName" />
+        <EditText
         android:id="@+id/userPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

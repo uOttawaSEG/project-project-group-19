@@ -15,6 +15,17 @@ public abstract class RegisterUser extends User {
     private String province;
     private String postalCode;
 
+    public RegisterUser(String email, String password, String firstName, String lastName, String phoneNumber, String streetAddress, String city, String province, String postalCode) {
+        super(email, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+    }
+
     /**
      * Validates the first name
      * @return true if firstName is valid, false otherwise

@@ -3,6 +3,11 @@ package com.example.eams.users;
 public class Organizer extends RegisterUser {
     private String organizationName;
 
+    public Organizer(String email, String password, String firstName, String lastName, String phoneNumber, String streetAddress, String city, String province, String postalCode, String organizationName) {
+        super(email, password, firstName, lastName, phoneNumber, streetAddress, city, province, postalCode);
+        this.organizationName = organizationName;
+    }
+
     /**
      * Gets the organization name of the user.
      * @return the organization name of the user.
@@ -29,3 +34,4 @@ public class Organizer extends RegisterUser {
         return false;
     }
 }
+

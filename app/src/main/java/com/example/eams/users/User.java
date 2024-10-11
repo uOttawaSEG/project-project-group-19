@@ -4,6 +4,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     private String email;
     private String password;
