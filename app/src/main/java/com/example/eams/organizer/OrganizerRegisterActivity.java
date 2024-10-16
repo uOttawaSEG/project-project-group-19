@@ -25,18 +25,31 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import androidx.annotation.NonNull;
 
-
+/**
+ * OrganizerRegisterActivity allows a User to register as an Organizer
+ * Bi-directional connection to MainActivity (home/login page)
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class OrganizerRegisterActivity extends AppCompatActivity{
 
-
-    private EditText userFirstName, userLastName, userPhoneNumber, etEmail, userPassword, userStreetName, userCity, userProvince, userPostalCode;
+    // INSTANCE VARIABLES
+    private EditText userFirstName, userLastName, userPhoneNumber, etEmail,
+            userPassword, userStreetName, userCity, userProvince, userPostalCode;
 
     private Button confirm_button;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private static final String TAG = "OrganizerActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_organiser_register);
@@ -48,6 +61,7 @@ public class OrganizerRegisterActivity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        // Retrieve inputs from Register page
         userFirstName = findViewById(R.id.userFirstName);
         userLastName = findViewById(R.id.userLastName);
         userPhoneNumber = findViewById(R.id.userPhoneNumber);
@@ -59,16 +73,11 @@ public class OrganizerRegisterActivity extends AppCompatActivity{
         userPostalCode = findViewById(R.id.userPostalCode);
         confirm_button = findViewById(R.id.confirm_button);
 
-
-
-        //confirm button from registration page to bring back to login
+        // Confirm button from registration page brings Organizer back to login page (MainActivity)
 
         View confirmButtonOrganizer = findViewById(R.id.confirm_button);
 
         confirmButtonOrganizer.setOnClickListener(new View.OnClickListener() {
-
-
-
 
             @Override
             public void onClick(View v) {

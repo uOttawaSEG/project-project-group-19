@@ -5,8 +5,18 @@ import java.util.regex.Pattern;
 
 /**
  * An abstract class to enforce the register method and to store common instance variables
+ * RegisterUser extends User. It is extended by Organizer and Attendee.
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public abstract class RegisterUser extends User {
+
+    // INSTANCE VARIABLES
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -15,6 +25,20 @@ public abstract class RegisterUser extends User {
     private String province;
     private String postalCode;
 
+    /**
+     * Parameterized constructor that creates a new RegisterUser with given register information.
+     * Calls constructor of superclass User to set email and password.
+     *
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @param phoneNumber
+     * @param streetAddress
+     * @param city
+     * @param province
+     * @param postalCode
+     */
     public RegisterUser(String email, String password, String firstName, String lastName, String phoneNumber, String streetAddress, String city, String province, String postalCode) {
         super(email, password);
         this.firstName = firstName;
@@ -26,6 +50,16 @@ public abstract class RegisterUser extends User {
         this.postalCode = postalCode;
     }
 
+    // PUBLIC METHODS
+
+    /**
+     * Attempts to register the user with the given instance variables
+     * @return true if successful, false otherwise
+     */
+    public abstract boolean register();
+
+    // First Name Methods
+
     /**
      * Validates the first name
      * @return true if firstName is valid, false otherwise
@@ -35,12 +69,47 @@ public abstract class RegisterUser extends User {
     }
 
     /**
+     * Gets the first name of the user.
+     * @return the first name of the user.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Sets the first name of the user.
+     * @param firstName the first name to set.
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    // Last Name Methods
+    /**
      * Validates the last name
      * @return true if lastName is valid, false otherwise
      */
     public boolean validateLastName() {
         return isAlphabetic(lastName);
     }
+
+    /**
+     * Gets the last name of the user.
+     * @return the last name of the user.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the last name of the user.
+     * @param lastName the last name to set.
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    // Phone Number Methods
 
     /**
      * Validates the phone number
@@ -51,6 +120,24 @@ public abstract class RegisterUser extends User {
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find();
     }
+
+    /**
+     * Gets the phone number of the user.
+     * @return the phone number of the user.
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the phone number of the user.
+     * @param phoneNumber the phone number to set.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Address methods
 
     /**
      * Validates the address
@@ -77,60 +164,6 @@ public abstract class RegisterUser extends User {
             return false;
         }
         return true; // this statement is reached if every test is passed
-    }
-
-    /**
-     * Attempts to register the user with the given instance variables
-     * @return true if successful, false otherwise
-     */
-    public abstract boolean register();
-
-    /**
-     * Gets the first name of the user.
-     * @return the first name of the user.
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Sets the first name of the user.
-     * @param firstName the first name to set.
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Gets the last name of the user.
-     * @return the last name of the user.
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Sets the last name of the user.
-     * @param lastName the last name to set.
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * Gets the phone number of the user.
-     * @return the phone number of the user.
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the user.
-     * @param phoneNumber the phone number to set.
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     /**

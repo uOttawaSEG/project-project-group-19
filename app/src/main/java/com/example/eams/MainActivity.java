@@ -35,8 +35,21 @@ import androidx.annotation.NonNull;
 
 import java.util.Iterator;
 
+/**
+ * AttendeeRegisterActivity allows a User to register as an Attendee
+ * Bi-directional connection to AttendeeRegisterActivity, AttendeeWelcomeActivity,
+ *      OrganizerRegisterActivity, OrganizerWelcomeActivity, and AdministratorWelcomeActivity
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // INSTANCE VARIABLES
     // Possible user types
     private enum UserType {
         INVALID,
@@ -62,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
-
-
-
         // Initialize refs to Views
         EditText etEmail = findViewById(R.id.etEmail);
         EditText etPassword = findViewById(R.id.etPassword);
@@ -88,8 +97,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Intent registerIntent;
             // Error message
             Toast error;
-            
-
 
             switch (userType) {
                 case ATTENDEE:
@@ -176,10 +183,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-
-    // When the user selects an item on the spinner
+    /** Determines selected user type (Attendee, Organizer, or Administrator).
+     *  Runs when a user selects an item with the spinner.
+     *
+     * @param parent
+     * @param view
+     * @param pos
+     * @param id
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // Determine selected user type
         String spinnerItemStr = (String) parent.getItemAtPosition(pos);
 
         // Set userType to selected

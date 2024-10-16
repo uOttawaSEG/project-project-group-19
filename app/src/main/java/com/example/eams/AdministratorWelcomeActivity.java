@@ -12,6 +12,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.organizer.OrganizerWelcomeActivity;
 
+/**
+ * AdministratorWelcomeActivity welcomes the Admin user with text
+ * Bi-directional connection to MainActivity (home/login page)
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class AdministratorWelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +35,7 @@ public class AdministratorWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Log off button returns Admin user to login page (MainActivity)
         View logoffButton = findViewById(R.id.logoffButton);
 
         logoffButton.setOnClickListener(new View.OnClickListener() {
