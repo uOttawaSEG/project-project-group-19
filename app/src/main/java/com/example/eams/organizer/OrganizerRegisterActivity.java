@@ -18,6 +18,17 @@ import com.example.eams.users.Organizer;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * OrganizerRegisterActivity allows a User to register as an Organizer
+ * Bi-directional connection to MainActivity (home/login page)
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class OrganizerRegisterActivity extends AppCompatActivity {
 
     @Override

@@ -13,7 +13,19 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.eams.MainActivity;
 import com.example.eams.R;
 
+/**
+ * AttendeeWelcomeActivity welcomes an Attendee user with text.
+ * Bi-directional connection to MainActivity (home/login page).
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class AttendeeWelcomeActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +37,7 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Log off button returns Attendee user to login page (MainActivity)
         View logoffButton = findViewById(R.id.logoffButton);
 
         logoffButton.setOnClickListener(new View.OnClickListener() {

@@ -14,9 +14,22 @@ import com.example.eams.MainActivity;
 import com.example.eams.R;
 import com.example.eams.attendee.AttendeeWelcomeActivity;
 
+/**
+ * OrganizerWelcomeActivity welcomes an Organizer with text
+ * Bi-directional connection to MainActivity (home/login page)
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class OrganizerWelcomeActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_welcome_organizer);
@@ -26,6 +39,7 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Log off button returns Organizer user to login page (MainActivity)
         View logoffButton = findViewById(R.id.logoffButton);
 
         logoffButton.setOnClickListener(new View.OnClickListener() {

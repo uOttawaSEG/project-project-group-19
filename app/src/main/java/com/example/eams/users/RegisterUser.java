@@ -5,8 +5,18 @@ import java.util.regex.Pattern;
 
 /**
  * An abstract class to enforce the register method and to store common instance variables
+ * RegisterUser extends User. It is extended by Organizer and Attendee.
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn Mcclelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public abstract class RegisterUser extends User {
+
+    // Instance variables
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -16,11 +26,25 @@ public abstract class RegisterUser extends User {
     private String province;
     private String postalCode;
 
+    // Constructors
     // DO NOT REMOVE: Required for Firebase!!
     public RegisterUser() {
 
     }
 
+    /**
+     * Creates a new RegisterUser with given information.
+     *
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @param phoneNumber
+     * @param street
+     * @param city
+     * @param province
+     * @param postalCode
+     */
     public RegisterUser(
             String email,
             String password,
@@ -43,6 +67,8 @@ public abstract class RegisterUser extends User {
         this.postalCode = postalCode;
     }
 
+
+    // Getters + Setters
     /**
      * Gets the first name of the user.
      *
