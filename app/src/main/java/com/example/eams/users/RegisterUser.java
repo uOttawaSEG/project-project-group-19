@@ -69,6 +69,7 @@ public abstract class RegisterUser extends User {
 
 
     // Getters + Setters
+
     /**
      * Gets the first name of the user.
      *
@@ -162,10 +163,10 @@ public abstract class RegisterUser extends User {
     /**
      * Sets the address of the user.
      *
-     * @param street        the address to set.
-     * @param city          the address to set.
-     * @param province      the address to set.
-     * @param postalCode    the address to set.
+     * @param street     the address to set.
+     * @param city       the address to set.
+     * @param province   the address to set.
+     * @param postalCode the address to set.
      */
     public void setAddress(String street, String city, String province, String postalCode) {
         this.street = street;

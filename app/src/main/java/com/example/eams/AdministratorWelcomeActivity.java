@@ -26,6 +26,7 @@ import com.example.eams.organizer.OrganizerWelcomeActivity;
 public class AdministratorWelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_welcome_admin);
@@ -38,12 +39,9 @@ public class AdministratorWelcomeActivity extends AppCompatActivity {
         // Log off button returns Admin user to login page (MainActivity)
         View logoffButton = findViewById(R.id.logoffButton);
 
-        logoffButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdministratorWelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        logoffButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AdministratorWelcomeActivity.this, MainActivity.class);
+            startActivity(intent);
         });
 
     }

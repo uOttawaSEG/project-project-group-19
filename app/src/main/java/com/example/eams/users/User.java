@@ -39,8 +39,8 @@ public abstract class User {
 
 
     // Getters + Setters
+
     /**
-     *
      * @return user's email
      */
     public String getEmail() {
@@ -48,7 +48,6 @@ public abstract class User {
     }
 
     /**
-     *
      * @param email email to be set
      */
     public void setEmail(String email) {
@@ -56,7 +55,6 @@ public abstract class User {
     }
 
     /**
-     *
      * @return user's password
      */
     public String getPassword() {
@@ -64,7 +62,6 @@ public abstract class User {
     }
 
     /**
-     *
      * @param password password to be set
      */
     public void setPassword(String password) {

@@ -2,7 +2,7 @@ package com.example.eams.users;
 
 /**
  * Organizer extends RegisterUser (and User). They can login in MainActivity or
- *      register in OrganizerRegisterActivity.
+ * register in OrganizerRegisterActivity.
  *
  * @author Alex Ajersch
  * @author Brooklyn Mcclelland
@@ -55,8 +55,8 @@ public class Organizer extends RegisterUser {
 
 
     // Getters + Setters
+
     /**
-     *
      * @return user's organization
      */
     public String getOrganization() {
@@ -64,7 +64,6 @@ public class Organizer extends RegisterUser {
     }
 
     /**
-     *
      * @param organization the organization to set.
      */
     public void setOrganization(String organization) {

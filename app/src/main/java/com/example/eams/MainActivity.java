@@ -28,12 +28,6 @@ import com.example.eams.users.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.OnCompleteListener;
-import androidx.annotation.NonNull;
 
 
 import java.util.Iterator;
@@ -41,7 +35,7 @@ import java.util.Iterator;
 /**
  * AttendeeRegisterActivity allows a User to register as an Attendee
  * Bi-directional connection to AttendeeRegisterActivity, AttendeeWelcomeActivity,
- *      OrganizerRegisterActivity, OrganizerWelcomeActivity, and AdministratorWelcomeActivity
+ * OrganizerRegisterActivity, OrganizerWelcomeActivity, and AdministratorWelcomeActivity
  *
  * @author Alex Ajersch
  * @author Brooklyn Mcclelland
@@ -77,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return insets;
         });
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         // Initialize refs to Views
         EditText etEmail = findViewById(R.id.et_main_email);
@@ -199,8 +192,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-    /** Determines selected user type (Attendee, Organizer, or Administrator).
-     *  Runs when a user selects an item with the spinner.
+    /**
+     * Determines selected user type (Attendee, Organizer, or Administrator).
+     * Runs when a user selects an item with the spinner.
      *
      * @param parent
      * @param view

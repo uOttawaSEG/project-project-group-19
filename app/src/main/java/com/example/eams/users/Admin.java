@@ -20,7 +20,7 @@ public class Admin extends User {
     /**
      * Creates an Admin with given email and password
      *
-     * @param email email to set
+     * @param email    email to set
      * @param password password to set
      */
     public Admin(String email, String password) {

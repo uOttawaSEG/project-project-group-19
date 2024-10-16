@@ -2,7 +2,7 @@ package com.example.eams.users;
 
 /**
  * Attendee extends RegisterUser (and User). They can login in MainActivity or
- *      register in AttendeeRegisterActivity.
+ * register in AttendeeRegisterActivity.
  *
  * @author Alex Ajersch
  * @author Brooklyn Mcclelland
