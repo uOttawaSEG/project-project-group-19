@@ -225,7 +225,7 @@ public abstract class RegisterUser extends User {
 
         // make sure street is valid
         Pattern streetPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+\\s[a-zA-Z.]+\\.?$");
-        Matcher streetMatcher = streetPattern.matcher(postalCode);
+        Matcher streetMatcher = streetPattern.matcher(street);
         if (!streetMatcher.find()) {
             return false;
         }

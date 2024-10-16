@@ -116,12 +116,11 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // TODO: FIX VALIDATION
-//            if (!organizer.phoneNumberIsValid()){
-//                error = Toast.makeText(this, "Invalid phone number.", Toast.LENGTH_SHORT);
-//                error.show();
-//                return;
-//            }
+            if (!organizer.phoneNumberIsValid()){
+                error = Toast.makeText(this, "Invalid phone number.", Toast.LENGTH_SHORT);
+                error.show();
+                return;
+            }
 
             if (!organizer.emailIsValid()) {
                 error = Toast.makeText(this, "Invalid email.", Toast.LENGTH_SHORT);
@@ -135,12 +134,11 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // TODO: FIX VALIDATION
-//            if (!organizer.addressIsValid()){
-//                error = Toast.makeText(this, "Invalid address.", Toast.LENGTH_SHORT);
-//                error.show();
-//                return;
-//            }
+            if (!organizer.addressIsValid()){
+                error = Toast.makeText(this, "Invalid address.", Toast.LENGTH_SHORT);
+                error.show();
+                return;
+            }
 
 
             // Add new Organizer to the database
