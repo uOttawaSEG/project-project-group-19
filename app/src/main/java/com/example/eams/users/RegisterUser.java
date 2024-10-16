@@ -10,32 +10,168 @@ public abstract class RegisterUser extends User {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String streetAddress;
+
+    private String street;
     private String city;
     private String province;
     private String postalCode;
 
+    // DO NOT REMOVE: Required for Firebase!!
+    public RegisterUser() {
+
+    }
+
+    public RegisterUser(
+            String email,
+            String password,
+            String firstName,
+            String lastName,
+            String phoneNumber,
+            String street,
+            String city,
+            String province,
+            String postalCode
+    ) {
+
+        super(email, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+    }
+
+    /**
+     * Gets the first name of the user.
+     *
+     * @return the first name of the user.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Sets the first name of the user.
+     *
+     * @param firstName the first name to set.
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Gets the last name of the user.
+     *
+     * @return the last name of the user.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the last name of the user.
+     *
+     * @param lastName the last name to set.
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Gets the phone number of the user.
+     *
+     * @return the phone number of the user.
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the phone number of the user.
+     *
+     * @param phoneNumber the phone number to set.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Gets the street address of the user.
+     *
+     * @return the street address of the user.
+     */
+    public String getStreet() {
+        return street;
+    }
+
+    /**
+     * Gets the city of the user.
+     *
+     * @return the city of the user.
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Gets the province of the user.
+     *
+     * @return the province of the user.
+     */
+    public String getProvince() {
+        return province;
+    }
+
+    /**
+     * Gets the postal code of the user.
+     *
+     * @return the postal code of the user.
+     */
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    /**
+     * Sets the address of the user.
+     *
+     * @param street        the address to set.
+     * @param city          the address to set.
+     * @param province      the address to set.
+     * @param postalCode    the address to set.
+     */
+    public void setAddress(String street, String city, String province, String postalCode) {
+        this.street = street;
+        this.city = city;
+        this.province = province;
+        this.postalCode = postalCode;
+    }
+
     /**
      * Validates the first name
+     *
      * @return true if firstName is valid, false otherwise
      */
-    public boolean validateFirstName() {
+    public boolean firstNameIsValid() {
         return isAlphabetic(firstName);
     }
 
     /**
      * Validates the last name
+     *
      * @return true if lastName is valid, false otherwise
      */
-    public boolean validateLastName() {
+    public boolean lastNameIsValid() {
         return isAlphabetic(lastName);
     }
 
     /**
      * Validates the phone number
+     *
      * @return true if phoneNumber is valid, false otherwise
      */
-    public boolean validatePhoneNumber() {
+    public boolean phoneNumberIsValid() {
         Pattern pattern = Pattern.compile("^[0-9]\\{3}-?[0-9]\\{3}-?[0-9]\\{4}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find();
@@ -43,9 +179,10 @@ public abstract class RegisterUser extends User {
 
     /**
      * Validates the address
+     *
      * @return true if address is valid, false otherwise
      */
-    public boolean validateAddress() {
+    public boolean addressIsValid() {
         // make sure city and province is alphabetic
         if (!isAlphabetic(city) || !isAlphabetic(province)) {
             return false;
@@ -59,10 +196,10 @@ public abstract class RegisterUser extends User {
             return false;
         }
 
-        // make sure streetAddress is valid
-        Pattern streetAddressPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+$");
-        Matcher streetAddressMatcher = streetAddressPattern.matcher(postalCode);
-        if (!streetAddressMatcher.find()) {
+        // make sure street is valid
+        Pattern streetPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+$");
+        Matcher streetMatcher = streetPattern.matcher(postalCode);
+        if (!streetMatcher.find()) {
             return false;
         }
         return true; // this statement is reached if every test is passed
@@ -70,114 +207,21 @@ public abstract class RegisterUser extends User {
 
     /**
      * Attempts to register the user with the given instance variables
+     *
      * @return true if successful, false otherwise
      */
     public abstract boolean register();
 
     /**
-     * Gets the first name of the user.
-     * @return the first name of the user.
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Sets the first name of the user.
-     * @param firstName the first name to set.
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Gets the last name of the user.
-     * @return the last name of the user.
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * Sets the last name of the user.
-     * @param lastName the last name to set.
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * Gets the phone number of the user.
-     * @return the phone number of the user.
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Sets the phone number of the user.
-     * @param phoneNumber the phone number to set.
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
-     * Gets the street address of the user.
-     * @return the street address of the user.
-     */
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    /**
-     * Gets the city of the user.
-     * @return the city of the user.
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * Gets the province of the user.
-     * @return the province of the user.
-     */
-    public String getProvince() {
-        return province;
-    }
-
-    /**
-     * Gets the postal code of the user.
-     * @return the postal code of the user.
-     */
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    /**
-     * Sets the address of the user.
-     * @param streetAddress the address to set.
-     * @param city the address to set.
-     * @param province the address to set.
-     * @param postalCode the address to set.
-     */
-    public void setAddress(String streetAddress, String city, String province, String postalCode) {
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.province = province;
-        this.postalCode = postalCode;
-    }
-
-    /**
-     * Tests if a string is strictly alphabetic
+     * Tests if a string is strictly alphabetic and not empty
+     *
      * @param s the string to be tested
-     * @return true if s is alphabetic, false otherwise
+     * @return true if s is alphabetic and not empty, false otherwise
      */
     private boolean isAlphabetic(String s) {
-        if (s.isEmpty())
-            return false;
+        if (s.isEmpty()) return false;
 
-        Pattern pattern = Pattern.compile("^[A-Za-z]$");
+        Pattern pattern = Pattern.compile("^[A-Za-z]+$");
         Matcher matcher = pattern.matcher(s);
         return matcher.find();
     }

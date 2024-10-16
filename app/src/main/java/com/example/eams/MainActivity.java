@@ -21,6 +21,9 @@ import com.example.eams.attendee.AttendeeRegisterActivity;
 import com.example.eams.attendee.AttendeeWelcomeActivity;
 import com.example.eams.organizer.OrganizerRegisterActivity;
 import com.example.eams.organizer.OrganizerWelcomeActivity;
+import com.example.eams.users.Admin;
+import com.example.eams.users.Attendee;
+import com.example.eams.users.Organizer;
 import com.example.eams.users.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ORGANIZER,
         ADMINISTRATOR
     }
+
     // Selected user type
     private UserType userType;
 
@@ -54,46 +58,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         // Initialize refs to Views
-        EditText etEmail = findViewById(R.id.etEmail);
-        EditText etPassword = findViewById(R.id.etPassword);
-        Spinner spinner = findViewById(R.id.spinnerUserSelect); // For selecting user type
-        Button registerButton = findViewById(R.id.btnRegister); // For Going to registration page for attendee/organizer
-        Button loginButton = findViewById(R.id.btnLogin); // For attempting to process login
+        EditText etEmail = findViewById(R.id.et_main_email);
+        EditText etPassword = findViewById(R.id.et_main_password);
+        Spinner spinner = findViewById(R.id.spinner_main_user_select); // For selecting user type
+        Button registerButton = findViewById(R.id.btn_main_register); // For Going to registration page for attendee/organizer
+        Button loginButton = findViewById(R.id.btn_main_login); // For attempting to process login
 
         // Set up spinner to choose from Administrator, Organizer, and Attendee
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_items, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
-        // Reference to the Firebase DB
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-        // When the user presses the registerButton
-        registerButton.setOnClickListener(v -> {
-            // Intent for changing to a register screen
-            Intent registerIntent;
-            // Error message
-            Toast error;
-
-            switch (userType) {
-                case ATTENDEE:
-                    registerIntent = new Intent(MainActivity.this, AttendeeRegisterActivity.class);
-                    startActivity(registerIntent);
-                    break;
-                case ORGANIZER:
-                    registerIntent = new Intent(MainActivity.this, OrganizerRegisterActivity.class);
-                    startActivity(registerIntent);
-                    break;
-                case ADMINISTRATOR:
-                    error = Toast.makeText(MainActivity.this, "No registration needed. Proceed to login.", Toast.LENGTH_SHORT);
-                    error.show();
-                    break;
-                default: // If the user has not selected a user type yet
-                    error = Toast.makeText(MainActivity.this, "Please select a user type.", Toast.LENGTH_SHORT);
-                    error.show();
-            }
-        });
 
         // When the user presses the loginButton
         loginButton.setOnClickListener(v -> {
@@ -107,33 +82,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             // Determine user type
             switch (userType) {
                 case ATTENDEE:
-                    loginIntent = new Intent(MainActivity.this, AttendeeWelcomeActivity.class);
-                    pathStr = "attendees";
+                    loginIntent = new Intent(this, AttendeeWelcomeActivity.class);
+                    pathStr = "users/attendees";
                     break;
                 case ORGANIZER:
-                    loginIntent = new Intent(MainActivity.this, OrganizerWelcomeActivity.class);
-                    pathStr = "organizers";
+                    loginIntent = new Intent(this, OrganizerWelcomeActivity.class);
+                    pathStr = "users/organizers";
                     break;
                 case ADMINISTRATOR:
-                    loginIntent = new Intent(MainActivity.this, AdministratorWelcomeActivity.class);
-                    pathStr = "administrators";
+                    loginIntent = new Intent(this, AdministratorWelcomeActivity.class);
+                    pathStr = "users/administrators";
                     break;
                 default: // If no user type is selected
-                    error = Toast.makeText(MainActivity.this, "Please select a user type.", Toast.LENGTH_SHORT);
+                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
                     error.show();
                     // Exit lambda expression or onClick()
                     return;
             }
 
             // Retrieve user input
-            String inEmail = etEmail.getText().toString();
-            String inPassword = etPassword.getText().toString();
+            String inEmail = etEmail.getText().toString().trim();
+            String inPassword = etPassword.getText().toString().trim();
 
             // Get the reference to the correct child node
-            DatabaseReference usersDataBaseRef = databaseReference.child(pathStr);
+            DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference(pathStr);
 
             // Add listener for fetching data
-            usersDataBaseRef.get().addOnCompleteListener(task -> {
+            usersDatabaseReference.get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
@@ -143,7 +118,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     // While theres more elements left and still haven't found a match
                     while (iterator.hasNext() && !isValid) {
-                        User user = iterator.next().getValue(User.class);
+                        // Fetched user
+                        User user = null;
+
+                        // Get object of correct type
+                        switch (userType) {
+                            case ATTENDEE:
+                                user = iterator.next().getValue(Attendee.class);
+                                break;
+                            case ORGANIZER:
+                                user = iterator.next().getValue(Organizer.class);
+                                break;
+                            case ADMINISTRATOR:
+                                user = iterator.next().getValue(Admin.class);
+                        }
+
+                        // If user found
                         if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
                             isValid = true;
                             startActivity(loginIntent);
@@ -158,6 +148,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 }
             });
+        });
+
+        // When the user presses the registerButton
+        registerButton.setOnClickListener(v -> {
+            // Intent for changing to a register screen
+            Intent registerIntent;
+            // Error message
+            Toast error;
+
+            switch (userType) {
+                case ATTENDEE:
+                    registerIntent = new Intent(this, AttendeeRegisterActivity.class);
+                    startActivity(registerIntent);
+                    break;
+                case ORGANIZER:
+                    registerIntent = new Intent(this, OrganizerRegisterActivity.class);
+                    startActivity(registerIntent);
+                    break;
+                case ADMINISTRATOR:
+                    error = Toast.makeText(this, "No registration needed. Proceed to login.", Toast.LENGTH_SHORT);
+                    error.show();
+                    break;
+                default: // If the user has not selected a user type yet
+                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
+                    error.show();
+            }
         });
     }
 
