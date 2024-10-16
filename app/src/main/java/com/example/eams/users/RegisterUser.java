@@ -199,7 +199,7 @@ public abstract class RegisterUser extends User {
      * @return true if phoneNumber is valid, false otherwise
      */
     public boolean phoneNumberIsValid() {
-        Pattern pattern = Pattern.compile("^[0-9]\\{3}-?[0-9]\\{3}-?[0-9]\\{4}$");
+        Pattern pattern = Pattern.compile("^[0-9]{3}-?[0-9]{3}-?[0-9]{4}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.find();
     }
@@ -224,7 +224,7 @@ public abstract class RegisterUser extends User {
         }
 
         // make sure street is valid
-        Pattern streetPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+$");
+        Pattern streetPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+\\s[a-zA-Z.]+\\.?$");
         Matcher streetMatcher = streetPattern.matcher(postalCode);
         if (!streetMatcher.find()) {
             return false;

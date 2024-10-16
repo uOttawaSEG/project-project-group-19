@@ -74,7 +74,7 @@ public abstract class User {
      * @return true if email is valid, false otherwise
      */
     public boolean emailIsValid() {
-        Pattern pattern = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        Pattern pattern = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[a-zA-Z]{2,4}$");
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
     }
@@ -82,12 +82,12 @@ public abstract class User {
     /**
      * Validates the password: <br>
      * password must have 1 lowercase letter,
-     * 1 uppercase letter, 1 number, one special character, min length of 8 characters
+     * 1 uppercase letter, 1 number, one special character, min length of 6 characters
      *
      * @return true if password is valid, false otherwise
      */
     public boolean passwordIsValid() {
-        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{6,}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.find();
     }
