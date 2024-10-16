@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * RegisterUser extends User. It is extended by Organizer and Attendee.
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi

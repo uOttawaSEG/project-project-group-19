@@ -38,7 +38,7 @@ import java.util.Iterator;
  * OrganizerRegisterActivity, OrganizerWelcomeActivity, and AdministratorWelcomeActivity
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi

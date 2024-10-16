@@ -19,7 +19,7 @@ import com.example.eams.attendee.AttendeeWelcomeActivity;
  * Bi-directional connection to MainActivity (home/login page)
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi

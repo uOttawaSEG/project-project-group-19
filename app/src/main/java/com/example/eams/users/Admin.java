@@ -4,7 +4,7 @@ package com.example.eams.users;
  * Admin refers to an Administrator user, with a provided login (email & password)
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi

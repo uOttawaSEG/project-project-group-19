@@ -5,7 +5,7 @@ package com.example.eams.users;
  * register in OrganizerRegisterActivity.
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi

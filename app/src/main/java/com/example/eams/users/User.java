@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * It is extended by RegisterUser (and Organizer and Attendee) and Admin.
  *
  * @author Alex Ajersch
- * @author Brooklyn Mcclelland
+ * @author Brooklyn McClelland
  * @author Moïse Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi
