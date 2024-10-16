@@ -1,4 +1,19 @@
 <resources>
-    <string name="app_name">eams</string>
+    <string name="app_name">EAMS</string>
     <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="organizer_registration">Organizer Registration</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="street">Street</string>
+    <string name="city">City</string>
+    <string name="province">Province</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="organization">Organization</string>
+    <string name="confirm">Confirm</string>
+    <string name="attendee_registration">Attendee Registration</string>
 </resources>

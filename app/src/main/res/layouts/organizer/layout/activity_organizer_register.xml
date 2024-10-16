@@ -2,22 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background = "@drawable/gradient_bg"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/rectangle_bg"
+        android:id="@+id/linear_organizer_register_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="60dp"
-        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rectangle_bg"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -26,18 +26,18 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/tvSignIn"
+            android:id="@+id/tv_organizer_register_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Organizer Registration"
+            android:text="@string/organizer_registration"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="38sp" />
 
         <EditText
-            android:id="@+id/userFirstName"
+            android:id="@+id/et_organizer_register_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -46,11 +46,11 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="First Name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/userLastName"
+            android:id="@+id/et_organizer_register_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -59,47 +59,50 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Last Name"
-            android:inputType="textPersonName" /><EditText
-        android:id="@+id/userPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="2dp"
-        android:ems="10"
-        android:fontFamily="@font/roboto_light"
-        android:hint="Phone Number"
-        android:inputType="number" />
+            android:hint="@string/last_name"
+            android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/et_organizer_register_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Email"
+            android:hint="@string/phone_number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_organizer_register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="2dp"
+            android:ems="10"
+            android:fontFamily="@font/roboto_light"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/userPassword"
+            android:id="@+id/et_organizer_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
+
         <EditText
-            android:id="@+id/userStreetName"
+            android:id="@+id/et_organizer_register_street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -108,11 +111,11 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Street Name"
+            android:hint="@string/street"
             android:inputType="textPostalAddress" />
 
         <EditText
-            android:id="@+id/userCity"
+            android:id="@+id/et_organizer_register_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -121,11 +124,11 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="City"
+            android:hint="@string/city"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/userProvince"
+            android:id="@+id/et_organizer_register_province"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -134,11 +137,11 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Province"
+            android:hint="@string/province"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/userPostalCode"
+            android:id="@+id/et_organizer_register_postal_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -147,11 +150,11 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Postal Code"
+            android:hint="@string/postal_code"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/userOrganization"
+            android:id="@+id/et_organizer_register_organization"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -160,20 +163,19 @@
             android:layout_marginBottom="2dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Organization Name"
+            android:hint="@string/organization"
             android:inputType="text" />
 
         <Button
-            android:id="@+id/confirm_button"
+            android:id="@+id/btn_organizer_register_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="40dp"
-            android:text="Confirm"
-            android:background = "#1D6BB8"
-            />
+            android:layout_marginBottom="10dp"
+            android:background="#1D6BB8"
+            android:text="@string/confirm" />
 
     </LinearLayout>
 

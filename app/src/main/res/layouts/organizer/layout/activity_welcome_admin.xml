@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/ivAppLogo"
+        android:id="@+id/iv_main_app_logo"
         android:layout_width="match_parent"
         android:layout_height="279dp"
         android:layout_marginTop="10dp"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteY="3dp" />
 
     <LinearLayout
-        android:id="@+id/rectangle_bg"
+        android:id="@+id/linear_main_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"

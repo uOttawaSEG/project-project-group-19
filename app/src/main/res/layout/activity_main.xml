@@ -2,30 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background = "@drawable/gradient_bg"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/ivAppLogo"
+        android:id="@+id/iv_main_app_logo"
         android:layout_width="match_parent"
         android:layout_height="279dp"
+        android:importantForAccessibility="no"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_logo"
         tools:layout_editor_absoluteX="-8dp" />
 
     <LinearLayout
-        android:id="@+id/rectangle_bg"
+        android:id="@+id/linear_main_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="60dp"
-        android:orientation="vertical"
         android:background="@drawable/rectangle_bg"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -34,7 +35,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/tvSignIn"
+            android:id="@+id/tv_main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -45,62 +46,61 @@
             android:textSize="38sp" />
 
         <Spinner
-            android:id="@+id/spinnerUserSelect"
+            android:id="@+id/spinner_main_user_select"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop = "10dp"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@font/roboto_light"/>
+            android:fontFamily="@font/roboto_light" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/et_main_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/et_main_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
             android:ems="10"
             android:fontFamily="@font/roboto_light"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btn_main_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="40dp"
-            android:text="Login"
-            android:background = "#1D6BB8"
-            />
+            android:layout_marginBottom="10dp"
+            android:background="#1D6BB8"
+            android:text="@string/login" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btn_main_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginBottom="40dp"
             android:layout_marginRight="40dp"
-            android:text="Register"
-            android:background="@android:color/transparent"/>
+            android:layout_marginBottom="40dp"
+            android:background="@android:color/transparent"
+            android:text="@string/register" />
 
     </LinearLayout>
 
