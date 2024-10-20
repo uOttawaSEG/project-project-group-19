@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.eams.admin.AdministratorWelcomeActivity;
 import com.example.eams.attendee.AttendeeRegisterActivity;
 import com.example.eams.attendee.AttendeeWelcomeActivity;
 import com.example.eams.organizer.OrganizerRegisterActivity;

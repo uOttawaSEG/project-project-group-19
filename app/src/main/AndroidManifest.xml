@@ -13,13 +13,16 @@
         android:theme="@style/Theme.Eams"
         tools:targetApi="31">
         <activity
+            android:name=".admin.AdministratorInboxActivity"
+            android:exported="false" />
+        <activity
             android:name=".attendee.AttendeeWelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".organizer.OrganizerWelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".AdministratorWelcomeActivity"
+            android:name=".admin.AdministratorWelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".organizer.OrganizerRegisterActivity"

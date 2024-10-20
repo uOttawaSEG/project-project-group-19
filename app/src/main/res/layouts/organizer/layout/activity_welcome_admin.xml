@@ -24,7 +24,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical"
         android:background="@drawable/rectangle_bg"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,20 +59,29 @@
         <ImageView
             android:id="@+id/welcomeImage"
             android:layout_width="match_parent"
-            android:layout_height="198dp"
+            android:layout_height="175dp"
             android:layout_marginTop="-10dp"
             app:srcCompat="@drawable/penguin_waving"
             tools:layout_editor_absoluteX="-8dp"
             tools:layout_editor_absoluteY="3dp" />
 
         <Button
+            android:id="@+id/viewInboxButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="#1D6BB8"
+            android:text="View Inbox" />
+
+        <Button
             android:id="@+id/logoffButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="2dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="15dp"
             android:background="#1D6BB8"
             android:text="Log off" />
 

@@ -1,4 +1,4 @@
-package com.example.eams;
+package com.example.eams.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.eams.organizer.OrganizerWelcomeActivity;
+import com.example.eams.MainActivity;
+import com.example.eams.R;
+
 
 /**
  * AdministratorWelcomeActivity welcomes the Admin user with text
@@ -41,6 +43,14 @@ public class AdministratorWelcomeActivity extends AppCompatActivity {
 
         logoffButton.setOnClickListener(v -> {
             Intent intent = new Intent(AdministratorWelcomeActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        // View Inbox button sends Admin user to inbox page (admin_inbox)
+        View viewInboxButton = findViewById(R.id.viewInboxButton);
+
+        viewInboxButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AdministratorWelcomeActivity.this, AdministratorInboxActivity.class);
             startActivity(intent);
         });
 
