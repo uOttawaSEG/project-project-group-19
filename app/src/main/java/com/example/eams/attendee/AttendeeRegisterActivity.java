@@ -90,7 +90,7 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Create new Organizer instance for field validation
+            // Create new Attendee instance for field validation
             Attendee attendee = new Attendee(
                     inEmail,
                     inPassword,
@@ -141,7 +141,7 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
             }
 
 
-            // Add new Organizer to the database
+            // Add new Attendee to the database
             registerAttendee(attendee);
 
             // Return to MainActivity
@@ -154,13 +154,13 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
 
     private void registerAttendee(Attendee attendee) {
         // Get the reference to the correct child node
-        DatabaseReference organizersDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees");
+        DatabaseReference attendeeDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees");
 
         // Generate unique key for new entry
-        String key = organizersDatabaseReference.push().getKey();
+        String key = attendeeDatabaseReference.push().getKey();
 
         // Add the user to the database
-        organizersDatabaseReference.child(key).setValue(attendee);
+        attendeeDatabaseReference.child(key).setValue(attendee);
     }
 
 
