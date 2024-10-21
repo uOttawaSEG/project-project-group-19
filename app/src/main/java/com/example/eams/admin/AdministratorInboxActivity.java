@@ -38,21 +38,12 @@ public class AdministratorInboxActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // Initialize RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView); // Make sure this ID matches your XML
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Organizer> organizers = new ArrayList<>();
-        OrganizerAdapter organizerAdapter = new OrganizerAdapter(organizers);
-        recyclerView.setAdapter(organizerAdapter);
-
-        retrieveRegistrationRequests();
+        retrieveRegistrationRequests(); // calls this method to populate the RecyclerViewer with data
     }
 
     private void retrieveRegistrationRequests() {
         // Get the reference to the correct child node
-        // TODO: generalize to user rather than specific cases for organizer and attendee
+        // TODO: add attendee case, or generalize to user rather than specific cases for organizer and attendee
         DatabaseReference organizersDatabaseReference = FirebaseDatabase.getInstance().getReference("users/organizers");
         DatabaseReference attendeeDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees");
 
@@ -60,22 +51,35 @@ public class AdministratorInboxActivity extends AppCompatActivity {
         organizersDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Organizer> organizers = new ArrayList<>();
                 for (DataSnapshot organizerSnapshot : dataSnapshot.getChildren()) {
                     // create a new organizer object from the database, we will display this information in the inbox
                     Organizer organizer = organizerSnapshot.getValue(Organizer.class);
                     if (organizer != null) {
-                        // TODO: Add the organizer content to activity_registration_request,
-                        System.out.println(organizer);
+                        organizers.add(organizer);
+                        // TODO: only add the organizer content if it is not yet approved,
+                        //  maybe will require adding an "approved" field to user in database
+                        //  and checking whether it is true or false
                     }
                 }
+                setUpRecyclerView(organizers);
+                // TODO: figure out how to add all of the users, not just the first one
+                //  (maybe has to do with clearing the list at some point?)
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle possible errors:
                 System.err.println("Error: " + databaseError.getMessage());
             }
         });
+    }
+
+    // sets up RecyclerView, and also sets the adapter
+    private void setUpRecyclerView(List<Organizer> organizers) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        OrganizerAdapter adapter = new OrganizerAdapter(organizers);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     // static OrganizerAdapter class
@@ -98,7 +102,7 @@ public class AdministratorInboxActivity extends AppCompatActivity {
 
         // displays data at a specified position, binding Organizer attributes to the TextViews defined in activity_registration_request.xml
         @Override
-        public void onBindViewHolder(@NonNull OrganizerAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Organizer organizer = organizers.get(position);
             holder.textViewFirstName.setText(organizer.getFirstName());
             holder.textViewLastName.setText(organizer.getLastName());
@@ -116,6 +120,7 @@ public class AdministratorInboxActivity extends AppCompatActivity {
             return organizers.size();
         }
 
+        // static class that updates the textViews for registration requests
         public static class ViewHolder extends RecyclerView.ViewHolder {
             TextView textViewFirstName, textViewLastName, textViewPhoneNumber, textViewEmail,
                     textViewStreet, textViewCity, textViewProvince, textViewPostalCode, textViewOrganization;
