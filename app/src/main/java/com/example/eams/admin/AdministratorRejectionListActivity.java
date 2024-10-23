@@ -15,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.eams.MainActivity;
 import com.example.eams.R;
 import com.example.eams.attendee.AttendeeWelcomeActivity;
+import com.example.eams.databinding.ActivityAdministratorRejectedListBinding;
+import com.example.eams.databinding.ActivityMainBinding;
 import com.example.eams.users.RegisterUser;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
  * @author Rachel Qi
  * @author Steven Wu
  */
-public class AdministratorRejectedListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class AdministratorRejectionListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +47,25 @@ public class AdministratorRejectedListActivity extends AppCompatActivity impleme
             return insets;
         });
 
+        ActivityAdministratorRejectedListBinding binding = ActivityAdministratorRejectedListBinding.inflate(getLayoutInflater());
         ArrayList<RegisterUser> rejectedUserList = new ArrayList<RegisterUser>();
+        ListView rejectedListView = (ListView) findViewById(R.id.lv_rejected_list);
+        RejectionListAdapter listAdapter = new RejectionListAdapter(this,rejectedUserList);
 
-        ListView rejectedList = (ListView) findViewById(R.id.lv_rejected_list);
-        rejectedList.setOnItemClickListener(this);
+        binding.lvRejectedList.setAdapter(listAdapter);
+        binding.lvRejectedList.setClickable(true);
 
-        logoffButton.setOnClickListener(new View.OnClickListener() {
+        binding.lvRejectedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AttendeeWelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                RegisterUser clickedUser = (RegisterUser) binding.lvRejectedList.getItemAtPosition(i);
+
+                Intent intent = new Intent(AdministratorRejectionListActivity.this, AdministratorRegistrationResponseActivity.class);
+                intent.putExtra("user",clickedUser);
             }
         });
-    }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-
-        RegisterUser user = rejectedList.getItemAtPosition(pos);
-        Intent intent = new Intent(AdministratorRejectedListActivity.this, AdministratorRegistrationResponseActivity.class);
-        intent.putExtra("position", pos);
     }
 }

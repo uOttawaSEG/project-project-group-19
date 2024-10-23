@@ -1,5 +1,8 @@
 package com.example.eams.users;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +17,7 @@ import java.util.regex.Pattern;
  * @author Rachel Qi
  * @author Steven Wu
  */
-public abstract class RegisterUser extends User {
+public abstract class RegisterUser extends User implements Parcelable {
 
     // Instance variables
     private String firstName;
@@ -105,6 +108,12 @@ public abstract class RegisterUser extends User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    /**
+     * Gets the full name of the user.
+     * @return combined first and last name of the user.
+     */
+    public String getFullName(){ return firstName + " " + lastName; }
 
     /**
      * Gets the phone number of the user.
@@ -251,5 +260,30 @@ public abstract class RegisterUser extends User {
         Pattern pattern = Pattern.compile("^[A-Za-z]+$");
         Matcher matcher = pattern.matcher(s);
         return matcher.find();
+    }
+
+    // Implementing Parcelable
+
+//    public RegisterUser(Parcel in) {
+//        eid = in.readInt();
+//        name = in.readString();
+//        email = in.readString();
+//        mobile = in.readString();
+//    }
+
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags){
+        out.writeString(firstName);
+        out.writeString(lastName);
+        out.writeString(phoneNumber);
+        out.writeString(street);
+        out.writeString(city);
+        out.writeString(province);
+        out.writeString(postalCode);
     }
 }

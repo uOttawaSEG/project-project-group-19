@@ -7,6 +7,11 @@ android {
     namespace = "com.example.eams"
     compileSdk = 34
 
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.eams"
         minSdk = 30
