@@ -1,7 +1,6 @@
 package com.example.eams.admin;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,12 +13,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.eams.R;
+import com.example.eams.admin.request.AttendeePendingRequestListFragment;
+import com.example.eams.admin.request.AttendeeRejectedRequestListFragment;
+import com.example.eams.admin.request.OrganizerPendingRequestListFragment;
+import com.example.eams.admin.request.OrganizerRejectedRequestListFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AdministratorInboxActivity2 extends AppCompatActivity /*implements RequestAdapterCreator<Attendee, AttendeeRequestViewHolder> */{
+/**
+ * An activity for the Administrator's inbox
+ */
+public class AdministratorInboxActivity extends AppCompatActivity {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef = database.getReference("users");
 
@@ -27,7 +33,7 @@ public class AdministratorInboxActivity2 extends AppCompatActivity /*implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_administrator_inbox_2);
+        setContentView(R.layout.activity_administrator_inbox);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -36,6 +42,8 @@ public class AdministratorInboxActivity2 extends AppCompatActivity /*implements 
 
         TabLayout tabLayout = findViewById(R.id.admin_inbox_tab_layout);
         ViewPager2 viewPager = findViewById(R.id.admin_inbox_view_pager);
+
+        /* Adapter decides which fragments are used in each tab */
         viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
@@ -60,44 +68,23 @@ public class AdministratorInboxActivity2 extends AppCompatActivity /*implements 
             }
         });
 
+        /* The TabLayoutMediator handles the naming of the tabs
+        * and interactions between the ViewPager and TabLayout */
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Pending Att");
+                    tab.setText("Pending Attendee");
                     break;
                 case 1:
-                    tab.setText("Rejected Att");
+                    tab.setText("Rejected Attendee");
                     break;
                 case 2:
-                    tab.setText("Pending Org");
+                    tab.setText("Pending Organizer");
                     break;
                 case 3:
-                    tab.setText("Rejected Org");
+                    tab.setText("Rejected Organizer");
                     break;
             }
         }).attach();
-
-
-
-//        attachRecyclerViewAdapter();
     }
-
-//    private void attachRecyclerViewAdapter() {
-//        RecyclerView rv = findViewById(R.id.rv_attendee_pending_requests);
-//        rv.setLayoutManager(new LinearLayoutManager((this)));
-//        rv.setAdapter(getRequestAdapter(userTypeRef, R.layout.recyclerview_attendee_rejected_request));
-//    }
-//
-//    @Override
-//    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(DatabaseReference userTypeRef) {
-//        return new FirebaseRecyclerOptions.Builder<Attendee>()
-//                .setLifecycleOwner(this)
-//                .setQuery(userTypeRef.child("rejected"), Attendee.class)
-//                .build();
-//    }
-//
-//    @Override
-//    public AttendeeRequestViewHolder initViewHolder(View view) {
-//        return new AttendeeRequestViewHolder(view);
-//    }
 }

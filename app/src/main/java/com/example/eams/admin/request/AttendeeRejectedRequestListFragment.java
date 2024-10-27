@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,15 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eams.R;
-import com.example.eams.users.Organizer;
+import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 
-public class OrganizerRejectedRequestListFragment extends Fragment implements RequestAdapterCreator<Organizer, OrganizerRequestViewHolder> {
+/**
+ * A Fragment for Attendee rejected request tab
+ */
+public class AttendeeRejectedRequestListFragment extends Fragment implements RequestAdapterCreator<Attendee, AttendeeRequestViewHolder> {
     private final String requestType = "rejected";
     private DatabaseReference userTypeReference;
 
-    public OrganizerRejectedRequestListFragment(DatabaseReference userTypeRef) {
+    /**
+     * Constructor for AttendeeRejectedRequestListFragment
+     * @param userTypeRef  a reference to the node representing the user's type.
+     *                     Should be "users/attendees" or "users/organizers"
+     */
+    public AttendeeRejectedRequestListFragment(DatabaseReference userTypeRef) {
         this.userTypeReference = userTypeRef;
     }
 
@@ -37,24 +45,28 @@ public class OrganizerRejectedRequestListFragment extends Fragment implements Re
     }
 
     @Override
-    public FirebaseRecyclerOptions<Organizer> getFirebaseRecyclerOptions(DatabaseReference userTypeRef) {
-        return new FirebaseRecyclerOptions.Builder<Organizer>()
+    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(DatabaseReference userTypeRef) {
+        return new FirebaseRecyclerOptions.Builder<Attendee>()
                 .setLifecycleOwner(this)
-                .setQuery(userTypeRef.child(requestType), Organizer.class)
+                .setQuery(userTypeRef.child(requestType), Attendee.class)
                 .build();
     }
 
     @Override
-    public OrganizerRequestViewHolder initViewHolder(View view) {
-        return new OrganizerRequestViewHolder(view);
+    public AttendeeRequestViewHolder initViewHolder(View view) {
+        return new AttendeeRequestViewHolder(view);
     }
 
+    /**
+     * Attaches the RecyclerViewAdapter to the view's RecyclerView
+     * @param view the View containing the RecyclerView
+     */
     private void attachRecyclerViewAdapter(View view) {
         RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(getRequestAdapter(
                 userTypeReference,
                 requestType,
-                R.layout.recyclerview_organizer_rejected_request));
+                R.layout.recyclerview_attendee_rejected_request));
     }
 }

@@ -88,88 +88,82 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // When the user presses the loginButton
         loginButton.setOnClickListener(v -> {
+            // Path for database
+            String pathStr;
+            // Intent for changing to a welcome screen
+            Intent loginIntent;
+            // Error message
+            Toast error;
 
-            Intent i = new Intent(this, AdministratorWelcomeActivity.class);
-            startActivity(i);
-            return;
+            // Determine user type
+            switch (userType) {
+                case ATTENDEE:
+                    loginIntent = new Intent(this, AttendeeWelcomeActivity.class);
+                    pathStr = "users/attendees";
+                    break;
+                case ORGANIZER:
+                    loginIntent = new Intent(this, OrganizerWelcomeActivity.class);
+                    pathStr = "users/organizers";
+                    break;
+                case ADMINISTRATOR:
+                    loginIntent = new Intent(this, AdministratorWelcomeActivity.class);
+                    pathStr = "users/administrators";
+                    break;
+                default: // If no user type is selected
+                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
+                    error.show();
+                    // Exit lambda expression or onClick()
+                    return;
+            }
 
-//
-//            // Path for database
-//            String pathStr;
-//            // Intent for changing to a welcome screen
-//            Intent loginIntent;
-//            // Error message
-//            Toast error;
-//
-//            // Determine user type
-//            switch (userType) {
-//                case ATTENDEE:
-//                    loginIntent = new Intent(this, AttendeeWelcomeActivity.class);
-//                    pathStr = "users/attendees";
-//                    break;
-//                case ORGANIZER:
-//                    loginIntent = new Intent(this, OrganizerWelcomeActivity.class);
-//                    pathStr = "users/organizers";
-//                    break;
-//                case ADMINISTRATOR:
-//                    loginIntent = new Intent(this, AdministratorWelcomeActivity.class);
-//                    pathStr = "users/administrators";
-//                    break;
-//                default: // If no user type is selected
-//                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
-//                    error.show();
-//                    // Exit lambda expression or onClick()
-//                    return;
-//            }
-//
-//            // Retrieve user input
-//            String inEmail = etEmail.getText().toString().trim();
-//            String inPassword = etPassword.getText().toString().trim();
-//
-//            // Get the reference to the correct child node
-//            DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference(pathStr);
-//
-//            // Add listener for fetching data
-//            usersDatabaseReference.get().addOnCompleteListener(task -> {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                } else {
-//                    // For iterating through all child objects
-//                    Iterator<DataSnapshot> iterator = task.getResult().getChildren().iterator();
-//                    boolean isValid = false;
-//
-//                    // While theres more elements left and still haven't found a match
-//                    while (iterator.hasNext() && !isValid) {
-//                        // Fetched user
-//                        User user = null;
-//
-//                        // Get object of correct type
-//                        switch (userType) {
-//                            case ATTENDEE:
-//                                user = iterator.next().getValue(Attendee.class);
-//                                break;
-//                            case ORGANIZER:
-//                                user = iterator.next().getValue(Organizer.class);
-//                                break;
-//                            case ADMINISTRATOR:
-//                                user = iterator.next().getValue(Admin.class);
-//                        }
-//
-//                        // If user found
-//                        if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
-//                            isValid = true;
-//                            startActivity(loginIntent);
-//                        }
-//                    }
-//
-//                    // No user found message
-//                    if (!isValid) {
-//                        Toast toast = Toast.makeText(this, "User not found, please try again.", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                    }
-//
-//                }
-//            });
+            // Retrieve user input
+            String inEmail = etEmail.getText().toString().trim();
+            String inPassword = etPassword.getText().toString().trim();
+
+            // Get the reference to the correct child node
+            DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference(pathStr);
+
+            // Add listener for fetching data
+            usersDatabaseReference.get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    // For iterating through all child objects
+                    Iterator<DataSnapshot> iterator = task.getResult().getChildren().iterator();
+                    boolean isValid = false;
+
+                    // While theres more elements left and still haven't found a match
+                    while (iterator.hasNext() && !isValid) {
+                        // Fetched user
+                        User user = null;
+
+                        // Get object of correct type
+                        switch (userType) {
+                            case ATTENDEE:
+                                user = iterator.next().getValue(Attendee.class);
+                                break;
+                            case ORGANIZER:
+                                user = iterator.next().getValue(Organizer.class);
+                                break;
+                            case ADMINISTRATOR:
+                                user = iterator.next().getValue(Admin.class);
+                        }
+
+                        // If user found
+                        if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
+                            isValid = true;
+                            startActivity(loginIntent);
+                        }
+                    }
+
+                    // No user found message
+                    if (!isValid) {
+                        Toast toast = Toast.makeText(this, "User not found, please try again.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }
+            });
         });
 
         // When the user presses the registerButton

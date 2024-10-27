@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.view.View;
 import android.widget.TextView;
@@ -9,9 +9,16 @@ import com.example.eams.R;
 import com.example.eams.users.Organizer;
 import com.example.eams.users.RegisterUser;
 
+/**
+ * A ViewHolder for an individual Organizer request
+ */
 public class OrganizerRequestViewHolder extends RequestViewHolder {
     private TextView tvOrganization;
 
+    /**
+     * Constructor for OrganizerRequestViewholder
+     * @param itemView View to initialize the ViewHolder
+     */
     public OrganizerRequestViewHolder(@NonNull View itemView) {
         super(itemView);
         setTvFirstName(R.id.organizer_rejected_request_first_name);
@@ -32,10 +39,18 @@ public class OrganizerRequestViewHolder extends RequestViewHolder {
         setOrganization(((Organizer) user).getOrganization());
     }
 
+    /**
+     * Finds the Organization TextView
+     * @param id the id of the element
+     */
     public void setTvOrganization(int id) {
         this.tvOrganization = itemView.findViewById(id);
     }
 
+    /**
+     * Sets the content of the Organization TextView
+     * @param organization the content to be set
+     */
     public void setOrganization(String organization) {
         if (tvOrganization == null) {
             return;

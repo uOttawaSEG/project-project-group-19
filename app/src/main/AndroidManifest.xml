@@ -16,7 +16,7 @@
             android:name=".admin.AdministratorInboxActivity"
             android:exported="false" />
         <activity
-            android:name=".admin.AdministratorInboxActivity2"
+            android:name=".admin.AdministratorInboxActivity"
             android:exported="false" />
         <activity
             android:name=".attendee.AttendeeWelcomeActivity"

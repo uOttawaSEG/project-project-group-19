@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.view.View;
 
@@ -9,6 +9,10 @@ import com.example.eams.R;
 public class AttendeeRejectableRequestViewHolder extends AttendeeRequestViewHolder implements RejectableRequest {
     private RejectableRequest rejecter;
 
+    /**
+     * Constructor for AttendeeRejectableRequestViewholder
+     * @param itemView View to initialize the ViewHolder
+     */
     public AttendeeRejectableRequestViewHolder(@NonNull View itemView) {
         super(itemView);
         rejecter = new RequestRejecter(itemView);

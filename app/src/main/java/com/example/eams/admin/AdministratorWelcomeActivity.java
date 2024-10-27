@@ -50,7 +50,7 @@ public class AdministratorWelcomeActivity extends AppCompatActivity {
         View viewInboxButton = findViewById(R.id.viewInboxButton);
 
         viewInboxButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AdministratorWelcomeActivity.this, AdministratorInboxActivity2.class);
+            Intent intent = new Intent(AdministratorWelcomeActivity.this, AdministratorInboxActivity.class);
             startActivity(intent);
         });
 

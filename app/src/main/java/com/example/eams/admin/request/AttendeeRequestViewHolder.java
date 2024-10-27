@@ -1,13 +1,19 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.example.eams.R;
-import com.example.eams.users.Attendee;
 
+/**
+ * A ViewHolder for an individual Attendee request
+ */
 public class AttendeeRequestViewHolder extends RequestViewHolder {
+    /**
+     * Constructor for AttendeeRequestViewholder
+     * @param itemView View to initialize the ViewHolder
+     */
     public AttendeeRequestViewHolder(@NonNull View itemView) {
         super(itemView);
         setTvFirstName(R.id.attendee_rejected_request_first_name);

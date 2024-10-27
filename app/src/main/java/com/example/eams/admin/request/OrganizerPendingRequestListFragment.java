@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,10 +16,18 @@ import com.example.eams.users.Organizer;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 
+/**
+ * A Fragment for the Organizer pending request tab
+ */
 public class OrganizerPendingRequestListFragment extends Fragment implements RequestAdapterCreator<Organizer, OrganizerRejectableRequestViewHolder> {
     private final String requestType = "pending";
     private DatabaseReference userTypeReference;
 
+    /**
+     * Constructor for OrganizerPendingRequestListFragment
+     * @param userTypeRef  a reference to the node representing the user's type.
+     *                     Should be "users/attendees" or "users/organizers"
+     */
     public OrganizerPendingRequestListFragment(DatabaseReference userTypeRef) {
         this.userTypeReference = userTypeRef;
     }
@@ -49,6 +57,10 @@ public class OrganizerPendingRequestListFragment extends Fragment implements Req
         return new OrganizerRejectableRequestViewHolder(view);
     }
 
+    /**
+     * Attaches the RecyclerViewAdapter to the view's RecyclerView
+     * @param view the View containing the RecyclerView
+     */
     private void attachRecyclerViewAdapter(View view) {
         RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));

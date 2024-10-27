@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,22 +9,37 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eams.R;
-import com.example.eams.users.Attendee;
 import com.example.eams.users.RegisterUser;
-import com.example.eams.users.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 
-public interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHolder> extends LifecycleOwner {
+/**
+ * An interface for fragments to implement so that they can create a RecyclerView.Adapter for
+ * their corresponding RecyclerView
+ * @param <T> the type of the user (Attendee, or Organizer)
+ * @param <VH> the type of ViewHolder
+ */
+interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHolder> extends LifecycleOwner {
+    /**
+     * Gets a FirebaseRecyclerAdapter to populate a RecyclerView
+     * with the data in the given DatabaseReference
+     * @param userTypeRef a reference to the node representing the user's type.
+     *                    Should be "users/attendees" or "users/organizers"
+     * @param requestType the type of request (pending or rejected)
+     * @param layout the xml layout that will hold the request's data
+     * @return a RecyclerView.Adapter for the specified type of request
+     */
     default RecyclerView.Adapter<VH> getRequestAdapter(
             DatabaseReference userTypeRef,
             String requestType,
             int layout
     ) {
+        /* Get a reference to either pending or rejected requests */
         DatabaseReference pendingUserRef = userTypeRef.child(requestType);
 
+        /* Create a FireBaseRecyclerAdapter which automatically handles getting data from the
+        * database to populate the RecyclerView */
         return new FirebaseRecyclerAdapter<T, VH>(getFirebaseRecyclerOptions(userTypeRef)) {
 
             @NonNull
@@ -40,6 +55,8 @@ public interface RequestAdapterCreator<T extends RegisterUser, VH extends Reques
             protected void onBindViewHolder(@NonNull VH holder, int position, @NonNull T model) {
                 DatabaseReference currentUserRef = getRef(position);
 
+                /* When the "Accept" button is clicked, add the user to the "approved" section
+                * of the database, and only once moved the request is deleted */
                 holder.setAcceptOnClickListener(v -> {
                     userTypeRef.child("approved")
                             .push()
@@ -53,6 +70,9 @@ public interface RequestAdapterCreator<T extends RegisterUser, VH extends Reques
                             });
                 });
 
+                /* If the request can be rejected, then when the "Reject" button is clicked, add the
+                * user to the "rejected" section of the database, and only once moved the request is
+                * deleted */
                 if (holder instanceof RejectableRequest) {
                     ((RejectableRequest) holder).setRejectOnClickListener(v -> {
                         userTypeRef.child("rejected")
@@ -67,12 +87,25 @@ public interface RequestAdapterCreator<T extends RegisterUser, VH extends Reques
                     });
                 }
 
+                /* Fill the view with the user's data */
                 holder.bind(model);
             }
         };
     }
 
+    /**
+     * Creates an instance of FirebaseRecyclerOptions that are used to initialize the
+     * FirebaseRecyclerAdapter
+     * @param userTypeRef a reference to the node representing the user's type.
+     *                    Should be "users/attendees" or "users/organizers"
+     * @return the correct FirebaseRecyclerOptions for the given types
+     */
     FirebaseRecyclerOptions<T> getFirebaseRecyclerOptions(DatabaseReference userTypeRef);
 
+    /**
+     * Factory method to create an instance of the ViewHolder
+     * @param view a View used to initialize the ViewHolder
+     * @return an instance of the ViewHolder
+     */
     VH initViewHolder(View view);
 }

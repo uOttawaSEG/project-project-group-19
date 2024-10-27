@@ -1,4 +1,4 @@
-package com.example.eams.admin;
+package com.example.eams.admin.request;
 
 import android.view.View;
 
@@ -6,9 +6,16 @@ import androidx.annotation.NonNull;
 
 import com.example.eams.R;
 
+/**
+ * A ViewHolder for an individual Organizer request that can be rejected
+ */
 public class OrganizerRejectableRequestViewHolder extends OrganizerRequestViewHolder implements RejectableRequest {
     private RejectableRequest rejecter;
 
+    /**
+     * Constructor for OrganizerRejectableRequestViewholder
+     * @param itemView View to initialize the ViewHolder
+     */
     public OrganizerRejectableRequestViewHolder(@NonNull View itemView) {
         super(itemView);
         rejecter = new RequestRejecter(itemView);
