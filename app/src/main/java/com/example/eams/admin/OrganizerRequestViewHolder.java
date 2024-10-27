@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.eams.R;
 import com.example.eams.users.Organizer;
+import com.example.eams.users.RegisterUser;
 
 public class OrganizerRequestViewHolder extends RequestViewHolder {
     private TextView tvOrganization;
@@ -25,9 +26,10 @@ public class OrganizerRequestViewHolder extends RequestViewHolder {
         setBtnAccept(R.id.organizer_rejected_request_accept);
     }
 
-    public void bind(Organizer organizer) {
-        super.bind(organizer);
-        setOrganization(organizer.getOrganization());
+    @Override
+    public void bind(@NonNull RegisterUser user) {
+        super.bind(user);
+        setOrganization(((Organizer) user).getOrganization());
     }
 
     public void setTvOrganization(int id) {

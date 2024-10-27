@@ -20,9 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 public interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHolder> extends LifecycleOwner {
     default RecyclerView.Adapter<VH> getRequestAdapter(
             DatabaseReference userTypeRef,
+            String requestType,
             int layout
     ) {
-        DatabaseReference pendingUserRef = userTypeRef.child("pending");
+        DatabaseReference pendingUserRef = userTypeRef.child(requestType);
 
         return new FirebaseRecyclerAdapter<T, VH>(getFirebaseRecyclerOptions(userTypeRef)) {
 
