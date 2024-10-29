@@ -57,10 +57,10 @@
       android:layout_gravity="bottom">
 
     <Button
-        android:id="@+id/button_admin_inbox_return_to_welcome"
+        android:id="@+id/btn_administrator_inbox_back"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Return to Welcome Page" />
+        android:text="@string/back" />
   </LinearLayout>
 
   <!--  <androidx.recyclerview.widget.RecyclerView-->

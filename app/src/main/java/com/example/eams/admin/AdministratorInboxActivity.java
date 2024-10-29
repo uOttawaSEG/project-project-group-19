@@ -1,8 +1,7 @@
 package com.example.eams.admin;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.eams.MainActivity;
 import com.example.eams.R;
 import com.example.eams.admin.request.AttendeePendingRequestListFragment;
 import com.example.eams.admin.request.AttendeeRejectedRequestListFragment;
@@ -54,6 +52,7 @@ public class AdministratorInboxActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.admin_inbox_tab_layout);
         ViewPager2 viewPager = findViewById(R.id.admin_inbox_view_pager);
+        Button backButton = findViewById(R.id.btn_administrator_inbox_back);
 
         /* Adapter decides which fragments are used in each tab */
         viewPager.setAdapter(new FragmentStateAdapter(this) {
@@ -99,12 +98,9 @@ public class AdministratorInboxActivity extends AppCompatActivity {
             }
         }).attach();
 
-        // Return to Welcome Page button returns Admin user to their welcome page (AdministratorWelcomeActivity)
-        View returnButton = findViewById(R.id.button_admin_inbox_return_to_welcome);
-
-        returnButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AdministratorInboxActivity.this, AdministratorWelcomeActivity.class);
-            startActivity(intent);
+        // Returns to Admin Welcome Page
+        backButton.setOnClickListener(v -> {
+            finish();
         });
     }
 }
