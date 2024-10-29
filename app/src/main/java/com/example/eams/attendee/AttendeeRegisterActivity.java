@@ -69,7 +69,7 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
             String inFirstName = etFirstName.getText().toString().trim();
             String inLastName = etLastName.getText().toString().trim();
             String inPhoneNumber = etPhoneNumber.getText().toString().trim();
-            String inEmail = etEmail.getText().toString().trim();
+            String inEmail = etEmail.getText().toString().trim().toLowerCase();
             String inPassword = etPassword.getText().toString().trim();
             String inStreet = etStreet.getText().toString().trim();
             String inCity = etCity.getText().toString().trim();
@@ -154,7 +154,7 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
 
     private void registerAttendee(Attendee attendee) {
         // Get the reference to the correct child node
-        DatabaseReference attendeeDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees");
+        DatabaseReference attendeeDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/pending");
 
         // Generate unique key for new entry
         String key = attendeeDatabaseReference.push().getKey();

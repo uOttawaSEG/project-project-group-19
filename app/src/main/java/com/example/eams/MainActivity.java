@@ -26,6 +26,7 @@ import com.example.eams.users.Admin;
 import com.example.eams.users.Attendee;
 import com.example.eams.users.Organizer;
 import com.example.eams.users.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     // Selected user type
     private UserType userType;
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
 
             // Retrieve user input
-            String inEmail = etEmail.getText().toString().trim();
+            String inEmail = etEmail.getText().toString().trim().toLowerCase();
             String inPassword = etPassword.getText().toString().trim();
 
             // Get the reference to the correct child node
@@ -128,40 +128,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
-                    // For iterating through all child objects
-                    Iterator<DataSnapshot> iterator = task.getResult().getChildren().iterator();
-                    boolean isValid = false;
+                    DataSnapshot dataSnapshot = task.getResult();
 
-                    // While theres more elements left and still haven't found a match
-                    while (iterator.hasNext() && !isValid) {
-                        // Fetched user
-                        User user = null;
-
-                        // Get object of correct type
-                        switch (userType) {
-                            case ATTENDEE:
-                                user = iterator.next().getValue(Attendee.class);
-                                break;
-                            case ORGANIZER:
-                                user = iterator.next().getValue(Organizer.class);
-                                break;
-                            case ADMINISTRATOR:
-                                user = iterator.next().getValue(Admin.class);
-                        }
-
-                        // If user found
-                        if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
-                            isValid = true;
-                            startActivity(loginIntent);
-                        }
+                    // Search within approved users
+                    if (userIsFound(dataSnapshot, "approved", inEmail, inPassword)) {
+                        startActivity(loginIntent);
+                        return;
                     }
 
-                    // No user found message
-                    if (!isValid) {
-                        Toast toast = Toast.makeText(this, "User not found, please try again.", Toast.LENGTH_SHORT);
-                        toast.show();
+                    // Search within rejected users
+                    if (userIsFound(dataSnapshot, "rejected", inEmail, inPassword)) {
+                        Snackbar.make(
+                                loginButton,
+                                "User Registration is rejected, please contact the Admin to resolve the issue: 999-999-9999",
+                                Snackbar.LENGTH_INDEFINITE
+                        ).show();
+                        return;
                     }
 
+                    // Search withing users waiting for approval
+                    if (userIsFound(dataSnapshot, "pending", inEmail, inPassword)) {
+                        Snackbar.make(
+                                loginButton,
+                                "User registration awaiting approval, please check back later.",
+                                Snackbar.LENGTH_INDEFINITE
+                        ).show();
+                        return;
+                    }
+
+                    // Reached if user not found
+                    Toast.makeText(this, "User not found, please try again.", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -191,6 +187,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     error.show();
             }
         });
+    }
+
+    private boolean userIsFound(DataSnapshot dataSnapshot, String userStatus, String inEmail, String inPassword) {
+        // For iterating through all child objects of users in a specific state
+        Iterator<DataSnapshot> iterator = dataSnapshot.child(userStatus).getChildren().iterator();
+
+        // While theres more elements left and still haven't found a match
+        while (iterator.hasNext()) {
+            // Fetched user
+            User user = null;
+
+            // Get object of correct type
+            switch (userType) {
+                case ATTENDEE:
+                    user = iterator.next().getValue(Attendee.class);
+                    break;
+                case ORGANIZER:
+                    user = iterator.next().getValue(Organizer.class);
+                    break;
+                case ADMINISTRATOR:
+                    user = iterator.next().getValue(Admin.class);
+            }
+
+            // If user found
+            if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
+                return true;
+            }
+        }
+
+        // Reached if user not found
+        return false;
     }
 
     /**

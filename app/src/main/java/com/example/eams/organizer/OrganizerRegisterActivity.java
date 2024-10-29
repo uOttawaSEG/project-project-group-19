@@ -68,7 +68,7 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
             String inFirstName = etFirstName.getText().toString().trim();
             String inLastName = etLastName.getText().toString().trim();
             String inPhoneNumber = etPhoneNumber.getText().toString().trim();
-            String inEmail = etEmail.getText().toString().trim();
+            String inEmail = etEmail.getText().toString().trim().toLowerCase();
             String inPassword = etPassword.getText().toString().trim();
             String inStreet = etStreet.getText().toString().trim();
             String inCity = etCity.getText().toString().trim();
@@ -152,7 +152,7 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
 
     private void registerOrganizer(Organizer organizer) {
         // Get the reference to the correct child node
-        DatabaseReference organizersDatabaseReference = FirebaseDatabase.getInstance().getReference("users/organizers");
+        DatabaseReference organizersDatabaseReference = FirebaseDatabase.getInstance().getReference("users/organizers/pending");
 
         // Generate unique key for new entry
         String key = organizersDatabaseReference.push().getKey();
