@@ -3,6 +3,7 @@ package com.example.eams.attendee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,14 +39,14 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Log off button returns Attendee user to login page (MainActivity)
-        View logoffButton = findViewById(R.id.logoffButton);
+        // Initialize refs to views
+        Button logoffButton = findViewById(R.id.logoffButton);
 
+        // Returns attendee to login page (MainActivity)
         logoffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AttendeeWelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

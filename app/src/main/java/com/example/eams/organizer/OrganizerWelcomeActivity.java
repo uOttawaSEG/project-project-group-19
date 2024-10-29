@@ -3,6 +3,7 @@ package com.example.eams.organizer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,14 +40,14 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Log off button returns Organizer user to login page (MainActivity)
-        View logoffButton = findViewById(R.id.logoffButton);
+        // Initialize refs to Views
+        Button logoffButton = findViewById(R.id.logoffButton);
 
+        // Returns organizer to login page (MainActivity)
         logoffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OrganizerWelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

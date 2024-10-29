@@ -3,6 +3,7 @@ package com.example.eams.admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,20 +39,18 @@ public class AdministratorWelcomeActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Log off button returns Admin user to login page (MainActivity)
-        View logoffButton = findViewById(R.id.logoffButton);
+        // Views
+        Button inboxButton = findViewById(R.id.viewInboxButton);
+        Button logoffButton = findViewById(R.id.logoffButton);
 
-        logoffButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AdministratorWelcomeActivity.this, MainActivity.class);
-            startActivity(intent);
+        // Go to admin inbox
+        inboxButton.setOnClickListener(v -> {
+            startActivity(new Intent(AdministratorWelcomeActivity.this, AdministratorInboxActivity.class));
         });
 
-        // View Inbox button sends Admin user to inbox page (admin_inbox)
-        View viewInboxButton = findViewById(R.id.viewInboxButton);
-
-        viewInboxButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AdministratorWelcomeActivity.this, AdministratorInboxActivity.class);
-            startActivity(intent);
+        // Returns Admin to login page
+        logoffButton.setOnClickListener(v -> {
+            finish();
         });
 
     }
