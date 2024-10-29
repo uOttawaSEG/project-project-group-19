@@ -19,6 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 
 /**
  * A Fragment for the Attendee pending request tab
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class AttendeePendingRequestListFragment extends Fragment implements RequestAdapterCreator<Attendee, AttendeeRejectableRequestViewHolder> {
     private final String requestType = "pending";

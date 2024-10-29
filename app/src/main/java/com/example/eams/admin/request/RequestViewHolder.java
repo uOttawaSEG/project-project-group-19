@@ -10,7 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eams.users.RegisterUser;
 
 /**
- * Abstract representation of a ViewHolder for a request
+ * Abstract representation of a ViewHolder for a registration request
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public abstract class RequestViewHolder extends RecyclerView.ViewHolder  {
     private TextView tvFirstName;

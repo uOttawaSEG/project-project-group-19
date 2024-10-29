@@ -18,6 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 
 /**
  * A Fragment for Attendee rejected request tab
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class AttendeeRejectedRequestListFragment extends Fragment implements RequestAdapterCreator<Attendee, AttendeeRequestViewHolder> {
     private final String requestType = "rejected";

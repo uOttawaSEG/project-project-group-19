@@ -11,6 +11,13 @@ import com.example.eams.users.RegisterUser;
 
 /**
  * A ViewHolder for an individual Organizer request
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class OrganizerRequestViewHolder extends RequestViewHolder {
     private TextView tvOrganization;

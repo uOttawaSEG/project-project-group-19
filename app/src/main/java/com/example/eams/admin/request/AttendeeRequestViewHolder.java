@@ -8,6 +8,13 @@ import com.example.eams.R;
 
 /**
  * A ViewHolder for an individual Attendee request
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class AttendeeRequestViewHolder extends RequestViewHolder {
     /**

@@ -1,6 +1,8 @@
 package com.example.eams.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.eams.MainActivity;
 import com.example.eams.R;
 import com.example.eams.admin.request.AttendeePendingRequestListFragment;
 import com.example.eams.admin.request.AttendeeRejectedRequestListFragment;
@@ -23,7 +26,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * An activity for the Administrator's inbox
+ * AdministratorInboxActivity displays the Admin user's inbox, where they can accept or
+ * reject registrations from Attendees and Organizers
+ * Bi-directional connection to AdministratorWelcomeActivity
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class AdministratorInboxActivity extends AppCompatActivity {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -86,5 +98,13 @@ public class AdministratorInboxActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
+
+        // Return to Welcome Page button returns Admin user to their welcome page (AdministratorWelcomeActivity)
+        View returnButton = findViewById(R.id.button_admin_inbox_return_to_welcome);
+
+        returnButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AdministratorInboxActivity.this, AdministratorWelcomeActivity.class);
+            startActivity(intent);
+        });
     }
 }

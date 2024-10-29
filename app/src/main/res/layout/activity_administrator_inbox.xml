@@ -46,9 +46,24 @@
   <androidx.viewpager2.widget.ViewPager2
       android:id="@+id/admin_inbox_view_pager"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="631dp" >
+  </androidx.viewpager2.widget.ViewPager2>
 
-<!--  <androidx.recyclerview.widget.RecyclerView-->
+  <LinearLayout
+      android:id="@+id/button_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:layout_gravity="bottom">
+
+    <Button
+        android:id="@+id/button_admin_inbox_return_to_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Return to Welcome Page" />
+  </LinearLayout>
+
+  <!--  <androidx.recyclerview.widget.RecyclerView-->
 <!--      android:id="@+id/rv_attendee_pending_requests"-->
 <!--      android:layout_width="409dp"-->
 <!--      android:layout_height="729dp"-->

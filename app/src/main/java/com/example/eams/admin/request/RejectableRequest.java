@@ -4,7 +4,14 @@ package com.example.eams.admin.request;
 import android.view.View;
 
 /**
- * An interface for a request that can be rejected ie a pending request
+ * An interface for a request that can be rejected; i.e., a pending request
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 interface RejectableRequest {
     /**

@@ -18,6 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 
 /**
  * A Fragment for the Organizer pending request tab
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class OrganizerPendingRequestListFragment extends Fragment implements RequestAdapterCreator<Organizer, OrganizerRejectableRequestViewHolder> {
     private final String requestType = "pending";

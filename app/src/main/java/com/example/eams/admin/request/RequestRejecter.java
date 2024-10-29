@@ -6,7 +6,14 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 
 /**
- * A concrete implementation of a RejectableRequest
+ * Concrete implementation of RejectableRequest
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 class RequestRejecter implements RejectableRequest {
     private Button btnReject;

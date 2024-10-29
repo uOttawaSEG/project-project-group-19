@@ -8,6 +8,13 @@ import com.example.eams.R;
 
 /**
  * A ViewHolder for an individual Organizer request that can be rejected
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class OrganizerRejectableRequestViewHolder extends OrganizerRequestViewHolder implements RejectableRequest {
     private RejectableRequest rejecter;

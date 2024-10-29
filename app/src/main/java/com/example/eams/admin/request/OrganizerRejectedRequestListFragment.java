@@ -18,6 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 
 /**
  * A Fragment for the Organizer rejected request tab
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
  */
 public class OrganizerRejectedRequestListFragment extends Fragment implements RequestAdapterCreator<Organizer, OrganizerRequestViewHolder> {
     private final String requestType = "rejected";
