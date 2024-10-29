@@ -150,6 +150,10 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Adds Organizer to database
+     * @param organizer
+     */
     private void registerOrganizer(Organizer organizer) {
         // Get the reference to the correct child node
         DatabaseReference organizersDatabaseReference = FirebaseDatabase.getInstance().getReference("users/organizers/pending");

@@ -152,6 +152,10 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Adds Attendee to database
+     * @param attendee
+     */
     private void registerAttendee(Attendee attendee) {
         // Get the reference to the correct child node
         DatabaseReference attendeeDatabaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/pending");
