@@ -6,7 +6,12 @@ plugins {
 android {
     namespace = "com.example.eams"
     compileSdk = 34
-
+    packaging {
+        resources {
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/LICENSE.md"  // If you have LICENSE conflicts as well
+        }
+    }
     buildFeatures{
         dataBinding = true
         viewBinding = true

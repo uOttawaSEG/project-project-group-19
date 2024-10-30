@@ -69,25 +69,24 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                     Log.e("firebase", "Failed to approve user");
                                     return;
                                 }
+                                Thread thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
                                 String emailaddress = model.getEmail();
                                 List emailToSend = new ArrayList();
                                 emailToSend.add(emailaddress);
-
-
-
-
-
-
                                 try{
-                                    GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Accepted", "Your registration request has been approved");
+                                    GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Accepted", "Your registration request has been accepted.");
                                     email.createEmailMessage();
                                     email.sendEmail();
-                                    }
-                                catch (Exception e){
-                                        Log.e("email", "Failed to send email");
                                 }
-
-
+                                catch (Exception e){
+                                    Log.e("email", "Failed to send email");
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                                thread.start();
                                 currentUserRef.removeValue();
                             });
                 });
@@ -103,17 +102,28 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                     if (error != null) {
                                         Log.e("firebase", "Failed to reject user");
                                     }
+
+                                    Thread thread = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
                                     String emailaddress = model.getEmail();
                                     List emailToSend = new ArrayList();
                                     emailToSend.add(emailaddress);
-                                    try{GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Refused", "Your registration request has been refused.");
-                                                                            email.createEmailMessage();
-                                                                            email.sendEmail();
-                                                                           }
+                                    try{
+                                        GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Refused", "Your registration request has been refused.");
+                                        email.createEmailMessage();
+                                        email.sendEmail();
+                                    }
                                     catch (Exception e){
                                         Log.e("email", "Failed to send email");
+                                            e.printStackTrace();
+                                        }
                                     }
-                                     currentUserRef.removeValue();
+                                });
+
+                                thread.start();
+
+                                currentUserRef.removeValue();
                                 });
                     });
                 }
