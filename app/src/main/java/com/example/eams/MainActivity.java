@@ -143,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     // Search within approved users
                     if (userIsFound(dataSnapshot, "approved", inEmail, inPassword)) {
-                        createNotificationChannel();
-                        showLoginSuccessNotification(loginIntent);
                         startActivity(loginIntent);
                         return;
                     }
@@ -264,38 +262,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void onNothingSelected(AdapterView<?> parent) {
     }
-    public void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "registration_success_channel";
-            CharSequence name = "Registration Success Notifications";
-            String description = "Notifications for successful registration";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel channel = new NotificationChannel(channelId, name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-    public void showLoginSuccessNotification(Intent intent) {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "registration_success_channel")
-                .setSmallIcon(R.drawable.app_logo)
-                .setContentTitle("Registration Successful")
-                .setContentText("You have been Accepted ")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-
-        notificationManager.notify(1001, builder.build());
-    }
 }
