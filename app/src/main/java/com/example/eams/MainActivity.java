@@ -52,7 +52,7 @@ import android.content.Intent;
  *
  * @author Alex Ajersch
  * @author Brooklyn McClelland
- * @author Moïse Kenge Ngoyi
+ * @author MoÃ¯se Kenge Ngoyi
  * @author Naomi Braun
  * @author Rachel Qi
  * @author Steven Wu
@@ -266,9 +266,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     public void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "login_success_channel";
-            CharSequence name = "Login Success Notifications";
-            String description = "Notifications for successful logins";
+            String channelId = "registration_success_channel";
+            CharSequence name = "Registration Success Notifications";
+            String description = "Notifications for successful registration";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel channel = new NotificationChannel(channelId, name, importance);
@@ -287,10 +287,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "login_success_channel")
-                .setSmallIcon(R.drawable.app_logo) 
-                .setContentTitle("Login Successful")
-                .setContentText("Welcome back!")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "registration_success_channel")
+                .setSmallIcon(R.drawable.app_logo)
+                .setContentTitle("Registration Successful")
+                .setContentText("You have been Accepted ")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -299,4 +299,3 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         notificationManager.notify(1001, builder.build());
     }
 }
-

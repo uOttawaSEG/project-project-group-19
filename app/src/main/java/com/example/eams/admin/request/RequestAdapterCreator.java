@@ -10,9 +10,13 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eams.users.RegisterUser;
+import com.example.eams.external.GMail;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An interface for fragments to implement so that they can create a RecyclerView.Adapter for
@@ -65,6 +69,24 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                     Log.e("firebase", "Failed to approve user");
                                     return;
                                 }
+                                String emailaddress = model.getEmail();
+                                List emailToSend = new ArrayList();
+                                emailToSend.add(emailaddress);
+
+
+
+
+
+
+                                try{
+                                    GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Accepted", "Your registration request has been approved");
+                                    email.createEmailMessage();
+                                    email.sendEmail();
+                                    }
+                                catch (Exception e){
+                                        Log.e("email", "Failed to send email");
+                                }
+
 
                                 currentUserRef.removeValue();
                             });
@@ -81,8 +103,17 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                     if (error != null) {
                                         Log.e("firebase", "Failed to reject user");
                                     }
-
-                                    currentUserRef.removeValue();
+                                    String emailaddress = model.getEmail();
+                                    List emailToSend = new ArrayList();
+                                    emailToSend.add(emailaddress);
+                                    try{GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Refused", "Your registration request has been refused.");
+                                                                            email.createEmailMessage();
+                                                                            email.sendEmail();
+                                                                           }
+                                    catch (Exception e){
+                                        Log.e("email", "Failed to send email");
+                                    }
+                                     currentUserRef.removeValue();
                                 });
                     });
                 }
