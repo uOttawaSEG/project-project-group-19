@@ -66,16 +66,24 @@
             tools:layout_editor_absoluteY="3dp" />
 
         <Button
+            android:id="@+id/createNewEventButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="#1D6BB8"
+            android:text="Create New Event" />
+
+        <Button
             android:id="@+id/logoffButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="2dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="15dp"
             android:background="#1D6BB8"
             android:text="Log off" />
-
 
     </LinearLayout>
 

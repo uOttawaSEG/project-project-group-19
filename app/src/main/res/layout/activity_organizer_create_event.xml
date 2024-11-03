@@ -7,4 +7,167 @@
     android:layout_height="match_parent"
     tools:context=".organizer.OrganizerCreateEventActivity">
 
+<LinearLayout
+    android:id="@+id/linear_attendee_register_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="30dp"
+    android:background="@drawable/rectangle_bg"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/create_new_event"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="38sp" />
+
+    <EditText
+        android:id="@+id/et_new_event_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/title"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_new_event_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/description"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/et_new_event_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/date" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/et_new_event_start_time"
+        android:layout_weight=".5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/start_time" />
+
+    <Button
+        android:id="@+id/et_new_event_end_time"
+        android:layout_weight=".5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/end_time" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_new_event_street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/street"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/et_new_event_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/city"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_new_event_province"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/province"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_new_event_postal_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="2dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/postal_code"
+        android:inputType="text" />
+
+
+    <Button
+        android:id="@+id/btn_create_new_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="#1D6BB8"
+        android:text="@string/create_new_event" />
+
+</LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

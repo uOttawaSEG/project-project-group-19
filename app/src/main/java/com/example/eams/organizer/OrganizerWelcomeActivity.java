@@ -42,6 +42,12 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
 
         // Initialize refs to Views
         Button logoffButton = findViewById(R.id.logoffButton);
+        Button createNewEventButton = findViewById(R.id.createNewEventButton);
+
+        // go to create event page
+        createNewEventButton.setOnClickListener(v -> {
+            startActivity(new Intent(OrganizerWelcomeActivity.this, OrganizerCreateEventActivity.class));
+        });
 
         // Returns organizer to login page (MainActivity)
         logoffButton.setOnClickListener(new View.OnClickListener() {
