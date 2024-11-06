@@ -10,6 +10,8 @@
 <LinearLayout
     android:id="@+id/linear_attendee_register_menu"
     android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_height="match_parent"
     android:layout_marginTop="30dp"
     android:layout_marginBottom="30dp"
@@ -63,24 +65,29 @@
     <TextView
         android:id="@+id/showDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_light"
+        android:textSize="18sp"
+        android:text="@string/date" />
 
     <Button
         android:id="@+id/et_new_event_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="2dp"
         android:ems="10"
         android:fontFamily="@font/roboto_light"
-        android:hint="@string/date" />
+        android:hint="@string/select_date" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -93,18 +100,19 @@
                 android:id="@+id/showStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="18sp"
                 android:text="@string/start_time"/>
 
             <Button
                 android:id="@+id/et_new_event_start_time"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="2dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto_light"
-                android:hint="@string/start_time" />
+                android:hint="@string/select_start_time" />
 
         </LinearLayout>
 
@@ -118,18 +126,20 @@
                 android:id="@+id/showEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/roboto_light"
+                android:textSize="18sp"
                 android:text="@string/end_time"/>
 
             <Button
                 android:id="@+id/et_new_event_end_time"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="20dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto_light"
-                android:hint="@string/end_time" />
+                android:hint="@string/select_end_time" />
 
         </LinearLayout>
 
@@ -192,7 +202,7 @@
         android:id="@+id/switch_manual_auto_accept"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="2dp"
