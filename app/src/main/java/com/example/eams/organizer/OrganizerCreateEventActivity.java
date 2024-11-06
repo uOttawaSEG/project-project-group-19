@@ -49,7 +49,6 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             return insets;
         });
 
-
         // Initialize refs to Views
         EditText etTitle = findViewById(R.id.et_new_event_title);
         EditText etDescription = findViewById(R.id.et_new_event_description);
