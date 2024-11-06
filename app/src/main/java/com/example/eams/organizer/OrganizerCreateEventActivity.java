@@ -3,6 +3,7 @@ package com.example.eams.organizer;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -79,7 +81,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
         // listener for date picker
         btnDate.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
-            DatePickerDialog dialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog dateDialog = new DatePickerDialog(this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                 // gets date that user has selected
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -93,8 +95,20 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
 
                 }
             }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)); // this is the initial date that the calendar opens with
-            dialog.show();
+            dateDialog.show();
         });
+
+        // listener for start time picker
+        btnStartTime.setOnClickListener(v -> {
+            showTimePickerDialog(btnStartTime);
+        });
+
+        // listener for end time picker
+        btnEndTime.setOnClickListener(v -> {
+            showTimePickerDialog(btnEndTime);
+        });
+
+        // TODO: need to make sure start time is before the end time
 
         // Set approvalIsAutomatic to true if switchWidget is checked, false if not
         approvalIsAutomatic = switchWidget.isChecked();
@@ -127,9 +141,9 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
 
             // TODO: Change these strings to obtain input from app
             // Temporary Strings so that constructor will work
-            String date = "November 19";
-            String startTime = "12:00 am";
-            String endTime = "11:59 pm";
+            String date = btnDate.getText().toString().trim(); // this should correctly obtain app input
+            String startTime = btnStartTime.getText().toString().trim();
+            String endTime = btnEndTime.getText().toString().trim();
 
             // Create new Event instance for field validation
             Event event = new Event(
@@ -147,6 +161,16 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
 
             }
         );
+    }
+    // displays selected time
+    private void showTimePickerDialog(Button targetButton) {
+        TimePickerDialog dialog = new TimePickerDialog(this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                targetButton.setText(hourOfDay + ":" + minute);
+            }
+        }, 12, 0, true); // initial time is 12pm
+        dialog.show();
     }
 
 

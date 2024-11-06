@@ -7,7 +7,7 @@
 
     <style name="Theme.Eams" parent="Base.Theme.Eams" />
 
-    <style name="DatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#1D6BB8</item>
 
     </style>
