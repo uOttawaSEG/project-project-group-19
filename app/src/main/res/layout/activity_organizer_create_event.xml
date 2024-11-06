@@ -11,9 +11,7 @@
     android:id="@+id/linear_attendee_register_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="30dp"
     android:layout_marginTop="30dp"
-    android:layout_marginEnd="30dp"
     android:layout_marginBottom="30dp"
     android:background="@drawable/rectangle_bg"
     android:orientation="vertical"
@@ -27,12 +25,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/create_new_event"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="38sp" />
+        android:textSize="34sp" />
 
     <EditText
         android:id="@+id/et_new_event_title"
@@ -93,7 +93,7 @@
                 android:id="@+id/showStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start Time"/>
+                android:text="@string/start_time"/>
 
             <Button
                 android:id="@+id/et_new_event_start_time"
@@ -118,7 +118,7 @@
                 android:id="@+id/showEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="End Time"/>
+                android:text="@string/end_time"/>
 
             <Button
                 android:id="@+id/et_new_event_end_time"
@@ -188,6 +188,18 @@
         android:inputType="text" />
 
 
+    <Switch
+        android:id="@+id/switch_manual_auto_accept"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="2dp"
+        android:text="Accept Attendees Automatically"
+        android:fontFamily="@font/roboto_light"
+        android:textSize="15sp"/>
+
     <Button
         android:id="@+id/btn_create_new_event"
         android:layout_width="match_parent"
@@ -195,7 +207,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="0dp"
         android:background="#1D6BB8"
         android:text="@string/create_new_event" />
 

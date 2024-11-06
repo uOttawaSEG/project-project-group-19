@@ -12,6 +12,7 @@ public class Event {
     private String city;
     private String province;
     private String postalCode;
+    private boolean approvalIsAutomatic;
 
     // required for firebase (?)
     public Event() {    }
@@ -39,7 +40,8 @@ public class Event {
             String street,
             String city,
             String province,
-            String postalCode
+            String postalCode,
+            boolean approvalIsAutomatic
     ) {
         this.title = title;
         this.description = description;
@@ -50,6 +52,7 @@ public class Event {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.approvalIsAutomatic = approvalIsAutomatic;
     }
 
     // Getters
@@ -124,6 +127,23 @@ public class Event {
      */
     public String getPostalCode() {
         return postalCode;
+    }
+
+    /**
+     * Sets attendee registration approval to manual or automatic.
+     * @param value is true if automatic, and false if manual
+     */
+    public void setAutomaticApproval(boolean value){
+        approvalIsAutomatic = value;
+    }
+
+    /**
+     * Determines if attendee registration is approved automatically or manually.
+     *
+     * @return true if attendee registration is set to approved automatically.
+     */
+    public boolean approvalIsAutomatic() {
+        return approvalIsAutomatic;
     }
 
     //TODO: validate fields - could potentially create address class to avoid reusing code in RegisterUser class
