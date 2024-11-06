@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,7 +27,9 @@ import com.example.eams.users.Organizer;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * OrganizerCreateEventActivity displays the Organizer user's event creation page,
@@ -74,13 +78,22 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
 
         // listener for date picker
         btnDate.setOnClickListener(v -> {
-            // use the current date as default in the calendar
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+            Calendar c = Calendar.getInstance();
+            DatePickerDialog dialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
+                // gets date that user has selected
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    c.set(Calendar.YEAR, year);
+                    c.set(Calendar.MONTH, month);
+                    c.set(Calendar.DAY_OF_MONTH, day);
+                    // Format the date in words
+                    SimpleDateFormat formattedDate = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
+                    btnDate.setText(formattedDate.format(c.getTime()));
+                    //TODO: make sure past date is not selected
 
-            // TODO: create and show DatePickerDialog
+                }
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)); // this is the initial date that the calendar opens with
+            dialog.show();
         });
 
         // Set approvalIsAutomatic to true if switchWidget is checked, false if not
