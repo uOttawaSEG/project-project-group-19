@@ -103,15 +103,30 @@
                 android:textSize="18sp"
                 android:text="@string/start_time"/>
 
-            <Button
-                android:id="@+id/et_new_event_start_time"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_light"
-                android:timePickerMode="spinner"
-                android:hint="@string/select_start_time" />
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_start_time_hour"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/roboto_light"/>
+
+                <Spinner
+                    android:id="@+id/spinner_start_time_minute"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/roboto_light"/>
+
+                </LinearLayout>
 
         </LinearLayout>
 
@@ -130,15 +145,29 @@
                 android:textSize="18sp"
                 android:text="@string/end_time"/>
 
-            <Button
-                android:id="@+id/et_new_event_end_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_light"
-                android:timePickerMode="spinner"
-                android:hint="@string/select_end_time" />
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_end_time_hour"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/roboto_light"/>
+
+                <Spinner
+                    android:id="@+id/spinner_end_time_minute"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto_light"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

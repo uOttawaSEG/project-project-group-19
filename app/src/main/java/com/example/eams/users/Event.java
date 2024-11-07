@@ -146,6 +146,6 @@ public class Event {
         return approvalIsAutomatic;
     }
 
-    //TODO: validate fields - could potentially create address class to avoid reusing code in RegisterUser class
+    //TODO: validate fields - could potentially create address class to avoid reusing code already in RegisterUser class
 
 }
