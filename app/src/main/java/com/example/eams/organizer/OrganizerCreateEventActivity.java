@@ -33,10 +33,13 @@ import com.example.eams.users.Event;
 import com.example.eams.users.Organizer;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -96,10 +99,11 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     c.set(Calendar.YEAR, year);
                     c.set(Calendar.MONTH, month);
                     c.set(Calendar.DAY_OF_MONTH, day);
-                    // Format the date in words
-                    SimpleDateFormat formattedDate = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
-                    btnDate.setText(formattedDate.format(c.getTime()));
-                    //TODO: make sure past date is not selected
+                    // Format the date to display to the user
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
+                    btnDate.setText(dateFormat.format(c.getTime()));
+                    
+                    // TODO: make sure past date is not selected
 
                 }
             }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)); // this is the initial date that the calendar opens with
@@ -119,7 +123,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
         spEndTimeHour.setAdapter(hourAdapter);
         spEndTimeMinute.setAdapter(minuteAdapter);
 
-        // TODO: need to make sure start time is before the end time, and time is in 30 min increments
+        // TODO: need to make sure start time is before the end time
 
         // Set approvalIsAutomatic to true if switchWidget is checked, false if not
         approvalIsAutomatic = switchWidget.isChecked();
@@ -150,12 +154,27 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             String inProvince = etProvince.getText().toString().trim();
             String inPostalCode = etPostalCode.getText().toString().trim();
 
-            // TODO: Change these strings to obtain input from app
-            // Temporary Strings so that constructor will work
-            String date = btnDate.getText().toString().trim(); // this should correctly obtain app input
-            // gets start and end time from spinner selections
-            String startTime = spStartTimeHour.getSelectedItem().toString() + ":" + spStartTimeMinute.getSelectedItem().toString();
-            String endTime = spEndTimeHour.getSelectedItem().toString() + ":" + spEndTimeMinute.getSelectedItem().toString();
+            // obtain and parse date from user input
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
+            Date date = null;
+            try {
+                date = dateFormat.parse(btnDate.getText().toString());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            // obtain and parse time from spinner selection
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HHmm", Locale.getDefault());
+            Date startTime = null;
+            Date endTime = null;
+            try {
+                startTime = timeFormat.parse(spStartTimeHour.getSelectedItem().toString() + spStartTimeMinute.getSelectedItem().toString());
+                endTime = timeFormat.parse(spEndTimeHour.getSelectedItem().toString() + spEndTimeMinute.getSelectedItem().toString());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            // get current user id
+            String organizerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             // Create new Event instance for field validation
             Event event = new Event(
@@ -168,11 +187,38 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     inCity,
                     inProvince,
                     inPostalCode,
-                    approvalIsAutomatic
+                    approvalIsAutomatic,
+                    organizerID
             );
 
-            }
-        );
+            // Add new event to the database
+            createEvent(event);
+
+            // Return to OrganizerWelcomeActivity
+            Intent intent = new Intent(this, OrganizerWelcomeActivity.class);
+            startActivity(intent);
+        });
     }
 
+    /**
+     * Adds Event to database
+     * @param event
+     */
+    private void createEvent(Event event) {
+        // TODO: make this actually work lol
+        // Get the reference to the correct child node
+        DatabaseReference eventDatabaseReference = FirebaseDatabase.getInstance().getReference("events");
+
+        // Generate unique key for new entry
+        String key = eventDatabaseReference.push().getKey();
+
+        // Add the event to the database
+        eventDatabaseReference.child(key).setValue(event)
+                .addOnSuccessListener(aVoid -> { // show success message if successful
+                    Toast.makeText(this, "Event created Successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> { // show error message if unsuccessful
+                    Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show();
+                });
+    }
 }

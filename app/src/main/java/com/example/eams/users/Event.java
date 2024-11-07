@@ -1,18 +1,21 @@
 package com.example.eams.users;
 
+import java.util.Date;
+
 public class Event {
 
     // instance variables
     private String title;
     private String description;
-    private String date;
-    private String startTime;
-    private String endTime;
+    private Date date;
+    private Date startTime;
+    private Date endTime;
     private String street;
     private String city;
     private String province;
     private String postalCode;
     private boolean approvalIsAutomatic;
+    private String organizerID;
 
     // required for firebase (?)
     public Event() {    }
@@ -30,18 +33,20 @@ public class Event {
      * @param city
      * @param province
      * @param postalCode
+     * @param organizerID
      */
     public Event(
             String title,
             String description,
-            String date,
-            String startTime,
-            String endTime,
+            Date date,
+            Date startTime,
+            Date endTime,
             String street,
             String city,
             String province,
             String postalCode,
-            boolean approvalIsAutomatic
+            boolean approvalIsAutomatic,
+            String organizerID
     ) {
         this.title = title;
         this.description = description;
@@ -53,6 +58,7 @@ public class Event {
         this.province = province;
         this.postalCode = postalCode;
         this.approvalIsAutomatic = approvalIsAutomatic;
+        this.organizerID = organizerID;
     }
 
     // Getters
@@ -75,21 +81,21 @@ public class Event {
     /**
      * @return event date
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     /**
      * @return event start time
      */
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
     /**
      * @return event end time
      */
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
@@ -144,6 +150,15 @@ public class Event {
      */
     public boolean approvalIsAutomatic() {
         return approvalIsAutomatic;
+    }
+
+    /**
+     * Gets the organizerID of the event.
+     *
+     * @return the organizerID of the event.
+     */
+    public String getOrganizerID() {
+        return organizerID;
     }
 
     //TODO: validate fields - could potentially create address class to avoid reusing code already in RegisterUser class
