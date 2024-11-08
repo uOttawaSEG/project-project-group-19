@@ -31,6 +31,7 @@ import com.example.eams.R;
 import com.example.eams.users.Attendee;
 import com.example.eams.users.Event;
 import com.example.eams.users.Organizer;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +39,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -155,48 +160,60 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             String inPostalCode = etPostalCode.getText().toString().trim();
 
             // obtain and parse date from user input
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
-            Date date = null;
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.getDefault());
+            LocalDate day = null;
             try {
-                date = dateFormat.parse(btnDate.getText().toString());
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
+                day = LocalDate.parse(btnDate.getText().toString(), dateFormatter);
+            } catch (DateTimeParseException e) {
+                throw new RuntimeException("Invalid Date Format");
             }
 
             // obtain and parse time from spinner selection
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HHmm", Locale.getDefault());
-            Date startTime = null;
-            Date endTime = null;
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm", Locale.getDefault());
+            LocalTime startTime = null;
+            LocalTime endTime = null;
+
+            // Pad hour and minute strings to ensure two digits (e.g., "5" becomes "05")
+            String startTimeHour = String.format("%02d", Integer.parseInt(spStartTimeHour.getSelectedItem().toString()));
+            String endTimeHour = String.format("%02d", Integer.parseInt(spEndTimeHour.getSelectedItem().toString()));
+            String startTimeMinute = spStartTimeMinute.getSelectedItem().toString();
+            String endTimeMinute = spEndTimeMinute.getSelectedItem().toString();
+
             try {
-                startTime = timeFormat.parse(spStartTimeHour.getSelectedItem().toString() + spStartTimeMinute.getSelectedItem().toString());
-                endTime = timeFormat.parse(spEndTimeHour.getSelectedItem().toString() + spEndTimeMinute.getSelectedItem().toString());
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
+                startTime = LocalTime.parse(startTimeHour + startTimeMinute, timeFormatter);
+                endTime = LocalTime.parse(endTimeHour + endTimeMinute, timeFormatter);
+            } catch (DateTimeParseException e) {
+                throw new RuntimeException("Invalid Time Format");
             }
             // get current user id
-            String organizerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            //String organizerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             // Create new Event instance for field validation
             Event event = new Event(
                     inTitle,
                     inDescription,
-                    date,
-                    startTime,
-                    endTime,
+                    day.toString(),
+                    startTime.toString(),
+                    endTime.toString(),
                     inStreet,
                     inCity,
                     inProvince,
                     inPostalCode,
-                    approvalIsAutomatic,
-                    organizerID
+                    approvalIsAutomatic
+                    //organizerID
             );
 
             // Add new event to the database
             createEvent(event);
 
+            TextView tvEventDetails = findViewById(R.id.tv_event_details);
+            tvEventDetails.setText(event.getTitle() + event.getDescription() + event.getDate()
+            + event.getStartTime() + event.getEndTime() + event.getStreet() + event.getCity()
+            + event.getProvince() + event.getPostalCode() + event.approvalIsAutomatic());
+
             // Return to OrganizerWelcomeActivity
-            Intent intent = new Intent(this, OrganizerWelcomeActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, OrganizerWelcomeActivity.class);
+            //startActivity(intent);
         });
     }
 
@@ -210,15 +227,9 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
         DatabaseReference eventDatabaseReference = FirebaseDatabase.getInstance().getReference("events");
 
         // Generate unique key for new entry
-        String key = eventDatabaseReference.push().getKey();
+        //String key = eventDatabaseReference.push().getKey();
 
         // Add the event to the database
-        eventDatabaseReference.child(key).setValue(event)
-                .addOnSuccessListener(aVoid -> { // show success message if successful
-                    Toast.makeText(this, "Event created Successfully!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> { // show error message if unsuccessful
-                    Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show();
-                });
+        eventDatabaseReference.push().setValue(event);
     }
 }

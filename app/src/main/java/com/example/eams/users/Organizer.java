@@ -52,7 +52,7 @@ public class Organizer extends RegisterUser {
         super(email, password, firstName, lastName, phoneNumber, street, city, province, postalCode);
         this.organization = organization;
     }
-
+    //fullName
 
     // Getters + Setters
 

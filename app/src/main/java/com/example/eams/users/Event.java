@@ -1,21 +1,25 @@
 package com.example.eams.users;
 
+import android.widget.Toast;
+
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Event {
 
     // instance variables
     private String title;
     private String description;
-    private Date date;
-    private Date startTime;
-    private Date endTime;
+    private String date;
+    private String startTime;
+    private String endTime;
     private String street;
     private String city;
     private String province;
     private String postalCode;
     private boolean approvalIsAutomatic;
-    private String organizerID;
+    //private String organizerID;
 
     // required for firebase (?)
     public Event() {    }
@@ -33,20 +37,20 @@ public class Event {
      * @param city
      * @param province
      * @param postalCode
-     * @param organizerID
+     * //@param organizerID
      */
     public Event(
             String title,
             String description,
-            Date date,
-            Date startTime,
-            Date endTime,
+            String date,
+            String startTime,
+            String endTime,
             String street,
             String city,
             String province,
             String postalCode,
-            boolean approvalIsAutomatic,
-            String organizerID
+            boolean approvalIsAutomatic
+            //String organizerID
     ) {
         this.title = title;
         this.description = description;
@@ -58,7 +62,7 @@ public class Event {
         this.province = province;
         this.postalCode = postalCode;
         this.approvalIsAutomatic = approvalIsAutomatic;
-        this.organizerID = organizerID;
+        //this.organizerID = organizerID;
     }
 
     // Getters
@@ -81,21 +85,21 @@ public class Event {
     /**
      * @return event date
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
     /**
      * @return event start time
      */
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
     /**
      * @return event end time
      */
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
@@ -157,10 +161,46 @@ public class Event {
      *
      * @return the organizerID of the event.
      */
-    public String getOrganizerID() {
-        return organizerID;
-    }
+    //public String getOrganizerID() {
+      //  return organizerID;
+    //}
 
     //TODO: validate fields - could potentially create address class to avoid reusing code already in RegisterUser class
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
 }
