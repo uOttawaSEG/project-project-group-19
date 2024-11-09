@@ -11,9 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.eams.MainActivity;
 import com.example.eams.R;
-import com.example.eams.attendee.AttendeeWelcomeActivity;
 
 /**
  * OrganizerWelcomeActivity welcomes an Organizer with text
@@ -43,10 +41,16 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
         // Initialize refs to Views
         Button logoffButton = findViewById(R.id.logoffButton);
         Button createNewEventButton = findViewById(R.id.createNewEventButton);
+        Button viewEventsButton = findViewById(R.id.viewEventsButton);
 
         // go to create event page
         createNewEventButton.setOnClickListener(v -> {
             startActivity(new Intent(OrganizerWelcomeActivity.this, OrganizerCreateEventActivity.class));
+        });
+
+        // go to view events page
+        viewEventsButton.setOnClickListener(v -> {
+            startActivity(new Intent(OrganizerWelcomeActivity.this, OrganizerViewEventsActivity.class));
         });
 
         // Returns organizer to login page (MainActivity)
