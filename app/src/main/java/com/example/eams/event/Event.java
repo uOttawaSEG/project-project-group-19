@@ -1,10 +1,4 @@
-package com.example.eams.users;
-
-import android.widget.Toast;
-
-import java.util.Date;
-import java.time.LocalDate;
-import java.time.LocalTime;
+package com.example.eams.event;
 
 public class Event {
 

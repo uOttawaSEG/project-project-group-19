@@ -20,9 +20,8 @@ import java.util.Iterator;
 public class OrganizerViewEventsActivity extends AppCompatActivity {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    // get database reference to events
     private DatabaseReference eventsRef = database.getReference("events");
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

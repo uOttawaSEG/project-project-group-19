@@ -1,13 +1,9 @@
 package com.example.eams.organizer;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,11 +18,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.R;
-import com.example.eams.users.Event;
+import com.example.eams.event.Event;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
