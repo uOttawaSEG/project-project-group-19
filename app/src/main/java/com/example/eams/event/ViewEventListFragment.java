@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eams.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
-public class UpcomingViewEventListFragment extends Fragment {
+public class ViewEventListFragment extends Fragment {
 
-    private DatabaseReference eventReference;
+    private Query eventReference;
     private FirebaseRecyclerAdapter<Event, EventViewHolder> adapter;
 
     /**
      * Constructor for UpcomingViewEvent
      * @param eventRef  a reference to the node representing the event
      */
-    public UpcomingViewEventListFragment(DatabaseReference eventRef) {
+    public ViewEventListFragment(Query eventRef) {
         this.eventReference = eventRef;
     }
 
@@ -44,7 +44,7 @@ public class UpcomingViewEventListFragment extends Fragment {
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
      */
-    public FirebaseRecyclerOptions<Event> getFirebaseRecyclerOptions(DatabaseReference eventRef) {
+    public FirebaseRecyclerOptions<Event> getFirebaseRecyclerOptions(Query eventRef) {
         return new FirebaseRecyclerOptions.Builder<Event>()
                 .setLifecycleOwner(this)
                 .setQuery(eventRef, Event.class)
@@ -74,6 +74,8 @@ public class UpcomingViewEventListFragment extends Fragment {
                 return new EventViewHolder(itemView);
             }
         };
+
+        rv.setAdapter(adapter);
     }
 
 }
