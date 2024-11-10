@@ -1,5 +1,8 @@
 package com.example.eams.event;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Event {
 
     // instance variables
@@ -197,4 +200,42 @@ public class Event {
         this.postalCode = postalCode;
     }
 
+    public boolean titleIsValid() {
+        return !title.isEmpty();
+    }
+
+    public boolean descriptionIsValid() {
+        return !title.isEmpty();
+    }
+
+    public boolean addressIsValid() {
+        // make sure city and province is alphabetic
+        if (!isAlphabetic(city) || !isAlphabetic(province)) {
+            return false;
+        }
+
+        // make sure postal code is valid
+        postalCode = postalCode.replace(" ", ""); // gets rid of any spaces in postalCode
+        Pattern postalCodePattern = Pattern.compile("^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]\\d$");
+        Matcher postalCodeMatcher = postalCodePattern.matcher(postalCode);
+        if (!postalCodeMatcher.find()) {
+            return false;
+        }
+
+        // make sure street is valid
+        Pattern streetPattern = Pattern.compile("^\\d+\\s[a-zA-Z.]+\\s[a-zA-Z.]+\\.?$");
+        Matcher streetMatcher = streetPattern.matcher(street);
+        if (!streetMatcher.find()) {
+            return false;
+        }
+        return true; // this statement is reached if every test is passed
+    }
+
+    private boolean isAlphabetic(String s) {
+        if (s.isEmpty()) return false;
+
+        Pattern pattern = Pattern.compile("^[A-Za-z]+$");
+        Matcher matcher = pattern.matcher(s);
+        return matcher.find();
+    }
 }

@@ -159,6 +159,24 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     approvalIsAutomatic
             );
 
+            if (!event.titleIsValid()) {
+                Toast error = Toast.makeText(this, "Invalid title", Toast.LENGTH_LONG);
+                error.show();
+                return;
+            }
+
+            if (!event.descriptionIsValid()) {
+                Toast error = Toast.makeText(this, "Invalid description", Toast.LENGTH_LONG);
+                error.show();
+                return;
+            }
+
+            if (!event.addressIsValid()) {
+                Toast error = Toast.makeText(this, "Invalid address", Toast.LENGTH_LONG);
+                error.show();
+                return;
+            }
+
             // Add new event to the database
             createEvent(event);
 
