@@ -11,22 +11,22 @@ package com.example.eams.event;
  *  @author Rachel Qi
  *  @author Steven Wu
  */
-public class Registration {
+public class EventRegistration {
 
     String eventTitle;
     String attendeeEmail;
 
     // Constructor for Firebase
-    public Registration(){
+    public EventRegistration(){
 
     }
 
     /**
-     * Create a Registration object with Event and registered Attendee
+     * Create an EventRegistration object with Event and registered Attendee
      * @param eventTitle Title of the event
      * @param attendeeEmail Email of the Attendee registering
      */
-    public Registration(String eventTitle, String attendeeEmail){
+    public EventRegistration(String eventTitle, String attendeeEmail){
 
         this.eventTitle = eventTitle;
         this.attendeeEmail = attendeeEmail;

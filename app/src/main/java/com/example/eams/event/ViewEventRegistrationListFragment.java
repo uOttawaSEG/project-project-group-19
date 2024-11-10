@@ -16,17 +16,17 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.Query;
 
-public class ViewEventListFragment extends Fragment {
+public class ViewEventRegistrationListFragment extends Fragment {
 
-    private Query eventReference;
-    private FirebaseRecyclerAdapter<Event, EventViewHolder> adapter;
+    private Query eventRegistrationReference;
+
 
     /**
      * Constructor for UpcomingViewEvent
-     * @param eventRef  a reference to the node representing the event
+     * @param eventRegistrationReference  a reference to the node representing the event
      */
-    public ViewEventListFragment(Query eventRef) {
-        this.eventReference = eventRef;
+    public ViewEventRegistrationListFragment(Query eventRegistrationReference) {
+        this.eventRegistrationReference = eventRegistrationReference;
     }
 
     @Override
@@ -41,41 +41,6 @@ public class ViewEventListFragment extends Fragment {
         attachRecyclerViewAdapter(view);
     }
 
-    /**
-     * Creates FirebaseRecyclerOptions to retrieve data from Firebase
-     */
-    public FirebaseRecyclerOptions<Event> getFirebaseRecyclerOptions(Query eventRef) {
-        return new FirebaseRecyclerOptions.Builder<Event>()
-                .setLifecycleOwner(this)
-                .setQuery(eventRef, Event.class)
-                .build();
-    }
 
-    /**
-     * Attaches the FirebaseRecyclerAdapter to the view's RecyclerView
-     * @param view the View containing the RecyclerView
-     */
-    private void attachRecyclerViewAdapter(View view) {
-        RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        FirebaseRecyclerOptions<Event> options = getFirebaseRecyclerOptions(eventReference);
-
-        adapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
-                holder.bind(event);
-            }
-
-            @NonNull
-            @Override
-            public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event, parent, false);
-                return new EventViewHolder(itemView);
-            }
-        };
-
-        rv.setAdapter(adapter);
-    }
 
 }

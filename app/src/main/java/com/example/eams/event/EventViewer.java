@@ -36,9 +36,11 @@ public class EventViewer implements ViewEvent {
 
     @Override
     public void setViewEventsOnClickListener(View.OnClickListener l) {
+
         if (btnViewEvents == null) {
             return;
         }
+
         btnViewEvents.setOnClickListener(l);
     }
 

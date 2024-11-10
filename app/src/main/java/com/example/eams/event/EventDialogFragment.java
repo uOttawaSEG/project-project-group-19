@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class EventDialogueFragment extends DialogFragment {
+public class EventDialogFragment extends DialogFragment {
 
     private String eventTitle;
     private String attendeeEmail;
@@ -38,7 +38,7 @@ public class EventDialogueFragment extends DialogFragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = database.getReference("eventRegistrations");
 
-    public EventDialogueFragment(String eventTitle, String attendeeEmail){
+    public EventDialogFragment(String eventTitle, String attendeeEmail){
         this.eventTitle= eventTitle;
         this.attendeeEmail= attendeeEmail;
     }

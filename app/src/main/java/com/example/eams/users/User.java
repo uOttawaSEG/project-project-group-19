@@ -1,5 +1,6 @@
 package com.example.eams.users;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
  * @author Rachel Qi
  * @author Steven Wu
  */
-public abstract class User {
+public abstract class User{
 
     // Instance variables
     private String email;

@@ -24,100 +24,82 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/attendee_request_first_name"
+                android:id="@+id/event_attendee_first_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/attendee_request_last_name"
+                android:id="@+id/event_attendee_last_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/attendee_request_first_name"
-                app:layout_constraintTop_toTopOf="@+id/attendee_request_first_name" />
+                app:layout_constraintStart_toEndOf="@+id/event_attendee_first_name"
+                app:layout_constraintTop_toTopOf="@+id/event_attendee_first_name" />
 
             <TextView
-                android:id="@+id/attendee_request_phone_number"
+                android:id="@+id/event_attendee_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/attendee_request_first_name"
-                app:layout_constraintTop_toBottomOf="@+id/attendee_request_first_name" />
+                app:layout_constraintStart_toStartOf="@+id/event_attendee_first_name"
+                app:layout_constraintTop_toBottomOf="@+id/event_attendee_first_name" />
 
             <TextView
-                android:id="@+id/attendee_request_email"
+                android:id="@+id/event_attendee_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/attendee_request_phone_number"
-                app:layout_constraintTop_toBottomOf="@+id/attendee_request_phone_number" />
+                app:layout_constraintStart_toStartOf="@+id/event_attendee_phone_number"
+                app:layout_constraintTop_toBottomOf="@+id/event_attendee_phone_number" />
 
             <TextView
-                android:id="@+id/attendee_request_street"
+                android:id="@+id/event_attendee_street"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
                 android:text="TextView"
-                app:layout_constraintStart_toStartOf="@+id/attendee_request_email"
-                app:layout_constraintTop_toBottomOf="@+id/attendee_request_email" />
-
-            <TextView
-                android:id="@+id/attendee_request_city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_street"
-                app:layout_constraintStart_toEndOf="@+id/attendee_request_street"
-                app:layout_constraintTop_toTopOf="@+id/attendee_request_street" />
-
-            <TextView
-                android:id="@+id/attendee_request_province"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_city"
-                app:layout_constraintStart_toEndOf="@+id/attendee_request_city"
-                app:layout_constraintTop_toTopOf="@+id/attendee_request_city" />
-
-            <TextView
-                android:id="@+id/attendee_request_postal_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_province"
-                app:layout_constraintStart_toEndOf="@+id/attendee_request_province"
-                app:layout_constraintTop_toTopOf="@+id/attendee_request_province" />
-
-            <Button
-                android:id="@+id/attendee_request_accept"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="Accept"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/attendee_request_street"
-                app:layout_constraintTop_toBottomOf="@+id/attendee_request_street" />
+                app:layout_constraintStart_toStartOf="@+id/event_attendee_email"
+                app:layout_constraintTop_toBottomOf="@+id/event_attendee_email" />
 
-            <Button
-                android:id="@+id/attendee_request_reject"
+            <TextView
+                android:id="@+id/event_attendee_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Reject"
-                app:layout_constraintStart_toEndOf="@+id/attendee_request_accept"
-                app:layout_constraintTop_toTopOf="@+id/attendee_request_accept" />
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/event_attendee_street"
+                app:layout_constraintStart_toEndOf="@+id/event_attendee_street"
+                app:layout_constraintTop_toTopOf="@+id/event_attendee_street" />
+
+            <TextView
+                android:id="@+id/event_attendee_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/event_attendee_city"
+                app:layout_constraintStart_toEndOf="@+id/event_attendee_city"
+                app:layout_constraintTop_toTopOf="@+id/event_attendee_city" />
+
+            <TextView
+                android:id="@+id/event_attendee_postal_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/event_attendee_province"
+                app:layout_constraintStart_toEndOf="@+id/event_attendee_province"
+                app:layout_constraintTop_toTopOf="@+id/event_attendee_province" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

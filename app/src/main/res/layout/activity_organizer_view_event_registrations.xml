@@ -7,48 +7,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".organizer.OrganizerViewEventsActivity">
+    tools:context=".organizer.OrganizerViewEventRegistrationsActivity">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/organizer_view_events_tab_layout"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/organizer_view_events_pager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/organizer_upcoming_events_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upcoming Events" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/organizer_past_events_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Past Events" />
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="List Of Attendees"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="34sp" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/organizer_view_events_pager"
+        android:id="@+id/organizer_view_event_registrations_pager"
         android:layout_width="match_parent"
-        android:layout_height="631dp" >
+        android:layout_height="591dp">
+
     </androidx.viewpager2.widget.ViewPager2>
 
-    <LinearLayout
-        android:id="@+id/button_layout"
+    <Button
+        android:id="@+id/btn_organizer_view_event_registrations_back"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="bottom">
-
-        <Button
-            android:id="@+id/btn_organizer_view_events_back"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/back" />
-    </LinearLayout>
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/back" />
 
 </LinearLayout>

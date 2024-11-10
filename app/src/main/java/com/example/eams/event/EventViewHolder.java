@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eams.R;
 
 /**
- * Abstract representation of a ViewHolder for an event
+ * ViewHolder for an event
  *
  * @author Alex Ajersch
  * @author Brooklyn McClelland
@@ -149,7 +149,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
      * Sets the OnClickListener for the Accept Button
      * @param l the OnClickListener to be set
      */
-    public void setViewEventsOnClickListener(View.OnClickListener l) {
+    public void setViewRegistrationsOnClickListener(View.OnClickListener l) {
         if (btnViewRegistrations == null) {
             return;
         }

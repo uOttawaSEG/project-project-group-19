@@ -55,6 +55,7 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                 .inflate(layout, parent, false));
             }
 
+            // Makes list element for a specific user
             @Override
             protected void onBindViewHolder(@NonNull VH holder, int position, @NonNull T model) {
                 DatabaseReference currentUserRef = getRef(position);

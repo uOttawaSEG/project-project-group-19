@@ -77,5 +77,10 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
+
+        // Returns to Organizer Welcome Page
+        backButton.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

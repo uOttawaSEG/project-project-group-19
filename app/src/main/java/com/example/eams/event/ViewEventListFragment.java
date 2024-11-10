@@ -1,9 +1,12 @@
 package com.example.eams.event;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,9 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eams.MainActivity;
 import com.example.eams.R;
+import com.example.eams.organizer.OrganizerViewEventRegistrationsActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 public class ViewEventListFragment extends Fragment {
@@ -64,7 +72,28 @@ public class ViewEventListFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
+
+//                DatabaseReference eventReference = getRef(position);
+//
+//                eventReference.get().addOnCompleteListener(task -> {
+//
+//                    if (!task.isSuccessful()) {
+//                        Log.e("firebase", "Error getting data", task.getException());
+//                    } else {
+//
+//                    }
+//                });
+
+                holder.setViewRegistrationsOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view){
+                        Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
+                        intent.putExtra("Title", event.getTitle());
+                    }
+                });
+
                 holder.bind(event);
+
             }
 
             @NonNull
