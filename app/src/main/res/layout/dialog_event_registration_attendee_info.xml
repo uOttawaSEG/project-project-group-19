@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/attendee_request_first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/attendee_request_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toEndOf="@+id/attendee_request_first_name"
+                app:layout_constraintTop_toTopOf="@+id/attendee_request_first_name" />
+
+            <TextView
+                android:id="@+id/attendee_request_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="@+id/attendee_request_first_name"
+                app:layout_constraintTop_toBottomOf="@+id/attendee_request_first_name" />
+
+            <TextView
+                android:id="@+id/attendee_request_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="@+id/attendee_request_phone_number"
+                app:layout_constraintTop_toBottomOf="@+id/attendee_request_phone_number" />
+
+            <TextView
+                android:id="@+id/attendee_request_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="@+id/attendee_request_email"
+                app:layout_constraintTop_toBottomOf="@+id/attendee_request_email" />
+
+            <TextView
+                android:id="@+id/attendee_request_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_street"
+                app:layout_constraintStart_toEndOf="@+id/attendee_request_street"
+                app:layout_constraintTop_toTopOf="@+id/attendee_request_street" />
+
+            <TextView
+                android:id="@+id/attendee_request_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_city"
+                app:layout_constraintStart_toEndOf="@+id/attendee_request_city"
+                app:layout_constraintTop_toTopOf="@+id/attendee_request_city" />
+
+            <TextView
+                android:id="@+id/attendee_request_postal_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/attendee_request_province"
+                app:layout_constraintStart_toEndOf="@+id/attendee_request_province"
+                app:layout_constraintTop_toTopOf="@+id/attendee_request_province" />
+
+            <Button
+                android:id="@+id/attendee_request_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Accept"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/attendee_request_street"
+                app:layout_constraintTop_toBottomOf="@+id/attendee_request_street" />
+
+            <Button
+                android:id="@+id/attendee_request_reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Reject"
+                app:layout_constraintStart_toEndOf="@+id/attendee_request_accept"
+                app:layout_constraintTop_toTopOf="@+id/attendee_request_accept" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
