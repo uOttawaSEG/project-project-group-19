@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Eams"
         tools:targetApi="31">
         <activity
+            android:name=".organizer.OrganizerViewEventRegistrationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".organizer.OrganizerViewEventsActivity"
             android:exported="false" />
         <activity

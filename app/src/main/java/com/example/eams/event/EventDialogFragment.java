@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -13,15 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.eams.R;
-import com.example.eams.admin.request.RejectableRequest;
-import com.example.eams.external.GMail;
 import com.example.eams.users.Attendee;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventDialogFragment extends DialogFragment {
 
@@ -77,45 +73,42 @@ public class EventDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int id) {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+
                 databaseReference.orderByChild("email").equalTo(attendee.getEmail()).get().addOnCompleteListener(task -> {
-
-
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         DataSnapshot attendeeSnapshot = task.getResult().getChildren().iterator().next();
-                        String attendeeKey = attendeeSnapshot.getKey();
 
-                        DatabaseReference attendeeReference = FirebaseDatabase.getInstance();
+                        // Reference to the attendee
+                        DatabaseReference attendeeRef = attendeeSnapshot.getRef();
 
-                        userTypeRef.child("approved")
-                                .push()
-                                .setValue(model, (error, ref) -> {
-                                    if (error != null) {
-                                        Log.e("firebase", "Failed to approve user");
-                                        return;
-                                    }
-                                    currentUserRef.removeValue();
-                                });
+                        // Add key of event to approved
+                        attendeeRef.child("attendeeApprovedEventRegistrations").push().setValue(eventKey);
+                        // Remove key of event from pending
+                        attendeeRef.child("attendeePendingEventRegistrations/" + eventKey).removeValue();
+
                     }
                 });
             }
-        })
-                // Reject the request
-                builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        userTypeRef.child("rejected")
-                                .push()
-                                .setValue(model, (error, ref) -> {
-                                    if (error != null) {
-                                        Log.e("firebase", "Failed to reject user");
-                                    }
-                                    currentUserRef.removeValue();
-                                });
-                        dialog.dismiss();
+        });
+        // Reject the request
+        builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+                databaseReference.orderByChild("email").equalTo(attendee.getEmail()).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DataSnapshot attendeeSnapshot = task.getResult().getChildren().iterator().next();
+
+                        // Reference to the attendee
+                        DatabaseReference attendeeRef = attendeeSnapshot.getRef();
+                        // Remove key of event from pending
+                        attendeeRef.child("attendeePendingEventRegistrations/" + eventKey).removeValue();
                     }
                 });
+            }
+        });
 
-            // Create and return
-            return builder.create();
-        }
+        // Create and return
+        return builder.create();
     }
 }
+

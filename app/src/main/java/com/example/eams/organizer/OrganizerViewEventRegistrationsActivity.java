@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eams.R;
 import com.example.eams.event.EventDialogFragment;
-import com.example.eams.event.EventRegistrationViewHolder;
+import com.example.eams.event.EventRegistrationAttendeeViewHolder;
 import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -39,13 +39,15 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         });
 
         // initialize refs to views
+        RecyclerView recyclerView = findViewById(R.id.rv_organizer_view_event_registrations);
         Button backButton = findViewById(R.id.btn_organizer_view_event_registrations_back);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
 
         String eventKey = getIntent().getStringExtra("pushKey");
-        Query registeredAttendeesQuery = databaseReference.orderByChild("requestsPending").equalTo(eventKey);
-        attachRecyclerViewAdapter(this, registeredAttendeesQuery, eventKey);
+//        Query registeredAttendeesQuery = databaseReference.orderByChild("attendeePendingEventRegistrations").equalTo(eventKey);
+        Query registeredAttendeesQuery = databaseReference;
+        attachRecyclerViewAdapter(recyclerView, registeredAttendeesQuery, eventKey);
 
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
@@ -66,18 +68,25 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
     /**
      * Attaches the FirebaseRecyclerAdapter to the view's RecyclerView
      *
-     * @param view the View containing the RecyclerView
+     * @param recyclerView RecyclerView to receive the adapter
      */
-    private void attachRecyclerViewAdapter(View view, Query registeredAttendeesQuery, String eventKey) {
+    private void attachRecyclerViewAdapter(RecyclerView recyclerView, Query registeredAttendeesQuery, String eventKey) {
 
-        RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseRecyclerOptions<Attendee> options = getFirebaseRecyclerOptions(registeredAttendeesQuery);
 
-        FirebaseRecyclerAdapter<Attendee, EventRegistrationViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationViewHolder>(options) {
+        FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder>(options) {
+
+            @NonNull
             @Override
-            protected void onBindViewHolder(@NonNull EventRegistrationViewHolder holder, int position, @NonNull Attendee attendee) {
+            public EventRegistrationAttendeeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event_registration_attendees, parent, false);
+                return new EventRegistrationAttendeeViewHolder(itemView);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull EventRegistrationAttendeeViewHolder holder, int position, @NonNull Attendee attendee) {
                 holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
                     EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
                     dialog.show(getSupportFragmentManager(), "attendeeDetails");
@@ -85,14 +94,8 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
                 holder.bind(attendee);
             }
 
-            @NonNull
-            @Override
-            public EventRegistrationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event_registration_attendees, parent, false);
-                return new EventRegistrationViewHolder(itemView);
-            }
         };
 
-        rv.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 }

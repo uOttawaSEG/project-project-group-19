@@ -20,7 +20,7 @@ import com.example.eams.users.Attendee;
  * @author Rachel Qi
  * @author Steven Wu
  */
-public class EventRegistrationViewHolder extends RecyclerView.ViewHolder  {
+public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder  {
 
     private TextView tvEmail;
     private Button btnViewAttendeeDetails;
@@ -29,7 +29,7 @@ public class EventRegistrationViewHolder extends RecyclerView.ViewHolder  {
      * Constructor for a EventRegistrationViewHolder
      * @param itemView the View used to initialize the EventRegistrationViewHolder
      */
-    public EventRegistrationViewHolder(@NonNull View itemView) {
+    public EventRegistrationAttendeeViewHolder(@NonNull View itemView) {
 
         super(itemView);
         setTvEmail(R.id.event_registration_attendee_email);
@@ -38,10 +38,10 @@ public class EventRegistrationViewHolder extends RecyclerView.ViewHolder  {
 
     /**
      * Populates the view with the given user's information
-     * @param eventRegistration
+     * @param attendee
      */
-    public void bind(@NonNull Attendee eventRegistration) {
-        setTvEmail(eventRegistration.getRegisteredAttendeeEmail());
+    public void bind(@NonNull Attendee attendee) {
+        setTvEmail(attendee.getEmail());
     }
 
     /**

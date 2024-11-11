@@ -70,14 +70,4 @@ public class Organizer extends RegisterUser {
         this.organization = organization;
     }
 
-
-    /**
-     * Attempts to register the user with the given instance variables
-     *
-     * @return true if successful, false otherwise
-     */
-    @Override
-    public boolean register() {
-        return false;
-    }
 }

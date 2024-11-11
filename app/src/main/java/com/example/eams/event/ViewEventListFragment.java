@@ -31,7 +31,8 @@ public class ViewEventListFragment extends Fragment {
 
     /**
      * Constructor for UpcomingViewEvent
-     * @param eventRef  a reference to the node representing the event
+     *
+     * @param eventRef a reference to the node representing the event
      */
     public ViewEventListFragment(Query eventRef) {
         this.eventReference = eventRef;
@@ -61,6 +62,7 @@ public class ViewEventListFragment extends Fragment {
 
     /**
      * Attaches the FirebaseRecyclerAdapter to the view's RecyclerView
+     *
      * @param view the View containing the RecyclerView
      */
     private void attachRecyclerViewAdapter(View view) {
@@ -70,25 +72,22 @@ public class ViewEventListFragment extends Fragment {
         FirebaseRecyclerOptions<Event> options = getFirebaseRecyclerOptions(eventReference);
 
         adapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(options) {
+            @NonNull
+            @Override
+            public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event, parent, false);
+                return new EventViewHolder(itemView);
+            }
+
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
 
-//                DatabaseReference eventReference = getRef(position);
-//
-//                eventReference.get().addOnCompleteListener(task -> {
-//
-//                    if (!task.isSuccessful()) {
-//                        Log.e("firebase", "Error getting data", task.getException());
-//                    } else {
-//
-//                    }
-//                });
-
                 holder.setViewRegistrationsOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view){
+                    public void onClick(View view) {
                         Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
                         intent.putExtra("pushKey", getRef(position).getKey());
+                        startActivity(intent);
                     }
                 });
 
@@ -96,12 +95,6 @@ public class ViewEventListFragment extends Fragment {
 
             }
 
-            @NonNull
-            @Override
-            public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event, parent, false);
-                return new EventViewHolder(itemView);
-            }
         };
 
         rv.setAdapter(adapter);

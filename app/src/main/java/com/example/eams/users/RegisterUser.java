@@ -235,12 +235,6 @@ public abstract class RegisterUser extends User {
         return true; // this statement is reached if every test is passed
     }
 
-    /**
-     * Attempts to register the user with the given instance variables
-     *
-     * @return true if successful, false otherwise
-     */
-    public abstract boolean register();
 
     /**
      * Tests if a string is strictly alphabetic and not empty

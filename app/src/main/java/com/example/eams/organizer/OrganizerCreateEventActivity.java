@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.R;
 import com.example.eams.event.Event;
-import com.example.eams.event.Registration;
+import com.example.eams.users.Attendee;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -159,7 +159,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             }
 
             // Create new Event instance
-            Event registration = new Event(
+            Event event = new Event(
                     inTitle,
                     inDescription,
                     day.toString(),
@@ -191,47 +191,55 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             }
 
             // Add new event to the database
-            createEvent(registration);
+            createEvent(event);
 
-            // PLACEHOLDER: add Registrations to the database
-            createEventRegistration(new Attendee(inTitle,"nbrau104@uottawa.ca"));
-            createEventRegistration(new Attendee(inTitle, "naomibraun321@gmail.com"));
+//            // PLACEHOLDER: add Registrations to the database
+//            createEventRegistration(new Attendee(inTitle,"nbrau104@uottawa.ca"));
+//            createEventRegistration(new Attendee(inTitle, "naomibraun321@gmail.com"));
 
             // Display event details in TextView for verification
             TextView tvEventDetails = findViewById(R.id.tv_event_details);
-            tvEventDetails.setText(registration.getTitle() + registration.getDescription() + registration.getDate()
-                    + registration.getStartTime() + registration.getEndTime() + registration.getStreet() + registration.getCity()
-                    + registration.getProvince() + registration.getPostalCode() + registration.approvalIsAutomatic());
+            tvEventDetails.setText(event.getTitle() + event.getDescription() + event.getDate()
+                    + event.getStartTime() + event.getEndTime() + event.getStreet() + event.getCity()
+                    + event.getProvince() + event.getPostalCode() + event.approvalIsAutomatic());
         });
     }
 
     /**
      * Adds Event to database with success and failure messages
-     * @param registration
+     * @param event
      */
-    private void createEvent(Event registration) {
+    private void createEvent(Event event) {
         DatabaseReference eventDatabaseReference = FirebaseDatabase.getInstance().getReference("events");
+        String eventKey = eventDatabaseReference.push().getKey();
 
         // Add the event to the database with success and failure toast messages
-        eventDatabaseReference.push().setValue(registration)
+        eventDatabaseReference.child(eventKey).setValue(event)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Event created successfully!", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to create event.", Toast.LENGTH_SHORT).show();
                 });
+
+        // Add 2 pending event registrations to begin with
+        // TODO: Remove in deliverable 4
+        DatabaseReference approvedAttendeesRef = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+        approvedAttendeesRef.child("a1/attendeePendingEventRegistrations").push().setValue(eventKey);
+        approvedAttendeesRef.child("a2/attendeePendingEventRegistrations").push().setValue(eventKey);
+
     }
 
     // PLACEHOLDER
     /**
      * Adds Registration to event with success and failure messages
-     * @param eventRegistration
+     * @param event
      */
-    private void createEventRegistration(Attendee eventRegistration) {
+    private void createEventRegistration(Attendee event) {
         DatabaseReference registrationDatabaseReference = FirebaseDatabase.getInstance().getReference("registrations");
 
         // Add the event to the database with success and failure toast messages
-        registrationDatabaseReference.push().setValue(eventRegistration)
+        registrationDatabaseReference.push().setValue(event)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Registration created successfully!", Toast.LENGTH_SHORT).show();
                 })
