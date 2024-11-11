@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eams.R;
-import com.example.eams.users.RegisterUser;
+import com.example.eams.users.Attendee;
 
 /**
  * ViewHolder for a registration request
@@ -40,7 +40,7 @@ public class EventRegistrationViewHolder extends RecyclerView.ViewHolder  {
      * Populates the view with the given user's information
      * @param eventRegistration
      */
-    public void bind(@NonNull EventRegistration eventRegistration) {
+    public void bind(@NonNull Attendee eventRegistration) {
         setTvEmail(eventRegistration.getRegisteredAttendeeEmail());
     }
 
@@ -68,15 +68,13 @@ public class EventRegistrationViewHolder extends RecyclerView.ViewHolder  {
         this.btnViewAttendeeDetails = itemView.findViewById(id);
     }
 
-    public void setViewRegistrationsOnClickListener(View.OnClickListener l) {
+    public void setBtnViewAttendeeDetailsOnClickListener(View.OnClickListener listener) {
 
         if (btnViewAttendeeDetails == null) {
             return;
         }
 
-        btnViewAttendeeDetails.setOnClickListener(v -> {
-            EventDialogFragment eventDialog = new EventDialogFragment(tvEmail.getText().toString());
-        });
+        btnViewAttendeeDetails.setOnClickListener(listener);
     }
 
 

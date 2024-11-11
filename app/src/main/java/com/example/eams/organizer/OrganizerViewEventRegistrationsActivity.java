@@ -12,34 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.eams.R;
-import com.example.eams.event.EventRegistration;
+import com.example.eams.event.EventDialogFragment;
 import com.example.eams.event.EventRegistrationViewHolder;
-import com.example.eams.event.ViewEventListFragment;
-import com.example.eams.event.ViewEventRegistrationListFragment;
+import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import java.time.LocalDate;
-
 public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
-
-    private FirebaseRecyclerAdapter<EventRegistration, EventRegistrationViewHolder> adapter;
-
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    // get database reference to event registrations
-    private DatabaseReference eventsRef = database.getReference("registrations");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +39,12 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         });
 
         // initialize refs to views
-        ViewEventRegistrationListFragment
         Button backButton = findViewById(R.id.btn_organizer_view_event_registrations_back);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+
+        String eventKey = getIntent().getStringExtra("pushKey");
+        Query registeredAttendeesQuery = databaseReference.orderByChild("requestsPending").equalTo(eventKey);
 
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
@@ -65,29 +55,33 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
      */
-    public FirebaseRecyclerOptions<EventRegistration> getFirebaseRecyclerOptions(Query eventRegistrationRef) {
-        return new FirebaseRecyclerOptions.Builder<EventRegistration>()
+    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(Query registeredAttendeesQuery) {
+        return new FirebaseRecyclerOptions.Builder<Attendee>()
                 .setLifecycleOwner(this)
-                .setQuery(eventRegistrationRef, EventRegistration.class)
+                .setQuery(registeredAttendeesQuery, Attendee.class)
                 .build();
     }
 
     /**
      * Attaches the FirebaseRecyclerAdapter to the view's RecyclerView
+     *
      * @param view the View containing the RecyclerView
      */
-    private void attachRecyclerViewAdapter(View view) {
+    private void attachRecyclerViewAdapter(View view, Query registeredAttendeesQuery) {
 
         RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseRecyclerOptions<EventRegistration> options = getFirebaseRecyclerOptions(eventsRef);
+        FirebaseRecyclerOptions<Attendee> options = getFirebaseRecyclerOptions(registeredAttendeesQuery);
 
-        adapter = new FirebaseRecyclerAdapter<EventRegistration, EventRegistrationViewHolder>(options) {
+        FirebaseRecyclerAdapter<Attendee, EventRegistrationViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull EventRegistrationViewHolder holder, int position, @NonNull EventRegistration eventRegistration) {
-
-                holder.bind(eventRegistration);
+            protected void onBindViewHolder(@NonNull EventRegistrationViewHolder holder, int position, @NonNull Attendee attendee) {
+                holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
+                    EventDialogFragment dialog = new EventDialogFragment(attendee);
+                    dialog.show(getSupportFragmentManager(), "attendeeDetails");
+                });
+                holder.bind(attendee);
             }
 
             @NonNull

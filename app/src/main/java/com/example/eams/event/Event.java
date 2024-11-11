@@ -1,9 +1,10 @@
 package com.example.eams.event;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Event {
+public class Event implements Serializable {
 
     // instance variables
     private String title;

@@ -19,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.R;
 import com.example.eams.event.Event;
-import com.example.eams.event.EventRegistration;
 import com.example.eams.event.Registration;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -195,8 +194,8 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             createEvent(registration);
 
             // PLACEHOLDER: add Registrations to the database
-            createEventRegistration(new EventRegistration(inTitle,"nbrau104@uottawa.ca"));
-            createEventRegistration(new EventRegistration(inTitle, "naomibraun321@gmail.com"));
+            createEventRegistration(new Attendee(inTitle,"nbrau104@uottawa.ca"));
+            createEventRegistration(new Attendee(inTitle, "naomibraun321@gmail.com"));
 
             // Display event details in TextView for verification
             TextView tvEventDetails = findViewById(R.id.tv_event_details);
@@ -228,7 +227,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
      * Adds Registration to event with success and failure messages
      * @param eventRegistration
      */
-    private void createEventRegistration(EventRegistration eventRegistration) {
+    private void createEventRegistration(Attendee eventRegistration) {
         DatabaseReference registrationDatabaseReference = FirebaseDatabase.getInstance().getReference("registrations");
 
         // Add the event to the database with success and failure toast messages

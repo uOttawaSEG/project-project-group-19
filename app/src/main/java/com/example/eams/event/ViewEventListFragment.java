@@ -88,7 +88,7 @@ public class ViewEventListFragment extends Fragment {
                     @Override
                     public void onClick(View view){
                         Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
-                        intent.putExtra("Title", event.getTitle());
+                        intent.putExtra("pushKey", getRef(position).getKey());
                     }
                 });
 
