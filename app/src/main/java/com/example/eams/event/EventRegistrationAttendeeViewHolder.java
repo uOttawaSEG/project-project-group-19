@@ -20,24 +20,25 @@ import com.example.eams.users.Attendee;
  * @author Rachel Qi
  * @author Steven Wu
  */
-public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder  {
+public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder {
 
     private TextView tvEmail;
-    private Button btnViewAttendeeDetails;
+    private Button btnViewDetails;
 
     /**
-     * Constructor for a EventRegistrationViewHolder
+     * Creates a new EventRegistrationViewHolder
+     *
      * @param itemView the View used to initialize the EventRegistrationViewHolder
      */
     public EventRegistrationAttendeeViewHolder(@NonNull View itemView) {
-
         super(itemView);
         setTvEmail(R.id.event_registration_attendee_email);
-        setBtnViewAttendeeDetails(R.id.btn_event_registration_view_attendee_details);
+        setBtnViewDetails(R.id.btn_event_registration_view_attendee_details);
     }
 
     /**
      * Populates the view with the given user's information
+     *
      * @param attendee
      */
     public void bind(@NonNull Attendee attendee) {
@@ -46,6 +47,7 @@ public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder
 
     /**
      * Sets the email of the registered Attendee
+     *
      * @param id id of the TextView
      */
     public void setTvEmail(int id) {
@@ -54,6 +56,7 @@ public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder
 
     /**
      * Sets the email of the registered Attendee
+     *
      * @param email the email of the registered Attendee
      */
     public void setTvEmail(String email) {
@@ -62,19 +65,20 @@ public class EventRegistrationAttendeeViewHolder extends RecyclerView.ViewHolder
 
     /**
      * Finds the accept button
+     *
      * @param id the id of the element
      */
-    public void setBtnViewAttendeeDetails(int id) {
-        this.btnViewAttendeeDetails = itemView.findViewById(id);
+    public void setBtnViewDetails(int id) {
+        this.btnViewDetails = itemView.findViewById(id);
     }
 
     public void setBtnViewAttendeeDetailsOnClickListener(View.OnClickListener listener) {
 
-        if (btnViewAttendeeDetails == null) {
+        if (btnViewDetails == null) {
             return;
         }
 
-        btnViewAttendeeDetails.setOnClickListener(listener);
+        btnViewDetails.setOnClickListener(listener);
     }
 
 

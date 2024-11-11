@@ -14,22 +14,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.eams.R;
-import com.example.eams.event.ViewEventListFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.time.LocalDate;
 
 public class OrganizerViewEventsActivity extends AppCompatActivity {
 
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    // get database reference to events
-    private DatabaseReference eventsRef = database.getReference("events");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_organizer_view_events);
@@ -39,23 +36,29 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
             return insets;
         });
 
-        // initialize refs to views
+        // Initialize refs to views
         TabLayout tabLayout = findViewById(R.id.organizer_view_events_tab_layout);
         ViewPager2 viewPager = findViewById(R.id.organizer_view_events_pager);
         Button backButton = findViewById(R.id.btn_organizer_view_events_back);
+
+        // Get reference to database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference eventsReference = databaseReference.child("events");
 
         viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
+                Query eventsByDateQuery = eventsReference.orderByChild("date");
                 String date = LocalDate.now().toString();
                 switch (position) {
-                case 0:
-                    return new ViewEventListFragment(eventsRef.orderByChild("date").startAt(date));
-                case 1:
-                    return new ViewEventListFragment(eventsRef.orderByChild("date").endBefore(date));
-                default:
-                    return new ViewEventListFragment(eventsRef.orderByChild("date").startAt(date));
+                    // Past
+                    case 1:
+                        return new OrganizerEventsListFragment(eventsByDateQuery.endBefore(date));
+                    // Upcoming
+                    case 0:
+                    default:
+                        return new OrganizerEventsListFragment(eventsByDateQuery.startAt(date));
                 }
             }
 
@@ -79,8 +82,6 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
         }).attach();
 
         // Returns to Organizer Welcome Page
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
+        backButton.setOnClickListener(v -> finish());
     }
 }

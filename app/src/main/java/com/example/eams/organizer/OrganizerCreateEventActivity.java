@@ -19,7 +19,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.R;
 import com.example.eams.event.Event;
-import com.example.eams.users.Attendee;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -46,13 +45,14 @@ import java.util.Locale;
 public class OrganizerCreateEventActivity extends AppCompatActivity {
 
     // ** INSTANCE VARIABLES **************************************************
+
     private Switch switchWidget;
     private boolean approvalIsAutomatic;
 
     //  ** INSTANCE METHODS **************************************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_organizer_create_event);
@@ -191,32 +191,34 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             }
 
             // Add new event to the database
-            createEvent(event);
-
-//            // PLACEHOLDER: add Registrations to the database
-//            createEventRegistration(new Attendee(inTitle,"nbrau104@uottawa.ca"));
-//            createEventRegistration(new Attendee(inTitle, "naomibraun321@gmail.com"));
+            writeEvent(event);
 
             // Display event details in TextView for verification
             TextView tvEventDetails = findViewById(R.id.tv_event_details);
-            tvEventDetails.setText(event.getTitle() + event.getDescription() + event.getDate()
-                    + event.getStartTime() + event.getEndTime() + event.getStreet() + event.getCity()
-                    + event.getProvince() + event.getPostalCode() + event.approvalIsAutomatic());
+            tvEventDetails.setText(
+                    event.getTitle() + event.getDescription() + event.getDate() + event.getStartTime() +
+                    event.getEndTime() + event.getStreet() + event.getCity() + event.getProvince() +
+                    event.getPostalCode() + event.approvalIsAutomatic()
+            );
         });
     }
 
     /**
-     * Adds Event to database with success and failure messages
-     * @param event
+     * Writes an Event to database with success and failure messages
+     *
+     * @param event event to be written to the database
      */
-    private void createEvent(Event event) {
-        DatabaseReference eventDatabaseReference = FirebaseDatabase.getInstance().getReference("events");
-        String eventKey = eventDatabaseReference.push().getKey();
+    private void writeEvent(Event event) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference eventsReference = databaseReference.child("events");
+        String eventKey = eventsReference.push().getKey();
 
         // Add the event to the database with success and failure toast messages
-        eventDatabaseReference.child(eventKey).setValue(event)
+        assert eventKey != null;
+        eventsReference.child(eventKey).setValue(event)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Failed to create event.", Toast.LENGTH_SHORT).show();
@@ -224,27 +226,33 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
 
         // Add 2 pending event registrations to begin with
         // TODO: Remove in deliverable 4
-        DatabaseReference approvedAttendeesRef = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+        DatabaseReference pendingAttendeeKeysReference = eventsReference.child(eventKey + "/pendingAttendeeKeys");
+        // Linkage from event
+        pendingAttendeeKeysReference.push().setValue("a1");
+        pendingAttendeeKeysReference.push().setValue("a2");
+        // Linkage from attendee
+        DatabaseReference approvedAttendeesRef = databaseReference.child("users/attendees/approved");
         approvedAttendeesRef.child("a1/attendeePendingEventRegistrations").push().setValue(eventKey);
         approvedAttendeesRef.child("a2/attendeePendingEventRegistrations").push().setValue(eventKey);
 
     }
 
-    // PLACEHOLDER
-    /**
-     * Adds Registration to event with success and failure messages
-     * @param event
-     */
-    private void createEventRegistration(Attendee event) {
-        DatabaseReference registrationDatabaseReference = FirebaseDatabase.getInstance().getReference("registrations");
-
-        // Add the event to the database with success and failure toast messages
-        registrationDatabaseReference.push().setValue(event)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Registration created successfully!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to create registration.", Toast.LENGTH_SHORT).show();
-                });
-    }
+//    // PLACEHOLDER
+//    /**
+//     * Adds Registration to event with success and failure messages
+//     *
+//     * @param event
+//     */
+//    private void createEventRegistration(Attendee event) {
+//        DatabaseReference registrationDatabaseReference = FirebaseDatabase.getInstance().getReference("registrations");
+//
+//        // Add the event to the database with success and failure toast messages
+//        registrationDatabaseReference.push().setValue(event)
+//                .addOnSuccessListener(aVoid -> {
+//                    Toast.makeText(this, "Registration created successfully!", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(e -> {
+//                    Toast.makeText(this, "Failed to create registration.", Toast.LENGTH_SHORT).show();
+//                });
+//    }
 }

@@ -1,10 +1,11 @@
 package com.example.eams.event;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Event implements Serializable {
+public class Event {
 
     // instance variables
     private String title;
@@ -17,11 +18,14 @@ public class Event implements Serializable {
     private String province;
     private String postalCode;
     private boolean approvalIsAutomatic;
+    private List<String> pendingAttendeeKeys;
+    private List<String> approvedAttendeeKeys;
     //private String organizerID;
 
     // required for firebase (?)
-    public Event() {    }
+    public Event() {
 
+    }
 
     /**
      * Parameterized constructor that creates a new Event with given information.
@@ -34,8 +38,7 @@ public class Event implements Serializable {
      * @param street
      * @param city
      * @param province
-     * @param postalCode
-     * //@param organizerID
+     * @param postalCode  //@param organizerID
      */
     public Event(
             String title,
@@ -60,6 +63,8 @@ public class Event implements Serializable {
         this.province = province;
         this.postalCode = postalCode;
         this.approvalIsAutomatic = approvalIsAutomatic;
+        this.pendingAttendeeKeys = new ArrayList<>();
+        this.approvedAttendeeKeys = new ArrayList<>();
         //this.organizerID = organizerID;
     }
 
@@ -139,9 +144,10 @@ public class Event implements Serializable {
 
     /**
      * Sets attendee registration approval to manual or automatic.
+     *
      * @param value is true if automatic, and false if manual
      */
-    public void setAutomaticApproval(boolean value){
+    public void setAutomaticApproval(boolean value) {
         approvalIsAutomatic = value;
     }
 
@@ -155,16 +161,29 @@ public class Event implements Serializable {
     }
 
     /**
+     * @return FireBase push key for pending attendees of an event
+     */
+    public List<String> getPendingAttendeeKeys() {
+        return pendingAttendeeKeys;
+    }
+
+    /**
+     * @return FireBase push key for approved attendees of an event
+     */
+    public List<String> getApprovedAttendeeKeys() {
+        return pendingAttendeeKeys;
+    }
+
+    /**
      * Gets the organizerID of the event.
      *
      * @return the organizerID of the event.
      */
     //public String getOrganizerID() {
-      //  return organizerID;
+    //  return organizerID;
     //}
 
     //TODO: validate fields - could potentially create address class to avoid reusing code already in RegisterUser class
-
     public void setTitle(String title) {
         this.title = title;
     }

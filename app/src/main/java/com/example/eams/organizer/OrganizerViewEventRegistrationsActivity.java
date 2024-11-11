@@ -27,8 +27,11 @@ import com.google.firebase.database.Query;
 
 public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
+    public final static String INTENT_EXTRA_NAME = "pushID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_organizer_view_event_registrations);
@@ -38,16 +41,18 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
             return insets;
         });
 
-        // initialize refs to views
+        // Initialize refs to views
         RecyclerView recyclerView = findViewById(R.id.rv_organizer_view_event_registrations);
         Button backButton = findViewById(R.id.btn_organizer_view_event_registrations_back);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+        // Get reference to database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference approvedAttendeesReference = databaseReference.child("users/attendees/approved");
 
-        String eventKey = getIntent().getStringExtra("pushKey");
-//        Query registeredAttendeesQuery = databaseReference.orderByChild("attendeePendingEventRegistrations").equalTo(eventKey);
-        Query registeredAttendeesQuery = databaseReference;
-        attachRecyclerViewAdapter(recyclerView, registeredAttendeesQuery, eventKey);
+        // Get the eventKey from the intent
+        String eventKey = getIntent().getStringExtra(INTENT_EXTRA_NAME);
+        Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
+        attachRecyclerViewAdapter(recyclerView, pendingAttendees, eventKey);
 
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
@@ -58,10 +63,10 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
      */
-    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(Query registeredAttendeesQuery) {
+    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(Query pendingAttendees) {
         return new FirebaseRecyclerOptions.Builder<Attendee>()
                 .setLifecycleOwner(this)
-                .setQuery(registeredAttendeesQuery, Attendee.class)
+                .setQuery(pendingAttendees, Attendee.class)
                 .build();
     }
 
@@ -72,11 +77,12 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
      */
     private void attachRecyclerViewAdapter(RecyclerView recyclerView, Query registeredAttendeesQuery, String eventKey) {
 
+        // Use a LinearLayout for the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseRecyclerOptions<Attendee> options = getFirebaseRecyclerOptions(registeredAttendeesQuery);
+        FirebaseRecyclerOptions<Attendee> recyclerOptions = getFirebaseRecyclerOptions(registeredAttendeesQuery);
 
-        FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder>(options) {
+        FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder>(recyclerOptions) {
 
             @NonNull
             @Override

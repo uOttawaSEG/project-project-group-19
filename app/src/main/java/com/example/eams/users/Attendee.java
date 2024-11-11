@@ -1,13 +1,11 @@
 package com.example.eams.users;
 
-import android.widget.Toast;
-
-import com.example.eams.event.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Attendee extends RegisterUser (and User). They can login in MainActivity or
@@ -23,10 +21,10 @@ import java.util.ArrayList;
 public class Attendee extends RegisterUser {
 
     // List of Event keys that Attendee has signed up for (pending approval)
-    ArrayList<String> attendeePendingEventRegistrations;
+    List<String> pendingEventRegistrationKeys;
 
     // List of Event keys that Attendee has signed up for (and Organizer has approved)
-    ArrayList<String> attendeeApprovedEventRegistrations;
+    List<String> approvedEventRegistrationKeys;
 
     // DO NOT REMOVE: Required for Firebase!!
     public Attendee() {
@@ -58,45 +56,28 @@ public class Attendee extends RegisterUser {
             String postalCode
     ) {
         super(email, password, firstName, lastName, phoneNumber, street, city, province, postalCode);
-        attendeePendingEventRegistrations = new ArrayList<>();
-        attendeeApprovedEventRegistrations = new ArrayList<>();
+        pendingEventRegistrationKeys = new ArrayList<>();
+        approvedEventRegistrationKeys = new ArrayList<>();
     }
 
     /**
-     * Getter method for the list of pending event registrations
-     * @return ArrayList of pending event registrations
+     * @return list of pending event registrations
      */
-    public ArrayList<String> getAttendeePendingEventRegistrations() {
-        return attendeePendingEventRegistrations;
+    public List<String> getPendingEventRegistrationKeys() {
+        return pendingEventRegistrationKeys;
     }
 
     /**
-     * Setter method for the list of pending event registrations
-     * @param attendeePendingEventRegistrations ArrayList of pending event registrations for Attendee
+     * @return list of approved event registrations
      */
-    public void setAttendeePendingEventRegistrations(ArrayList<String> attendeePendingEventRegistrations) {
-        this.attendeePendingEventRegistrations = attendeePendingEventRegistrations;
+    public List<String> getApprovedEventRegistrationKeys() {
+        return approvedEventRegistrationKeys;
     }
 
-    /**
-     * Getter method for the list of approved event registrations
-     * @return
-     */
-    public ArrayList<String> getAttendeeApprovedEventRegistrations() {
-        return attendeeApprovedEventRegistrations;
-    }
-    /**
-     * Setter method for the list of approved event registrations
-     * @return
-     */
-    public void setAttendeeApprovedEventRegistrations(ArrayList<String> attendeeApprovedEventRegistrations) {
-        this.attendeeApprovedEventRegistrations = attendeeApprovedEventRegistrations;
-    }
-
-    public void addEventRegistrationToPending (String eventKey){
+    public void addEventRegistrationToPending(String eventKey) {
 
         // Only add if attendee has not already signed up for event
-        if(! (attendeePendingEventRegistrations.contains(eventKey)) && ! (attendeeApprovedEventRegistrations.contains(eventKey)) ){
+        if (!(pendingEventRegistrationKeys.contains(eventKey)) && !(approvedEventRegistrationKeys.contains(eventKey))) {
 
             DatabaseReference eventInfo = FirebaseDatabase.getInstance()
                     .getReference("events")
@@ -104,18 +85,18 @@ public class Attendee extends RegisterUser {
                     .child("isApprovedAutomatically");
 
             eventInfo.get().addOnCompleteListener(task -> {
-                if(task.isSuccessful() && task.getResult().exists()){
+                if (task.isSuccessful() && task.getResult().exists()) {
                     Boolean isApprovedAutomatically = task.getResult().getValue(Boolean.class);
 
                     // If Event isApprovedAutomatically, add Event directly to attendeeApprovedEventRegistrations
-                    if(isApprovedAutomatically != null && isApprovedAutomatically){
-                        attendeeApprovedEventRegistrations.add(eventKey);
+                    if (isApprovedAutomatically != null && isApprovedAutomatically) {
+                        approvedEventRegistrationKeys.add(eventKey);
                         updateFirebaseAttendeeEventRegistrations();
                     }
 
                     // Otherwise, add Event to attendeePendingEventRegistrations to be approved/rejected by Organizer
-                    else{
-                        attendeePendingEventRegistrations.add(eventKey);
+                    else {
+                        pendingEventRegistrationKeys.add(eventKey);
                         updateFirebaseAttendeeEventRegistrations();
                     }
                 }
@@ -127,37 +108,37 @@ public class Attendee extends RegisterUser {
     // Move an Event from attendeePendingEventRegistrations to attendeeApprovedEventRegistrations
     public void approveEventRegistration(String eventKey) {
 
-        if (attendeePendingEventRegistrations.contains(eventKey)) {
+        if (pendingEventRegistrationKeys.contains(eventKey)) {
 
             String approvedEventKey = eventKey;
-            attendeePendingEventRegistrations.remove(eventKey);
-            attendeeApprovedEventRegistrations.add(approvedEventKey);
+            pendingEventRegistrationKeys.remove(eventKey);
+            approvedEventRegistrationKeys.add(approvedEventKey);
 
             updateFirebaseAttendeeEventRegistrations();
         }
     }
 
-    public void rejectEventRegistration(String eventKey){
-        if (attendeePendingEventRegistrations.contains(eventKey)) {
+    public void rejectEventRegistration(String eventKey) {
+        if (pendingEventRegistrationKeys.contains(eventKey)) {
 
-            attendeePendingEventRegistrations.remove(eventKey);
+            pendingEventRegistrationKeys.remove(eventKey);
             updateFirebaseAttendeeEventRegistrations();
         }
     }
 
     // Update event ArrayLists in Firebase
-    private void updateFirebaseAttendeeEventRegistrations(){
+    private void updateFirebaseAttendeeEventRegistrations() {
         DatabaseReference attendeesReference = FirebaseDatabase.getInstance().getReference("attendees");
 
         // Find this Attendee object in Firebase
         attendeesReference.orderByChild("email").equalTo(this.getEmail()).get().addOnCompleteListener(task -> {
 
-            if(task.isSuccessful() && task.getResult().exists()){
+            if (task.isSuccessful() && task.getResult().exists()) {
                 DataSnapshot attendeeSnapshot = task.getResult().getChildren().iterator().next();
                 String attendeeKey = attendeeSnapshot.getKey();
 
-                attendeesReference.child(attendeeKey).child("attendeePendingEventRegistrations").setValue(attendeePendingEventRegistrations);
-                attendeesReference.child(attendeeKey).child("attendeeApprovedEventRegistrations").setValue(attendeeApprovedEventRegistrations);
+                attendeesReference.child(attendeeKey).child("attendeePendingEventRegistrations").setValue(pendingEventRegistrationKeys);
+                attendeesReference.child(attendeeKey).child("attendeeApprovedEventRegistrations").setValue(approvedEventRegistrationKeys);
             }
         });
     }

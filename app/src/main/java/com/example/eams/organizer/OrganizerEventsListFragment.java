@@ -1,12 +1,12 @@
-package com.example.eams.event;
+package com.example.eams.organizer;
+
+import static com.example.eams.organizer.OrganizerViewEventRegistrationsActivity.INTENT_EXTRA_NAME;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,28 +14,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eams.MainActivity;
 import com.example.eams.R;
-import com.example.eams.organizer.OrganizerViewEventRegistrationsActivity;
+import com.example.eams.event.Event;
+import com.example.eams.event.EventViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
-public class ViewEventListFragment extends Fragment {
+public class OrganizerEventsListFragment extends Fragment {
 
-    private Query eventReference;
-    private FirebaseRecyclerAdapter<Event, EventViewHolder> adapter;
+    private final Query eventsReference;
 
     /**
      * Constructor for UpcomingViewEvent
      *
-     * @param eventRef a reference to the node representing the event
+     * @param eventsReference a reference to the node representing the event
      */
-    public ViewEventListFragment(Query eventRef) {
-        this.eventReference = eventRef;
+    public OrganizerEventsListFragment(Query eventsReference) {
+        this.eventsReference = eventsReference;
     }
 
     @Override
@@ -69,9 +65,9 @@ public class ViewEventListFragment extends Fragment {
         RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        FirebaseRecyclerOptions<Event> options = getFirebaseRecyclerOptions(eventReference);
+        FirebaseRecyclerOptions<Event> firebaseRecyclerOptions = getFirebaseRecyclerOptions(eventsReference);
 
-        adapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(options) {
+        FirebaseRecyclerAdapter<Event, EventViewHolder> adapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(firebaseRecyclerOptions) {
             @NonNull
             @Override
             public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -82,13 +78,10 @@ public class ViewEventListFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
 
-                holder.setViewRegistrationsOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
-                        intent.putExtra("pushKey", getRef(position).getKey());
-                        startActivity(intent);
-                    }
+                holder.setViewRegistrationsOnClickListener(view -> {
+                    Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
+                    intent.putExtra(INTENT_EXTRA_NAME, getRef(position).getKey());
+                    startActivity(intent);
                 });
 
                 holder.bind(event);

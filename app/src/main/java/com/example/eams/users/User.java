@@ -1,6 +1,5 @@
 package com.example.eams.users;
 
-import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
