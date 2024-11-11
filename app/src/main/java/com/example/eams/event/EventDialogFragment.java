@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,7 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.eams.R;
+import com.example.eams.admin.request.RejectableRequest;
+import com.example.eams.external.GMail;
 import com.example.eams.users.Attendee;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDialogFragment extends DialogFragment {
 
@@ -20,9 +29,13 @@ public class EventDialogFragment extends DialogFragment {
      * The attendee who has the info to be shown
      */
     private Attendee attendee;
+    private String eventKey;
 
-    public EventDialogFragment(Attendee attendee) {
+    public EventDialogFragment(Attendee attendee, String eventKey) {
+
         this.attendee = attendee;
+        this.eventKey = eventKey;
+
     }
 
     @NonNull
@@ -56,24 +69,53 @@ public class EventDialogFragment extends DialogFragment {
         tvProvince.setText(attendee.getProvince());
         tvPostalCode.setText(attendee.getPostalCode());
 
+        builder.setView(eventDialogView);
 
-        builder.setView(eventDialogView)
-                // Accept the request
-                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+        // Accept the request
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
 
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/attendees/approved");
+                databaseReference.orderByChild("email").equalTo(attendee.getEmail()).get().addOnCompleteListener(task -> {
+
+
+                    if(task.isSuccessful()){
+                        DataSnapshot attendeeSnapshot = task.getResult().getChildren().iterator().next();
+                        String attendeeKey = attendeeSnapshot.getKey();
+
+                        DatabaseReference attendeeReference = FirebaseDatabase.getInstance();
+
+                        userTypeRef.child("approved")
+                                .push()
+                                .setValue(model, (error, ref) -> {
+                                    if (error != null) {
+                                        Log.e("firebase", "Failed to approve user");
+                                        return;
+                                    }
+                                    currentUserRef.removeValue();
+                                });
                     }
-                })
+                });
+            }
+        })
                 // Reject the request
-                .setNegativeButton("Reject", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        userTypeRef.child("rejected")
+                                .push()
+                                .setValue(model, (error, ref) -> {
+                                    if (error != null) {
+                                        Log.e("firebase", "Failed to reject user");
+                                    }
+                                    currentUserRef.removeValue();
+                                });
                         dialog.dismiss();
                     }
                 });
 
-        // Create and return
-        return builder.create();
+            // Create and return
+            return builder.create();
+        }
     }
-
 }

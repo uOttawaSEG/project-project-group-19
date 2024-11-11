@@ -45,6 +45,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
         String eventKey = getIntent().getStringExtra("pushKey");
         Query registeredAttendeesQuery = databaseReference.orderByChild("requestsPending").equalTo(eventKey);
+        attachRecyclerViewAdapter(this, registeredAttendeesQuery, eventKey);
 
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
@@ -67,7 +68,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
      *
      * @param view the View containing the RecyclerView
      */
-    private void attachRecyclerViewAdapter(View view, Query registeredAttendeesQuery) {
+    private void attachRecyclerViewAdapter(View view, Query registeredAttendeesQuery, String eventKey) {
 
         RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -78,7 +79,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull EventRegistrationViewHolder holder, int position, @NonNull Attendee attendee) {
                 holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
-                    EventDialogFragment dialog = new EventDialogFragment(attendee);
+                    EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
                     dialog.show(getSupportFragmentManager(), "attendeeDetails");
                 });
                 holder.bind(attendee);
