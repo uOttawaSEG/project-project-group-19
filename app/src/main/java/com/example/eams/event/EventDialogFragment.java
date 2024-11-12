@@ -110,5 +110,6 @@ public class EventDialogFragment extends DialogFragment {
         // Create and return
         return builder.create();
     }
+
 }
 

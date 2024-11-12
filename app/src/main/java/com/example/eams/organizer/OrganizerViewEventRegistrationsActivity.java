@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.example.eams.event.EventRegistrationAttendeeViewHolder;
 import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -44,6 +46,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         // Initialize refs to views
         RecyclerView recyclerView = findViewById(R.id.rv_organizer_view_event_registrations);
         Button backButton = findViewById(R.id.btn_organizer_view_event_registrations_back);
+        Button approveAllButton = findViewById(R.id.btn_organizer_approval_all_event_registrations);
 
         // Get reference to database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -58,7 +61,38 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             finish();
         });
+        //Approves all attendees
+        approveAllButton.setOnClickListener(v -> {
+            approveAllAttendees(eventKey);
+        });
     }
+    /**
+     * Approves all attendees
+     */
+    private void approveAllAttendees(String eventKey) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference attendeesReference = databaseReference.child("users/attendees/approved");
+
+        Query pendingAttendeesQuery = attendeesReference.orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
+
+        pendingAttendeesQuery.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                for (DataSnapshot attendeeSnapshot : task.getResult().getChildren()) {
+                    Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+
+                    if (attendee != null) {
+                        attendee.approveEventRegistration(eventKey);
+
+                        attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
+                    }
+                }
+                Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase

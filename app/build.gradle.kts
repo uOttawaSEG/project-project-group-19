@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.firebase.ui.database)
     implementation(libs.google.firebase.auth)
+    implementation(libs.junit.junit)
+    implementation(libs.ext.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

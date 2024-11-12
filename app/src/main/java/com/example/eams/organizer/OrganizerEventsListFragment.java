@@ -2,14 +2,19 @@ package com.example.eams.organizer;
 
 import static com.example.eams.organizer.OrganizerViewEventRegistrationsActivity.INTENT_EXTRA_NAME;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.collection.CircularArray;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +22,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eams.R;
 import com.example.eams.event.Event;
 import com.example.eams.event.EventViewHolder;
+import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 public class OrganizerEventsListFragment extends Fragment {
 
     private final Query eventsReference;
+
 
     /**
      * Constructor for UpcomingViewEvent
@@ -78,6 +90,23 @@ public class OrganizerEventsListFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
 
+                holder.setOnLongClickListener(v -> {
+
+                    String eventKey = getRef(position).getKey();
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Delete Event")
+                            .setMessage("Are you sure you want to delete this event?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                getRef(position).removeValue();
+                            })
+                            .setNegativeButton("No", null)  // Handle "No" click
+                            .show();
+
+
+                    return true; // Return true to indicate the long-click event was handled
+                });
+
                 holder.setViewRegistrationsOnClickListener(view -> {
                     Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
                     intent.putExtra(INTENT_EXTRA_NAME, getRef(position).getKey());
@@ -86,11 +115,29 @@ public class OrganizerEventsListFragment extends Fragment {
 
                 holder.bind(event);
 
+                holder.setDeleteButtonListener(v -> {
+                    String eventKey = getRef(position).getKey();
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Delete Event")
+                            .setMessage("Are you sure you want to delete this event?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                getRef(position).removeValue();
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                });
+                holder.setViewRegistrationsOnClickListener(view -> {
+                    Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
+                    intent.putExtra(INTENT_EXTRA_NAME, getRef(position).getKey());
+                    startActivity(intent);
+                });
             }
 
         };
 
         rv.setAdapter(adapter);
+
+    }
     }
 
-}
+

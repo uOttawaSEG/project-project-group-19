@@ -1,5 +1,7 @@
 package com.example.eams.event;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.view.View;
 
 /**
@@ -25,6 +27,8 @@ public interface ViewEvent {
      * @param l the OnClickListener to be set
      */
     public void setViewEventsOnClickListener(View.OnClickListener l);
+
+
 }
 
 

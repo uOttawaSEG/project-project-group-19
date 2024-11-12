@@ -32,6 +32,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
     private TextView tvPostalCode;
     private Button btnViewRegistrations;
 
+    private Button deleteEvent;
+
     /**
      * Constructor for a EventViewHolder
      * @param itemView the View used to initialize the EventViewHolder
@@ -48,6 +50,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         setTvProvince(R.id.event_province);
         setTvPostalCode(R.id.event_postal_code);
         setBtnViewRegistrations(R.id.btn_event_view_registrations);
+        deleteEvent = itemView.findViewById(R.id.btn_delete_event);
     }
 
     /**
@@ -156,6 +159,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         btnViewRegistrations.setOnClickListener(l);
     }
 
+    public void setOnLongClickListener(View.OnLongClickListener listener) {
+        this.setOnLongClickListener(listener);
+    }
+
     /**
      * Sets the content of the First Name TextView
      * @param title the content to be set
@@ -254,6 +261,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
             return;
         }
         tvPostalCode.setText(postalCode);
+    }
+
+    public void setDeleteButtonListener(View.OnClickListener listener) {
+        deleteEvent.setOnClickListener(listener);
     }
 }
 
