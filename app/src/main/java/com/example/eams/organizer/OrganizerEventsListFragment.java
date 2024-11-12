@@ -65,7 +65,7 @@ public class OrganizerEventsListFragment extends Fragment {
      */
     private void attachRecyclerViewAdapter(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.fragment_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         FirebaseRecyclerOptions<Event> firebaseRecyclerOptions = getFirebaseRecyclerOptions(eventsReference);
 
@@ -79,23 +79,6 @@ public class OrganizerEventsListFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
-
-                holder.setOnLongClickListener(v -> {
-
-                    String eventKey = getRef(position).getKey();
-
-                    new AlertDialog.Builder(getContext())
-                            .setTitle("Delete Event")
-                            .setMessage("Are you sure you want to delete this event?")
-                            .setPositiveButton("Yes", (dialog, which) -> {
-                                getRef(position).removeValue();
-                            })
-                            .setNegativeButton("No", null)  // Handle "No" click
-                            .show();
-
-
-                    return true; // Return true to indicate the long-click event was handled
-                });
 
                 holder.setViewRegistrationsOnClickListener(view -> {
                     Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);

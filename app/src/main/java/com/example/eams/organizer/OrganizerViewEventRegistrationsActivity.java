@@ -57,13 +57,15 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys/" + eventKey).equalTo(true);
         attachRecyclerViewAdapter(recyclerView, pendingAttendees, eventKey);
 
+        //Approves all attendees
+//        approveAllButton.setOnClickListener(v -> {
+//            approveAllAttendees(eventKey);
+//        });
+
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
+
             finish();
-        });
-        //Approves all attendees
-        approveAllButton.setOnClickListener(v -> {
-            approveAllAttendees(eventKey);
         });
     }
     /**
@@ -81,7 +83,6 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
                     Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
 
                     if (attendee != null) {
-                        attendee.approveEventRegistration(eventKey);
 
                         attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
                     }
@@ -112,7 +113,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
     private void attachRecyclerViewAdapter(RecyclerView recyclerView, Query registeredAttendeesQuery, String eventKey) {
 
         // Use a LinearLayout for the RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         FirebaseRecyclerOptions<Attendee> recyclerOptions = getFirebaseRecyclerOptions(registeredAttendeesQuery);
 
@@ -136,6 +137,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
         };
 
+        recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(adapter);
     }
 }

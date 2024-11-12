@@ -159,10 +159,6 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         btnViewRegistrations.setOnClickListener(l);
     }
 
-    public void setOnLongClickListener(View.OnLongClickListener listener) {
-        this.setOnLongClickListener(listener);
-    }
-
     /**
      * Sets the content of the First Name TextView
      * @param title the content to be set
