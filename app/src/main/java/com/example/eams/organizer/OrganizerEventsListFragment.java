@@ -3,18 +3,14 @@ package com.example.eams.organizer;
 import static com.example.eams.organizer.OrganizerViewEventRegistrationsActivity.INTENT_EXTRA_NAME;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.collection.CircularArray;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,14 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.eams.R;
 import com.example.eams.event.Event;
 import com.example.eams.event.EventViewHolder;
-import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 public class OrganizerEventsListFragment extends Fragment {
@@ -74,8 +64,8 @@ public class OrganizerEventsListFragment extends Fragment {
      * @param view the View containing the RecyclerView
      */
     private void attachRecyclerViewAdapter(View view) {
-        RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerView recyclerView = view.findViewById(R.id.fragment_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FirebaseRecyclerOptions<Event> firebaseRecyclerOptions = getFirebaseRecyclerOptions(eventsReference);
 
@@ -135,9 +125,7 @@ public class OrganizerEventsListFragment extends Fragment {
 
         };
 
-        rv.setAdapter(adapter);
-
-    }
+        recyclerView.setAdapter(adapter);
     }
 
-
+}

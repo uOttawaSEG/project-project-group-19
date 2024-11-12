@@ -18,8 +18,8 @@ public class Event {
     private String province;
     private String postalCode;
     private boolean approvalIsAutomatic;
-    private List<String> pendingAttendeeKeys;
-    private List<String> approvedAttendeeKeys;
+//    private List<String> pendingAttendeeKeys;
+//    private List<String> approvedAttendeeKeys;
     //private String organizerID;
 
     // required for firebase (?)
@@ -63,8 +63,8 @@ public class Event {
         this.province = province;
         this.postalCode = postalCode;
         this.approvalIsAutomatic = approvalIsAutomatic;
-        this.pendingAttendeeKeys = new ArrayList<>();
-        this.approvedAttendeeKeys = new ArrayList<>();
+//        this.pendingAttendeeKeys = new ArrayList<>();
+//        this.approvedAttendeeKeys = new ArrayList<>();
         //this.organizerID = organizerID;
     }
 
@@ -163,16 +163,16 @@ public class Event {
     /**
      * @return FireBase push key for pending attendees of an event
      */
-    public List<String> getPendingAttendeeKeys() {
-        return pendingAttendeeKeys;
-    }
+//    public List<String> getPendingAttendeeKeys() {
+//        return pendingAttendeeKeys;
+//    }
 
     /**
      * @return FireBase push key for approved attendees of an event
      */
-    public List<String> getApprovedAttendeeKeys() {
-        return pendingAttendeeKeys;
-    }
+//    public List<String> getApprovedAttendeeKeys() {
+//        return pendingAttendeeKeys;
+//    }
 
     /**
      * Gets the organizerID of the event.

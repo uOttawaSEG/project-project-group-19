@@ -54,7 +54,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
         // Get the eventKey from the intent
         String eventKey = getIntent().getStringExtra(INTENT_EXTRA_NAME);
-        Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
+        Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys/" + eventKey).equalTo(true);
         attachRecyclerViewAdapter(recyclerView, pendingAttendees, eventKey);
 
         // Returns to Organizer View Events Activity
