@@ -16,10 +16,10 @@ import android.util.Log;
 
 public class GMail {
 
-    final String emailPort = "587";// gmail's smtp port
-    final String smtpAuth = "true";
-    final String starttls = "true";
-    final String emailHost = "smtp.gmail.com";
+    final String EMAIL_PORT = "587";// gmail's smtp port
+    final String SMTP_AUTH = "true";
+    final String START_TLS = "true";
+    final String EMAIL_HOST = "smtp.gmail.com";
 
     String fromEmail;
     String fromPassword;
@@ -43,9 +43,9 @@ public class GMail {
         this.emailBody = emailBody;
 
         emailProperties = System.getProperties();
-        emailProperties.put("mail.smtp.port", emailPort);
-        emailProperties.put("mail.smtp.auth", smtpAuth);
-        emailProperties.put("mail.smtp.starttls.enable", starttls);
+        emailProperties.put("mail.smtp.port", EMAIL_PORT);
+        emailProperties.put("mail.smtp.auth", SMTP_AUTH);
+        emailProperties.put("mail.smtp.starttls.enable", START_TLS);
         Log.i("GMail", "Mail server properties set.");
     }
 
@@ -71,7 +71,7 @@ public class GMail {
     public void sendEmail() throws MessagingException {
 
         Transport transport = mailSession.getTransport("smtp");
-        transport.connect(emailHost, fromEmail, fromPassword);
+        transport.connect(EMAIL_HOST, fromEmail, fromPassword);
         Log.i("GMail","allrecipients: "+emailMessage.getAllRecipients());
         transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
         transport.close();

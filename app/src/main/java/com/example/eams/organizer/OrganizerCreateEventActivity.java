@@ -2,6 +2,7 @@ package com.example.eams.organizer;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +21,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eams.R;
 import com.example.eams.event.Event;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,7 +32,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -197,8 +204,8 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             TextView tvEventDetails = findViewById(R.id.tv_event_details);
             tvEventDetails.setText(
                     event.getTitle() + event.getDescription() + event.getDate() + event.getStartTime() +
-                    event.getEndTime() + event.getStreet() + event.getCity() + event.getProvince() +
-                    event.getPostalCode() + event.approvalIsAutomatic()
+                            event.getEndTime() + event.getStreet() + event.getCity() + event.getProvince() +
+                            event.getPostalCode() + event.approvalIsAutomatic()
             );
         });
     }
@@ -224,16 +231,31 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to create event.", Toast.LENGTH_SHORT).show();
                 });
 
-        // Add 2 pending event registrations to begin with
         // TODO: Remove in deliverable 4
-        DatabaseReference pendingAttendeeKeysReference = eventsReference.child(eventKey + "/pendingAttendeeKeys");
+        // Add 2 pending event registrations to begin with
+
         // Linkage from event
-        pendingAttendeeKeysReference.push().setValue("a1");
-        pendingAttendeeKeysReference.push().setValue("a2");
+        DatabaseReference eventReference = eventsReference.child(eventKey);
+
         // Linkage from attendee
         DatabaseReference approvedAttendeesRef = databaseReference.child("users/attendees/approved");
-        approvedAttendeesRef.child("a1/attendeePendingEventRegistrations").push().setValue(eventKey);
-        approvedAttendeesRef.child("a2/attendeePendingEventRegistrations").push().setValue(eventKey);
+
+        // In Deliverable 4, an Attendee will check if Event approvalIsAutomatic when they sign up to the Event.
+        // If the Event approvalIsAutomatic, the Event will be sent straight to attendeeApprovedEventRegistrations
+        // instead of attendeePendingEventRegistrations. For now, this will be done manually.
+
+        // Update Firebase
+        if (event.approvalIsAutomatic()) {
+            eventReference.child("approvedAttendeeKeys/a1").setValue(true);
+            eventReference.child("approvedAttendeeKeys/a2").setValue(true);
+            approvedAttendeesRef.child("a1/approvedEventRegistrationKeys/" + eventKey).setValue(true);
+            approvedAttendeesRef.child("a2/approvedEventRegistrationKeys/" + eventKey).setValue(true);
+        } else {
+            eventReference.child("pendingAttendeeKeys/a1").setValue(true);
+            eventReference.child("pendingAttendeeKeys/a2").setValue(true);
+            approvedAttendeesRef.child("a1/pendingEventRegistrationKeys/" + eventKey).setValue(true);
+            approvedAttendeesRef.child("a2/pendingEventRegistrationKeys/" + eventKey).setValue(true);
+        }
 
     }
 

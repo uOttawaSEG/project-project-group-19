@@ -62,8 +62,8 @@ public class OrganizerEventsListFragment extends Fragment {
      * @param view the View containing the RecyclerView
      */
     private void attachRecyclerViewAdapter(View view) {
-        RecyclerView rv = view.findViewById(R.id.fragment_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerView recyclerView = view.findViewById(R.id.fragment_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         FirebaseRecyclerOptions<Event> firebaseRecyclerOptions = getFirebaseRecyclerOptions(eventsReference);
 
@@ -90,7 +90,7 @@ public class OrganizerEventsListFragment extends Fragment {
 
         };
 
-        rv.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
 }
