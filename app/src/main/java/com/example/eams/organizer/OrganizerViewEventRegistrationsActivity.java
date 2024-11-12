@@ -61,10 +61,10 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys/" + eventKey).equalTo(true);
         attachRecyclerViewAdapter(recyclerView, pendingAttendees, eventKey);
 
-        //Approves all attendees
-//        approveAllButton.setOnClickListener(v -> {
-//            approveAllAttendees(eventKey);
-//        });
+        // Approves all attendees
+        approveAllButton.setOnClickListener(v -> {
+            approveAllAttendees(eventKey);
+        });
 
         // Returns to Organizer View Events Activity
         backButton.setOnClickListener(v -> {
@@ -72,6 +72,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
             finish();
         });
     }
+
     /**
      * Approves all attendees
      */
@@ -79,55 +80,41 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendeesReference = databaseReference.child("users/attendees/approved");
 
-        Query pendingAttendeesQuery = databaseReference.child("users/attendees/pending")
-                .orderByChild("pendingEventRegistrationKeys")
-                .equalTo(eventKey);
+        Query pendingAttendeesQuery = databaseReference.child("users/attendees/pending").orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
 
         pendingAttendeesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 if (dataSnapshot.exists()) {
-                     for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()) {
-                         Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()) {
+                        Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
 
-                    if (attendee != null) {
+                        if (attendee != null) {
+                            attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
 
-                        attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
+                            databaseReference.child("users/attendees/pending").child(attendeeSnapshot.getKey()).removeValue();
+                        }
                     }
+                    Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
-                         if (attendee != null) {
-                             attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
-
-                             databaseReference.child("users/attendees/pending").child(attendeeSnapshot.getKey()).removeValue();
-                         }
-                     }
-
-                     Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
-                 } else {
-                     Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
-                 }
-
-             }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "Error retrieving from Database.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
 
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
      */
     public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(Query pendingAttendees) {
-        return new FirebaseRecyclerOptions.Builder<Attendee>()
-                .setLifecycleOwner(this)
-                .setQuery(pendingAttendees, Attendee.class)
+        return new FirebaseRecyclerOptions.Builder<Attendee>().
+                setLifecycleOwner(this).
+                setQuery(pendingAttendees, Attendee.class)
                 .build();
     }
 
@@ -165,3 +152,4 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
     }
+}
