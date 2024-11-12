@@ -23,9 +23,13 @@ import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
@@ -75,12 +79,16 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendeesReference = databaseReference.child("users/attendees/approved");
 
-        Query pendingAttendeesQuery = attendeesReference.orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
+        Query pendingAttendeesQuery = databaseReference.child("users/attendees/pending")
+                .orderByChild("pendingEventRegistrationKeys")
+                .equalTo(eventKey);
 
-        pendingAttendeesQuery.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult().exists()) {
-                for (DataSnapshot attendeeSnapshot : task.getResult().getChildren()) {
-                    Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+        pendingAttendeesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 if (dataSnapshot.exists()) {
+                     for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()) {
+                         Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
 
                     if (attendee != null) {
 
@@ -90,8 +98,26 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
                 Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
+                         if (attendee != null) {
+                             attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
+
+                             databaseReference.child("users/attendees/pending").child(attendeeSnapshot.getKey()).removeValue();
+                         }
+                     }
+
+                     Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
+                 } else {
+                     Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
+                 }
+
+             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "Error retrieving from Database.", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 
@@ -137,7 +163,5 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
 
         };
 
-        recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(adapter);
     }
-}
