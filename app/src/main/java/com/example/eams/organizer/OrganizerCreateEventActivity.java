@@ -1,6 +1,7 @@
 package com.example.eams.organizer;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -59,6 +60,10 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
     //  ** INSTANCE METHODS **************************************************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        String organizerKey = intent.getStringExtra("databaseKey");
+
         // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -176,6 +181,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     inCity,
                     inProvince,
                     inPostalCode,
+                    organizerKey,
                     approvalIsAutomatic
             );
 
@@ -241,40 +247,20 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
         DatabaseReference approvedAttendeesRef = databaseReference.child("users/attendees/approved");
 
         // In Deliverable 4, an Attendee will check if Event approvalIsAutomatic when they sign up to the Event.
-        // If the Event approvalIsAutomatic, the Event will be sent straight to attendeeApprovedEventRegistrations
-        // instead of attendeePendingEventRegistrations. For now, this will be done manually.
+        // If the Event approvalIsAutomatic, the attendee's eventsRegisteredTo value will be set to "approved" immediately
 
         // Update Firebase
         if (event.approvalIsAutomatic()) {
-            eventReference.child("approvedAttendeeKeys/a1").setValue(true);
-            eventReference.child("approvedAttendeeKeys/a2").setValue(true);
-            approvedAttendeesRef.child("a1/approvedEventRegistrationKeys/" + eventKey).setValue(true);
-            approvedAttendeesRef.child("a2/approvedEventRegistrationKeys/" + eventKey).setValue(true);
+            eventReference.child("registeredAttendees/a1").setValue("approved");
+            eventReference.child("registeredAttendees/a2").setValue("approved");
+            approvedAttendeesRef.child("a1/eventsRegisteredTo/" + eventKey).setValue("approved");
+            approvedAttendeesRef.child("a2/eventsRegisteredTo/" + eventKey).setValue("approved");
         } else {
-            eventReference.child("pendingAttendeeKeys/a1").setValue(true);
-            eventReference.child("pendingAttendeeKeys/a2").setValue(true);
-            approvedAttendeesRef.child("a1/pendingEventRegistrationKeys/" + eventKey).setValue(true);
-            approvedAttendeesRef.child("a2/pendingEventRegistrationKeys/" + eventKey).setValue(true);
+            eventReference.child("registeredAttendees/a1").setValue("pending");
+            eventReference.child("registeredAttendees/a2").setValue("pending");
+            approvedAttendeesRef.child("a1/eventsRegisteredTo/" + eventKey).setValue("pending");
+            approvedAttendeesRef.child("a2/eventsRegisteredTo/" + eventKey).setValue("pending");
         }
 
     }
-
-//    // PLACEHOLDER
-//    /**
-//     * Adds Registration to event with success and failure messages
-//     *
-//     * @param event
-//     */
-//    private void createEventRegistration(Attendee event) {
-//        DatabaseReference registrationDatabaseReference = FirebaseDatabase.getInstance().getReference("registrations");
-//
-//        // Add the event to the database with success and failure toast messages
-//        registrationDatabaseReference.push().setValue(event)
-//                .addOnSuccessListener(aVoid -> {
-//                    Toast.makeText(this, "Registration created successfully!", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(e -> {
-//                    Toast.makeText(this, "Failed to create registration.", Toast.LENGTH_SHORT).show();
-//                });
-//    }
 }

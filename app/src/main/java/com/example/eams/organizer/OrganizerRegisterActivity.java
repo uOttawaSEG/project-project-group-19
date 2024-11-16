@@ -160,6 +160,7 @@ public class OrganizerRegisterActivity extends AppCompatActivity {
 
         // Generate unique key for new entry
         String key = organizersDatabaseReference.push().getKey();
+        organizer.setDatabaseKey(key);
 
         // Add the user to the database
         organizersDatabaseReference.child(key).setValue(organizer);

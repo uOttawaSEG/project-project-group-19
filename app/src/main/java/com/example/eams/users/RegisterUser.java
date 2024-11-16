@@ -23,6 +23,7 @@ public abstract class RegisterUser extends User {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String databaseKey;
 
     private String street;
     private String city;
@@ -128,6 +129,18 @@ public abstract class RegisterUser extends User {
     }
 
     /**
+     * Gets the database (Firebase) key of the user.
+     * @return the database key of the user.
+     */
+    public String getDatabaseKey() {return databaseKey; }
+
+    /**
+     * Sets the database (Firebase) key of the user.
+     * @param databaseKey the key to set.
+     */
+    public void setDatabaseKey(String databaseKey) {this.databaseKey = databaseKey;}
+
+    /**
      * Gets the street address of the user.
      *
      * @return the street address of the user.
@@ -178,6 +191,7 @@ public abstract class RegisterUser extends User {
         this.postalCode = postalCode;
     }
 
+    // Validation Methods
     /**
      * Validates the first name
      *

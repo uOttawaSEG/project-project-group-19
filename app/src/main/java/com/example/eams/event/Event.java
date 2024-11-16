@@ -10,6 +10,7 @@ public class Event {
     // instance variables
     private String title;
     private String description;
+
     private String date;
     private String startTime;
     private String endTime;
@@ -17,12 +18,12 @@ public class Event {
     private String city;
     private String province;
     private String postalCode;
-    private boolean approvalIsAutomatic;
-//    private List<String> pendingAttendeeKeys;
-//    private List<String> approvedAttendeeKeys;
-    //private String organizerID;
 
-    // required for firebase (?)
+    private String databaseKey;
+    private String organizerKey;
+    private boolean approvalIsAutomatic;
+
+    // required for firebase (!)
     public Event() {
 
     }
@@ -50,8 +51,8 @@ public class Event {
             String city,
             String province,
             String postalCode,
+            String organizerKey,
             boolean approvalIsAutomatic
-            //String organizerID
     ) {
         this.title = title;
         this.description = description;
@@ -62,10 +63,8 @@ public class Event {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
+        this.organizerKey = organizerKey;
         this.approvalIsAutomatic = approvalIsAutomatic;
-//        this.pendingAttendeeKeys = new ArrayList<>();
-//        this.approvedAttendeeKeys = new ArrayList<>();
-        //this.organizerID = organizerID;
     }
 
     // Getters
@@ -143,15 +142,6 @@ public class Event {
     }
 
     /**
-     * Sets attendee registration approval to manual or automatic.
-     *
-     * @param value is true if automatic, and false if manual
-     */
-    public void setAutomaticApproval(boolean value) {
-        approvalIsAutomatic = value;
-    }
-
-    /**
      * Determines if attendee registration is approved automatically or manually.
      *
      * @return true if attendee registration is set to approved automatically.
@@ -161,64 +151,122 @@ public class Event {
     }
 
     /**
-     * @return FireBase push key for pending attendees of an event
+     * Gets the event's database key.
+     * @return the database key of the event
      */
-//    public List<String> getPendingAttendeeKeys() {
-//        return pendingAttendeeKeys;
-//    }
+    public String getDatabaseKey(){
+        return databaseKey;
+    }
 
     /**
-     * @return FireBase push key for approved attendees of an event
-     */
-//    public List<String> getApprovedAttendeeKeys() {
-//        return pendingAttendeeKeys;
-//    }
-
-    /**
-     * Gets the organizerID of the event.
+     * Gets the organizer of the event's database key.
      *
-     * @return the organizerID of the event.
+     * @return the database key of the organizer.
      */
-    //public String getOrganizerID() {
-    //  return organizerID;
-    //}
+    public String getOrganizerKey() {
+      return organizerKey;
+    }
 
-    //TODO: validate fields - could potentially create address class to avoid reusing code already in RegisterUser class
+    // Setters
+
+    /**
+     * Sets the title of the event.
+     * @param title the title to set the event to.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Sets the description of the event
+     * @param description the new event description to set.
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Sets the date of the event.
+     * @param date the date of the event in string format.
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * Sets the start time of the event.
+     * @param startTime the start time of the event. Must be in 30 minute increments.
+     */
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Sets the end time of the event.
+     * @param endTime the end time of the event. Must be in 30 minute increments.
+     */
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     * Sets the street of the event.
+     * @param street the street of the event.
+     */
     public void setStreet(String street) {
         this.street = street;
     }
 
+    /**
+     * Sets the city of the event.
+     * @param city the city of the event.
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Sets the province of the event.
+     * @param province the province of the event.
+     */
     public void setProvince(String province) {
         this.province = province;
     }
 
+    /**
+     * Sets the postal code of the event.
+     * @param postalCode the postal code of the event.
+     */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+
+    /**
+     * Sets the event's database key.
+     * @param databaseKey the database key of the event.
+     */
+    public void setDatabaseKey(String databaseKey){
+        this.databaseKey = databaseKey;
+    }
+
+    /**
+     * Sets the event organizer's key.
+     * @param organizerKey the key of the event's organizer.
+     */
+    public void setOrganizerKey(String organizerKey){
+        this.organizerKey = organizerKey;
+    }
+
+    /**
+     * Sets attendee registration approval to manual or automatic.
+     *
+     * @param value is true if automatic, and false if manual
+     */
+    public void setAutomaticApproval(boolean value) {
+        approvalIsAutomatic = value;
+    }
+
+    // Validation Methods
 
     public boolean titleIsValid() {
         return !title.isEmpty();

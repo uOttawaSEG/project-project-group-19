@@ -162,6 +162,7 @@ public class AttendeeRegisterActivity extends AppCompatActivity {
 
         // Generate unique key for new entry
         String key = attendeeDatabaseReference.push().getKey();
+        attendee.setDatabaseKey(key);
 
         // Add the user to the database
         attendeeDatabaseReference.child(key).setValue(attendee);

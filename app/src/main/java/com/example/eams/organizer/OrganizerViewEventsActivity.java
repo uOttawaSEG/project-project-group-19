@@ -1,5 +1,6 @@
 package com.example.eams.organizer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -14,6 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.eams.R;
+import com.example.eams.users.Organizer;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +28,10 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        String organizerKey = intent.getStringExtra("databaseKey");
+
         // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);

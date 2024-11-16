@@ -28,6 +28,11 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Get key of signed-in Organizer
+        Intent intent = getIntent();
+        String organizerKey = intent.getStringExtra("databaseKey");
+
         // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -50,7 +55,10 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
 
         // go to view events page
         viewEventsButton.setOnClickListener(v -> {
-            startActivity(new Intent(OrganizerWelcomeActivity.this, OrganizerViewEventsActivity.class));
+            Intent viewEventsIntent = new Intent(OrganizerWelcomeActivity.this, OrganizerViewEventsActivity.class);
+            viewEventsIntent.putExtra("organizerKey", organizerKey);
+            startActivity(viewEventsIntent);
+
         });
 
         // Returns organizer to login page (MainActivity)

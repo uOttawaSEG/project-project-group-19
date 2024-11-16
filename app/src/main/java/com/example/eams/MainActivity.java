@@ -26,6 +26,7 @@ import com.example.eams.organizer.OrganizerWelcomeActivity;
 import com.example.eams.users.Admin;
 import com.example.eams.users.Attendee;
 import com.example.eams.users.Organizer;
+import com.example.eams.users.RegisterUser;
 import com.example.eams.users.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -34,16 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.Iterator;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
-
-import android.app.NotificationManager;
-import androidx.core.app.NotificationCompat;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 
 /**
  * AttendeeRegisterActivity allows a User to register as an Attendee
@@ -142,13 +133,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     DataSnapshot dataSnapshot = task.getResult();
 
                     // Search within approved users
-                    if (userIsFound(dataSnapshot, "approved", inEmail, inPassword)) {
+                    User approvedUserFound = userFound(dataSnapshot, "approved", inEmail, inPassword);
+                    if (approvedUserFound != null) {
+
+                        if(approvedUserFound instanceof RegisterUser){
+                            String approvedUserKey = ((RegisterUser) approvedUserFound).getDatabaseKey();
+                            loginIntent.putExtra("databaseKey", approvedUserKey);
+                        }
+
                         startActivity(loginIntent);
                         return;
                     }
 
                     // Search within rejected users
-                    if (userIsFound(dataSnapshot, "rejected", inEmail, inPassword)) {
+                    if (userFound(dataSnapshot, "rejected", inEmail, inPassword) != null) {
                         Snackbar.make(
                                 loginButton,
                                 "User Registration is rejected, please contact the Admin to resolve the issue: 999-999-9999",
@@ -158,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
 
                     // Search withing users waiting for approval
-                    if (userIsFound(dataSnapshot, "pending", inEmail, inPassword)) {
+                    if (userFound(dataSnapshot, "pending", inEmail, inPassword) != null) {
                         Snackbar.make(
                                 loginButton,
                                 "User registration awaiting approval, please check back later.",
@@ -198,9 +196,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     error.show();
             }
         });
+
     }
 
-    private boolean userIsFound(DataSnapshot dataSnapshot, String userStatus, String inEmail, String inPassword) {
+    private User userFound(DataSnapshot dataSnapshot, String userStatus, String inEmail, String inPassword) {
         // For iterating through all child objects of users in a specific state
         Iterator<DataSnapshot> iterator = dataSnapshot.child(userStatus).getChildren().iterator();
 
@@ -223,12 +222,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             // If user found
             if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {
-                return true;
+                return user;
             }
         }
 
         // Reached if user not found
-        return false;
+        return null;
     }
 
     /**

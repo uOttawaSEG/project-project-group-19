@@ -72,6 +72,8 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                     Log.e("firebase", "Failed to approve user");
                                     return;
                                 }
+
+                                // TODO (MOISE): SEND PUSH NOTIFICATION WHEN USER IS ACCEPTED (AS IN DELIVERABLE 2)
                                 Thread thread = new Thread(new Runnable() {
                                     @Override
                                     public void run() {
