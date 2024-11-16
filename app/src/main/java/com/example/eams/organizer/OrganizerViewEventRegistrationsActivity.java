@@ -79,25 +79,28 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
     private void approveAllAttendees(String eventKey) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendeesReference = databaseReference.child("users/attendees/approved");
+        DatabaseReference eventsReference = databaseReference.child("events/"+eventKey);
 
-        Query pendingAttendeesQuery = databaseReference.child("users/attendees/pending").orderByChild("pendingEventRegistrationKeys").equalTo(eventKey);
-
-        pendingAttendeesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        eventsReference.child("registeredAttendess").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.exists()) {
+
                     for (DataSnapshot attendeeSnapshot : dataSnapshot.getChildren()) {
-                        Attendee attendee = attendeeSnapshot.getValue(Attendee.class);
+                        String attendeeKey = attendeeSnapshot.getKey();
 
-                        if (attendee != null) {
-                            attendeesReference.child(attendeeSnapshot.getKey()).setValue(attendee);
-
-                            databaseReference.child("users/attendees/pending").child(attendeeSnapshot.getKey()).removeValue();
+                        // Change all pending Attendee event registrations to approved
+                        if (attendeeSnapshot.getValue(String.class).equals("pending")) {
+                            // From attendee side
+                            attendeesReference.child(attendeeKey + "/eventsRegisteredTo/" + eventKey).setValue("approved");
+                            // From events side
+                            eventsReference.child("registeredAttendees/" + attendeeKey).setValue("approved");
                         }
                     }
                     Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "All attendees approved!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No pending attendees to approve.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "No attendees to approve.", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -22,16 +22,16 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="34sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_organizer_view_event_registrations"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <Button
         android:id="@+id/btn_organizer_approval_all_event_registrations"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Approve All Attendee Registrations" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_organizer_view_event_registrations"
+        android:layout_width="match_parent"
+        android:layout_height="534dp" />
 
     <Button
         android:id="@+id/btn_organizer_view_event_registrations_back"
