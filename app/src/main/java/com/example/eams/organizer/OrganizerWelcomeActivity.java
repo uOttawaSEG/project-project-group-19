@@ -2,6 +2,7 @@ package com.example.eams.organizer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -29,10 +30,6 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // Get key of signed-in Organizer
-        Intent intent = getIntent();
-        String organizerKey = intent.getStringExtra("databaseKey");
-
         // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -50,15 +47,14 @@ public class OrganizerWelcomeActivity extends AppCompatActivity {
 
         // go to create event page
         createNewEventButton.setOnClickListener(v -> {
-            startActivity(new Intent(OrganizerWelcomeActivity.this, OrganizerCreateEventActivity.class));
+            Intent createEventsIntent = new Intent(OrganizerWelcomeActivity.this, OrganizerCreateEventActivity.class);
+            startActivity(createEventsIntent);
         });
 
         // go to view events page
-        viewEventsButton.setOnClickListener(v -> {
+        viewEventsButton.setOnClickListener(v2 -> {
             Intent viewEventsIntent = new Intent(OrganizerWelcomeActivity.this, OrganizerViewEventsActivity.class);
-            viewEventsIntent.putExtra("organizerKey", organizerKey);
             startActivity(viewEventsIntent);
-
         });
 
         // Returns organizer to login page (MainActivity)

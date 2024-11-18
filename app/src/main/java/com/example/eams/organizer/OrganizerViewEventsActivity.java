@@ -24,13 +24,20 @@ import com.google.firebase.database.Query;
 
 import java.time.LocalDate;
 
+/**
+ * OrganizerViewEvents allows Organizer to view the list of events they created.
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class OrganizerViewEventsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Intent intent = getIntent();
-        String organizerKey = intent.getStringExtra("databaseKey");
 
         // Boilerplate
         super.onCreate(savedInstanceState);
@@ -45,7 +52,6 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
         // Initialize refs to views
         TabLayout tabLayout = findViewById(R.id.organizer_view_events_tab_layout);
         ViewPager2 viewPager = findViewById(R.id.organizer_view_events_pager);
-        Button backButton = findViewById(R.id.btn_organizer_view_events_back);
 
         // Get reference to database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -86,8 +92,5 @@ public class OrganizerViewEventsActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
-
-        // Returns to Organizer Welcome Page
-        backButton.setOnClickListener(v -> finish());
     }
 }

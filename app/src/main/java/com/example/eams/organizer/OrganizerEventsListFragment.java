@@ -1,7 +1,5 @@
 package com.example.eams.organizer;
 
-import static com.example.eams.organizer.OrganizerViewEventRegistrationsActivity.INTENT_EXTRA_NAME;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,16 +78,18 @@ public class OrganizerEventsListFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull EventViewHolder holder, int position, @NonNull Event event) {
 
+                String eventKey = event.getDatabaseKey();
+
                 holder.setViewRegistrationsOnClickListener(view -> {
                     Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
-                    intent.putExtra(INTENT_EXTRA_NAME, getRef(position).getKey());
+                    intent.putExtra("eventDatabaseKey", eventKey);
                     startActivity(intent);
                 });
 
                 holder.bind(event);
 
                 holder.setDeleteButtonListener(v -> {
-                    String eventKey = getRef(position).getKey();
+
                     new AlertDialog.Builder(getContext())
                             .setTitle("Delete Event")
                             .setMessage("Are you sure you want to delete this event?")
@@ -98,11 +98,6 @@ public class OrganizerEventsListFragment extends Fragment {
                             })
                             .setNegativeButton("No", null)
                             .show();
-                });
-                holder.setViewRegistrationsOnClickListener(view -> {
-                    Intent intent = new Intent(getContext(), OrganizerViewEventRegistrationsActivity.class);
-                    intent.putExtra(INTENT_EXTRA_NAME, getRef(position).getKey());
-                    startActivity(intent);
                 });
             }
 

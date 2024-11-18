@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 import android.util.Log;
 
-public class GMail {
+public class Gmail {
 
     final String EMAIL_PORT = "587";// gmail's smtp port
     final String SMTP_AUTH = "true";
@@ -31,11 +31,11 @@ public class GMail {
     Session mailSession;
     MimeMessage emailMessage;
 
-    public GMail() {
+    public Gmail() {
 
     }
 
-    public GMail(String fromEmail, String fromPassword, List toEmailList, String emailSubject, String emailBody) {
+    public Gmail(String fromEmail, String fromPassword, List toEmailList, String emailSubject, String emailBody) {
         this.fromEmail = fromEmail;
         this.fromPassword = fromPassword;
         this.toEmailList = toEmailList;
@@ -46,7 +46,7 @@ public class GMail {
         emailProperties.put("mail.smtp.port", EMAIL_PORT);
         emailProperties.put("mail.smtp.auth", SMTP_AUTH);
         emailProperties.put("mail.smtp.starttls.enable", START_TLS);
-        Log.i("GMail", "Mail server properties set.");
+        Log.i("Gmail", "Mail server properties set.");
     }
 
     public MimeMessage createEmailMessage() throws AddressException, MessagingException, UnsupportedEncodingException {
@@ -56,7 +56,7 @@ public class GMail {
 
         emailMessage.setFrom(new InternetAddress(fromEmail, fromEmail));
         for (String toEmail : toEmailList) {
-            Log.i("GMail","toEmail: "+toEmail);
+            Log.i("Gmail","toEmail: "+toEmail);
             emailMessage.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(toEmail));
         }
@@ -64,7 +64,7 @@ public class GMail {
         emailMessage.setSubject(emailSubject);
         emailMessage.setContent(emailBody, "text/html");// for a html email
         // emailMessage.setText(emailBody);// for a text email
-        Log.i("GMail", "Email Message created.");
+        Log.i("Gmail", "Email Message created.");
         return emailMessage;
     }
 
@@ -72,10 +72,10 @@ public class GMail {
 
         Transport transport = mailSession.getTransport("smtp");
         transport.connect(EMAIL_HOST, fromEmail, fromPassword);
-        Log.i("GMail","allrecipients: "+emailMessage.getAllRecipients());
+        Log.i("Gmail","allrecipients: "+emailMessage.getAllRecipients());
         transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
         transport.close();
-        Log.i("GMail", "Email sent successfully.");
+        Log.i("Gmail", "Email sent successfully.");
     }
 
 }

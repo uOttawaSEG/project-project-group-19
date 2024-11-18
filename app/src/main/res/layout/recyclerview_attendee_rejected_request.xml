@@ -25,19 +25,25 @@
 
             <TextView
                 android:id="@+id/attendee_rejected_request_first_name"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/attendee_rejected_request_last_name"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/attendee_rejected_request_first_name"
                 app:layout_constraintTop_toTopOf="@+id/attendee_rejected_request_first_name" />
@@ -73,7 +79,7 @@
                 android:id="@+id/attendee_rejected_request_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/attendee_rejected_request_street"
                 app:layout_constraintStart_toEndOf="@+id/attendee_rejected_request_street"
@@ -83,7 +89,7 @@
                 android:id="@+id/attendee_rejected_request_province"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/attendee_rejected_request_city"
                 app:layout_constraintStart_toEndOf="@+id/attendee_rejected_request_city"
@@ -93,7 +99,7 @@
                 android:id="@+id/attendee_rejected_request_postal_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/attendee_rejected_request_province"
                 app:layout_constraintStart_toEndOf="@+id/attendee_rejected_request_province"
@@ -102,13 +108,25 @@
             <Button
                 android:id="@+id/attendee_rejected_request_accept"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="38dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/lightest_blue"
                 android:text="Accept"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/attendee_rejected_request_street"
                 app:layout_constraintTop_toBottomOf="@+id/attendee_rejected_request_street" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="71dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/profile_pic" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

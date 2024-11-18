@@ -10,39 +10,48 @@
     tools:context=".organizer.OrganizerViewEventsActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/organizer_view_events_tab_layout"
+        android:id="@+id/organizer_view_event_registrations_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/organizer_view_events_pager"
+        app:layout_constraintBottom_toTopOf="@+id/organizer_view_event_registrations_pager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/dark_blue">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/organizer_upcoming_events_tab"
+            android:id="@+id/organizer_pending_event_registrations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upcoming Events" />
+            android:text="Pending Registrations" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/organizer_past_events_tab"
+            android:id="@+id/organizer_approved_event_registrations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Past Events" />
+            android:text="Approved Registrations" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/organizer_view_events_pager"
+        android:id="@+id/organizer_view_event_registrations_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_organizer_approve_all_event_registrations"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/organizer_view_events_tab_layout"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/organizer_view_event_registrations_tab_layout"
         android:background="@color/lightest_blue">
     </androidx.viewpager2.widget.ViewPager2>
+
+    <Button
+        android:id="@+id/btn_organizer_approve_all_event_registrations"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="Approve All"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/organizer_view_event_registrations_pager"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

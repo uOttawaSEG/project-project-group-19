@@ -1,69 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background = "@drawable/gradient_bg"
-    android:id="@+id/main"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:background = "@drawable/gradient_bg"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<ImageView
+    android:id="@+id/iv_main_app_logo"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="279dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/app_logo" />
 
-    <ImageView
-        android:id="@+id/iv_main_app_logo"
-        android:layout_width="match_parent"
-        android:layout_height="279dp"
-        android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/app_logo"
-        tools:layout_editor_absoluteX="-8dp"
-        tools:layout_editor_absoluteY="3dp" />
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear_main_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="220dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="60dp"
-        android:orientation="vertical"
+        android:layout_marginBottom="-40dp"
         android:background="@drawable/rectangle_bg"
+        android:translationY="-70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_app_logo">
 
         <TextView
             android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-condensed-light"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="WELCOME!"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="38sp" />
+            android:textSize="48sp"
+            app:layout_constraintBottom_toTopOf="@+id/welcomeTextMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/welcomeTextMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif-condensed-light"
-            android:text="You are logged in as Organizer"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-light"
+            android:text="You are logged in as an Organizer"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="38sp" />
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/welcomeImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
         <ImageView
             android:id="@+id/welcomeImage"
-            android:layout_width="match_parent"
-            android:layout_height="198dp"
+            android:layout_width="478dp"
+            android:layout_height="254dp"
             android:layout_marginTop="-10dp"
-            app:srcCompat="@drawable/penguin_waving"
-            tools:layout_editor_absoluteX="-8dp"
-            tools:layout_editor_absoluteY="3dp" />
+            app:layout_constraintBottom_toTopOf="@id/createNewEventButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeTextMessage"
+            app:srcCompat="@drawable/penguin_waving" />
 
         <Button
             android:id="@+id/createNewEventButton"
@@ -72,8 +83,12 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="15dp"
-            android:background="#1D6BB8"
-            android:text="Create New Event" />
+            android:background="@color/dark_blue"
+            android:text="Create New Event"
+            app:layout_constraintBottom_toTopOf="@id/viewEventsButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeImage"/>
 
         <Button
             android:id="@+id/viewEventsButton"
@@ -82,8 +97,12 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="15dp"
-            android:background="#1D6BB8"
-            android:text="View Events" />
+            android:background="@color/dark_blue"
+            android:text="View Events"
+            app:layout_constraintBottom_toTopOf="@id/logoffButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createNewEventButton" />
 
         <Button
             android:id="@+id/logoffButton"
@@ -91,11 +110,14 @@
             android:layout_height="56dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="15dp"
-            android:background="#1D6BB8"
-            android:text="Log off" />
+            android:layout_marginBottom="45dp"
+            android:background="@color/dark_blue"
+            android:text="Log off"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewEventsButton" />
 
-    </LinearLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

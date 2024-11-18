@@ -1,9 +1,7 @@
 package com.example.eams.organizer;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -13,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.eams.R;
-import com.example.eams.event.EventDialogFragment;
-import com.example.eams.event.EventRegistrationAttendeeViewHolder;
-import com.example.eams.users.Attendee;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.eams.event.EventRegistrationsListFragment;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,48 +26,85 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
+/**
+ * OrganizerViewEventRegistrationsActivity displays the pending and approved Attendees
+ * that have registered for an Event.
+ *
+ * Rejected Attendees are not shown.
+ *
+ * @author Alex Ajersch
+ * @author Brooklyn McClelland
+ * @author Moïse Kenge Ngoyi
+ * @author Naomi Braun
+ * @author Rachel Qi
+ * @author Steven Wu
+ */
 public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
-
-    public final static String INTENT_EXTRA_NAME = "pushID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Boilerplate
+
+        Intent intent = getIntent();
+        String eventKey = intent.getStringExtra("eventDatabaseKey");
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_organizer_view_event_registrations);
+        setContentView(R.layout.activity_organizer_view_events_registrations);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Initialize refs to views
-        RecyclerView recyclerView = findViewById(R.id.rv_organizer_view_event_registrations);
-        Button backButton = findViewById(R.id.btn_organizer_view_event_registrations_back);
-        Button approveAllButton = findViewById(R.id.btn_organizer_approval_all_event_registrations);
+        TabLayout tabLayout = findViewById(R.id.organizer_view_event_registrations_tab_layout);
+        ViewPager2 viewPager = findViewById(R.id.organizer_view_event_registrations_pager);
+        Button approveAllButton = findViewById(R.id.btn_organizer_approve_all_event_registrations);
 
-        // Get reference to database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference approvedAttendeesReference = databaseReference.child("users/attendees/approved");
+        /* Adapter decides which fragments are used in each tab */
+        viewPager.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
 
-        // Get the eventKey from the intent
-        String eventKey = getIntent().getStringExtra(INTENT_EXTRA_NAME);
-        Query pendingAttendees = approvedAttendeesReference.orderByChild("pendingEventRegistrationKeys/" + eventKey).equalTo(true);
-        attachRecyclerViewAdapter(recyclerView, pendingAttendees, eventKey);
+                Query eventAttendeesQuery = FirebaseDatabase.getInstance()
+                        .getReference("events")
+                        .child(eventKey)
+                        .child("registeredAttendees");
+
+                switch (position) {
+                    case 0:
+                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("pending"), eventKey);
+                    case 1:
+                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("approved"), eventKey);
+                    default:
+                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("pending"), eventKey);
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return 2;
+            }
+        });
+
+        /* The TabLayoutMediator handles the naming of the tabs
+        * and interactions between the ViewPager and TabLayout */
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Pending Registrations");
+                    break;
+                case 1:
+                    tab.setText("Approved Registrations");
+                    break;
+            }
+        }).attach();
 
         // Approves all attendees
         approveAllButton.setOnClickListener(v -> {
             approveAllAttendees(eventKey);
         });
 
-        // Returns to Organizer View Events Activity
-        backButton.setOnClickListener(v -> {
-
-            finish();
-        });
     }
 
     /**
@@ -81,7 +115,7 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
         DatabaseReference attendeesReference = databaseReference.child("users/attendees/approved");
         DatabaseReference eventsReference = databaseReference.child("events/"+eventKey);
 
-        eventsReference.child("registeredAttendess").addListenerForSingleValueEvent(new ValueEventListener() {
+        eventsReference.child("registeredAttendees").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -109,50 +143,5 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
                 Toast.makeText(OrganizerViewEventRegistrationsActivity.this, "Error retrieving from Database.", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    /**
-     * Creates FirebaseRecyclerOptions to retrieve data from Firebase
-     */
-    public FirebaseRecyclerOptions<Attendee> getFirebaseRecyclerOptions(Query pendingAttendees) {
-        return new FirebaseRecyclerOptions.Builder<Attendee>().
-                setLifecycleOwner(this).
-                setQuery(pendingAttendees, Attendee.class)
-                .build();
-    }
-
-    /**
-     * Attaches the FirebaseRecyclerAdapter to the view's RecyclerView
-     *
-     * @param recyclerView RecyclerView to receive the adapter
-     */
-    private void attachRecyclerViewAdapter(RecyclerView recyclerView, Query registeredAttendeesQuery, String eventKey) {
-
-        // Use a LinearLayout for the RecyclerView
-        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        FirebaseRecyclerOptions<Attendee> recyclerOptions = getFirebaseRecyclerOptions(registeredAttendeesQuery);
-
-        FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder> adapter = new FirebaseRecyclerAdapter<Attendee, EventRegistrationAttendeeViewHolder>(recyclerOptions) {
-
-            @NonNull
-            @Override
-            public EventRegistrationAttendeeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_event_registration_attendees, parent, false);
-                return new EventRegistrationAttendeeViewHolder(itemView);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull EventRegistrationAttendeeViewHolder holder, int position, @NonNull Attendee attendee) {
-                holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
-                    EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
-                    dialog.show(getSupportFragmentManager(), "attendeeDetails");
-                });
-                holder.bind(attendee);
-            }
-
-        };
-
-        recyclerView.setAdapter(adapter);
     }
 }

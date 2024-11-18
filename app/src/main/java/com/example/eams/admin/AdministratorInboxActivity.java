@@ -52,7 +52,6 @@ public class AdministratorInboxActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.admin_inbox_tab_layout);
         ViewPager2 viewPager = findViewById(R.id.admin_inbox_view_pager);
-        Button backButton = findViewById(R.id.btn_administrator_inbox_back);
 
         /* Adapter decides which fragments are used in each tab */
         viewPager.setAdapter(new FragmentStateAdapter(this) {
@@ -97,10 +96,5 @@ public class AdministratorInboxActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
-
-        // Returns to Admin Welcome Page
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
     }
 }

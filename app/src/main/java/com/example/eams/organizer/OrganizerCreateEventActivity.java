@@ -61,9 +61,6 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Intent intent = getIntent();
-        String organizerKey = intent.getStringExtra("databaseKey");
-
         // Boilerplate
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -181,7 +178,6 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
                     inCity,
                     inProvince,
                     inPostalCode,
-                    organizerKey,
                     approvalIsAutomatic
             );
 
@@ -225,6 +221,7 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference eventsReference = databaseReference.child("events");
         String eventKey = eventsReference.push().getKey();
+        event.setDatabaseKey(eventKey);
 
         // Add the event to the database with success and failure toast messages
         assert eventKey != null;

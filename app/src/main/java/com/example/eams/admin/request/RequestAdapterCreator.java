@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.eams.external.Gmail;
 import com.example.eams.users.RegisterUser;
-import com.example.eams.external.GMail;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -81,7 +81,7 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                         List emailToSend = new ArrayList();
                                         emailToSend.add(emailaddress);
                                         try {
-                                            GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Accepted", "Your registration request has been accepted.");
+                                            Gmail email = new Gmail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Accepted", "Your registration request has been accepted.");
                                             email.createEmailMessage();
                                             email.sendEmail();
                                         } catch (Exception e) {
@@ -114,7 +114,7 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                                             List emailToSend = new ArrayList();
                                             emailToSend.add(emailaddress);
                                             try {
-                                                GMail email = new GMail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Refused", "Your registration request has been refused.");
+                                                Gmail email = new Gmail("appjavatest38@gmail.com", "apicguvtbdjfxemz", emailToSend, "Refused", "Your registration request has been refused.");
                                                 email.createEmailMessage();
                                                 email.sendEmail();
                                             } catch (Exception e) {

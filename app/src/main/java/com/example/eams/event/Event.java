@@ -20,7 +20,6 @@ public class Event {
     private String postalCode;
 
     private String databaseKey;
-    private String organizerKey;
     private boolean approvalIsAutomatic;
 
     // required for firebase (!)
@@ -39,7 +38,8 @@ public class Event {
      * @param street
      * @param city
      * @param province
-     * @param postalCode  //@param organizerID
+     * @param postalCode
+     * @param approvalIsAutomatic
      */
     public Event(
             String title,
@@ -51,7 +51,6 @@ public class Event {
             String city,
             String province,
             String postalCode,
-            String organizerKey,
             boolean approvalIsAutomatic
     ) {
         this.title = title;
@@ -63,7 +62,6 @@ public class Event {
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
-        this.organizerKey = organizerKey;
         this.approvalIsAutomatic = approvalIsAutomatic;
     }
 
@@ -158,15 +156,6 @@ public class Event {
         return databaseKey;
     }
 
-    /**
-     * Gets the organizer of the event's database key.
-     *
-     * @return the database key of the organizer.
-     */
-    public String getOrganizerKey() {
-      return organizerKey;
-    }
-
     // Setters
 
     /**
@@ -247,14 +236,6 @@ public class Event {
      */
     public void setDatabaseKey(String databaseKey){
         this.databaseKey = databaseKey;
-    }
-
-    /**
-     * Sets the event organizer's key.
-     * @param organizerKey the key of the event's organizer.
-     */
-    public void setOrganizerKey(String organizerKey){
-        this.organizerKey = organizerKey;
     }
 
     /**

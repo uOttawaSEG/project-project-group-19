@@ -135,12 +135,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     // Search within approved users
                     User approvedUserFound = userFound(dataSnapshot, "approved", inEmail, inPassword);
                     if (approvedUserFound != null) {
-
-                        if(approvedUserFound instanceof RegisterUser){
-                            String approvedUserKey = ((RegisterUser) approvedUserFound).getDatabaseKey();
-                            loginIntent.putExtra("databaseKey", approvedUserKey);
-                        }
-
                         startActivity(loginIntent);
                         return;
                     }
