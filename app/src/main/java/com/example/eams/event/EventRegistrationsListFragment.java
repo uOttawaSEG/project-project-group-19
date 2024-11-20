@@ -1,6 +1,7 @@
 package com.example.eams.event;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.eams.organizer.WrapContentLinearLayoutManager;
 import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +67,7 @@ public class EventRegistrationsListFragment extends Fragment {
 
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
+     *
      * @param eventAttendeesReference
      */
     public FirebaseRecyclerOptions<String> getFirebaseRecyclerOptions(Query eventAttendeesReference) {
@@ -94,33 +98,28 @@ public class EventRegistrationsListFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull EventRegistrationAttendeeViewHolder holder, int position, @NonNull String attendeeKey) {
-
-                DatabaseReference attendeeRef = FirebaseDatabase.getInstance().getReference("users/attendees/approved/" + attendeeKey);
-                attendeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        Attendee attendee = snapshot.getValue(Attendee.class);
-                        if(attendee != null){
-
-                            holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
-                                EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
-                                dialog.show(requireActivity().getSupportFragmentManager(), "attendeeDetails");
-                            });
-                            holder.bind(attendee);
-                        }
-
+                String attendeeKeyCorrect = getRef(position).getKey();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("users/attendees/approved").child(attendeeKeyCorrect).get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e("Firebase", "Error getting attendee");
+                        return;
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getActivity(), "Error retrieving attendee data", Toast.LENGTH_SHORT).show();
+                    Attendee attendee = task.getResult().getValue(Attendee.class);
+                    if (attendee != null) {
+                        holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
+                            EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
+                            dialog.show(requireActivity().getSupportFragmentManager(), "attendeeDetails");
+                        });
+                        holder.bind(attendee);
+                    } else {
+                        Log.e("Attendee", "Attendee is null");
                     }
                 });
             }
         };
+
         recyclerView.setAdapter(adapter);
     }
-
 }
