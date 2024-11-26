@@ -249,18 +249,6 @@
         android:background="@color/dark_blue"
         android:text="@string/create_new_event" />
 
-    <TextView
-        android:id="@+id/tv_event_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="event"
-        android:textAlignment="center"
-        android:textSize="10sp" />
-
 </LinearLayout>
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,14 @@ import com.example.eams.event.Event;
 import com.example.eams.event.EventViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class OrganizerEventsListFragment extends Fragment {
 
@@ -87,17 +95,47 @@ public class OrganizerEventsListFragment extends Fragment {
                 });
 
                 holder.bind(event);
-
                 holder.setDeleteButtonListener(v -> {
+                    // check if approved event registrations exist
+                    checkAndDeleteEvent(eventKey, position);
+                });
+            }
 
-                    new AlertDialog.Builder(getContext())
-                            .setTitle("Delete Event")
-                            .setMessage("Are you sure you want to delete this event?")
-                            .setPositiveButton("Yes", (dialog, which) -> {
-                                getRef(position).removeValue();
-                            })
-                            .setNegativeButton("No", null)
-                            .show();
+            public void checkAndDeleteEvent(String eventKey, int position) {
+                DatabaseReference eventDatabaseReference = FirebaseDatabase.getInstance().getReference("events/" + eventKey + "/registeredAttendees");
+                eventDatabaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean exists = false;
+                        for (DataSnapshot registrationSnapshot : snapshot.getChildren()) {
+                            if (Objects.equals(registrationSnapshot.getValue(), "approved")) {
+                                exists = true; // there are approved attendees
+                                break;
+                            }
+                        }
+                        if (exists) { // if there are approved attendees
+                            // if they do exist, we can't delete!
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Cannot Delete Event")
+                                    .setMessage("This event has registered attendees.")
+                                    .setNegativeButton("Okay", null)
+                                    .show();
+                        } else {
+                            // show delete dialog
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Delete Event")
+                                    .setMessage("Are you sure you want to delete this event?")
+                                    .setPositiveButton("Yes", (dialog, which) -> {
+                                        getRef(position).removeValue();
+                                    })
+                                    .setNegativeButton("No", null)
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
                 });
             }
 

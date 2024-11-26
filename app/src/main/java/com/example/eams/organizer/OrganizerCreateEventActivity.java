@@ -202,13 +202,6 @@ public class OrganizerCreateEventActivity extends AppCompatActivity {
             // Add new event to the database
             writeEvent(event);
 
-            // Display event details in TextView for verification
-            TextView tvEventDetails = findViewById(R.id.tv_event_details);
-            tvEventDetails.setText(
-                    event.getTitle() + event.getDescription() + event.getDate() + event.getStartTime() +
-                            event.getEndTime() + event.getStreet() + event.getCity() + event.getProvince() +
-                            event.getPostalCode() + event.approvalIsAutomatic()
-            );
         });
     }
 
