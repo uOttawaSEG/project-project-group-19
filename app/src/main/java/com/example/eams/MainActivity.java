@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     // Search within approved users
                     User approvedUserFound = userFound(dataSnapshot, "approved", inEmail, inPassword);
                     if (approvedUserFound != null) {
+                        loginIntent.putExtra("userDatabaseKey", approvedUserFound.getDatabaseKey());
                         startActivity(loginIntent);
                         return;
                     }
@@ -202,17 +203,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             // Fetched user
             User user = null;
 
+            DataSnapshot currentUser = iterator.next();
             // Get object of correct type
             switch (userType) {
                 case ATTENDEE:
-                    user = iterator.next().getValue(Attendee.class);
+                    user = currentUser.getValue(Attendee.class);
                     break;
                 case ORGANIZER:
-                    user = iterator.next().getValue(Organizer.class);
+                    user = currentUser.getValue(Organizer.class);
                     break;
                 case ADMINISTRATOR:
-                    user = iterator.next().getValue(Admin.class);
+                    user = currentUser.getValue(Admin.class);
             }
+
+            user.setDatabaseKey(currentUser.getKey());
 
             // If user found
             if (user != null && user.getEmail().equals(inEmail) && user.getPassword().equals(inPassword)) {

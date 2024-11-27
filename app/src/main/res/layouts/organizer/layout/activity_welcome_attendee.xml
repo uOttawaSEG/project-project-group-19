@@ -90,6 +90,15 @@ tools:context=".MainActivity">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeImage" />
 
+    <Button
+        android:id="@+id/attendee_search_page_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="@+id/logoffButton"
+        app:layout_constraintStart_toStartOf="@+id/logoffButton"
+        app:layout_constraintTop_toBottomOf="@+id/logoffButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

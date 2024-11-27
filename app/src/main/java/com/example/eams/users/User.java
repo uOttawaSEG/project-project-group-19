@@ -19,6 +19,7 @@ public abstract class User{
     // Instance variables
     private String email;
     private String password;
+    private String databaseKey;
 
     // Constructors
     // DO NOT REMOVE: Required for Firebase!!
@@ -66,6 +67,14 @@ public abstract class User{
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDatabaseKey() {
+        return databaseKey;
+    }
+
+    public void setDatabaseKey(String databaseKey) {
+        this.databaseKey = databaseKey;
     }
 
     /**

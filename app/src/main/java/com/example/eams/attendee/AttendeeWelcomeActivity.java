@@ -41,6 +41,7 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
 
         // Initialize refs to views
         Button logoffButton = findViewById(R.id.logoffButton);
+        Button searchButton = findViewById(R.id.attendee_search_page_button);
 
         // Returns attendee to login page (MainActivity)
         logoffButton.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +49,11 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+        });
+
+        searchButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AttendeeEventSearchActivity.class);
+            startActivity(intent);
         });
 
     }

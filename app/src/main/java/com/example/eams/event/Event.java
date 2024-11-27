@@ -1,6 +1,9 @@
 package com.example.eams.event;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -278,6 +281,22 @@ public class Event {
             return false;
         }
         return true; // this statement is reached if every test is passed
+    }
+
+    public boolean isPastEvent() {
+        Calendar c = Calendar.getInstance();
+        Calendar.Builder calendarBuilder = new Calendar.Builder();
+        int day, month, year;
+        String[] times = getDate().split("-");
+
+        year = Integer.parseInt(times[0]);
+        month = Integer.parseInt(times[1]) - 1;
+        day = Integer.parseInt(times[2]);
+
+        calendarBuilder.setDate(year, month, day);
+        Log.e("DATE", calendarBuilder.build().toString());
+        Log.e("CURRENT DATE", c.toString());
+        return c.after(calendarBuilder.build());
     }
 
     private boolean isAlphabetic(String s) {

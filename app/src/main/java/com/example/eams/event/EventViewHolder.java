@@ -40,8 +40,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
      */
     public EventViewHolder(@NonNull View itemView) {
         super(itemView);
-        setTvTitle(R.id.event_title);
-        setTvDescription(R.id.event_description);
+        setTvTitle(R.id.event_search_title);
+        setTvDescription(R.id.event_search_description);
         setTvDate(R.id.event_date);
         setTvStartTime(R.id.event_start_time);
         setTvEndTime(R.id.event_end_time);
