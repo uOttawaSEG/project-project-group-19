@@ -35,7 +35,7 @@ tools:context=".MainActivity">
             android:id="@+id/welcomeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_medium"
             android:text="WELCOME!"
@@ -49,31 +49,29 @@ tools:context=".MainActivity">
 
         <TextView
             android:id="@+id/welcomeTextMessage"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="30dp"
             android:fontFamily="sans-serif-light"
             android:text="You are logged in as an Organizer"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@id/welcomeImage"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/createNewEventButton"
+            app:layout_constraintEnd_toStartOf="@id/welcomeImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
         <ImageView
             android:id="@+id/welcomeImage"
-            android:layout_width="478dp"
-            android:layout_height="254dp"
-            android:layout_marginTop="-10dp"
-            app:layout_constraintBottom_toTopOf="@id/createNewEventButton"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd = "30dp"
+            app:layout_constraintBottom_toBottomOf="@id/welcomeTextMessage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeTextMessage"
+            app:layout_constraintStart_toEndOf="@id/welcomeTextMessage"
+            app:layout_constraintTop_toTopOf="@+id/welcomeTextMessage"
             app:srcCompat="@drawable/penguin_waving" />
 
         <Button
@@ -88,7 +86,7 @@ tools:context=".MainActivity">
             app:layout_constraintBottom_toTopOf="@id/viewEventsButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeImage"/>
+            app:layout_constraintTop_toBottomOf="@+id/welcomeTextMessage"/>
 
         <Button
             android:id="@+id/viewEventsButton"
@@ -110,7 +108,7 @@ tools:context=".MainActivity">
             android:layout_height="56dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="30dp"
             android:background="@color/dark_blue"
             android:text="Log off"
             app:layout_constraintBottom_toBottomOf="parent"

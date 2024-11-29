@@ -4,16 +4,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eams.external.Gmail;
+import com.example.eams.users.Attendee;
+import com.example.eams.users.Organizer;
 import com.example.eams.users.RegisterUser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +69,16 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                 /* When the "Accept" button is clicked, add the user to the "approved" section
                  * of the database, and only once moved the request is deleted */
                 holder.setAcceptOnClickListener(v -> {
-                    userTypeRef.child("approved")
-                            .push()
+
+                    String databaseKey = userTypeRef.child("approved").push().getKey();
+
+                    if(model instanceof Attendee){
+                        ((Attendee) model).setDatabaseKey(databaseKey);
+                    } else if(model instanceof Organizer){
+                        ((Organizer) model).setDatabaseKey(databaseKey);
+                    }
+
+                    userTypeRef.child("approved/" + databaseKey)
                             .setValue(model, (error, ref) -> {
                                 if (error != null) {
                                     Log.e("firebase", "Failed to approve user");
@@ -100,8 +112,16 @@ interface RequestAdapterCreator<T extends RegisterUser, VH extends RequestViewHo
                  * deleted */
                 if (holder instanceof RejectableRequest) {
                     ((RejectableRequest) holder).setRejectOnClickListener(v -> {
-                        userTypeRef.child("rejected")
-                                .push()
+
+                        String databaseKey = userTypeRef.child("rejected").push().getKey();
+
+                        if(model instanceof Attendee){
+                            ((Attendee) model).setDatabaseKey(databaseKey);
+                        } else if(model instanceof Organizer){
+                            ((Organizer) model).setDatabaseKey(databaseKey);
+                        }
+
+                        userTypeRef.child("rejected/" + databaseKey)
                                 .setValue(model, (error, ref) -> {
                                     if (error != null) {
                                         Log.e("firebase", "Failed to reject user");
