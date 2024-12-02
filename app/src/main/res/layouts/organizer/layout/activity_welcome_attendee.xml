@@ -17,89 +17,138 @@ tools:context=".MainActivity">
     app:layout_constraintTop_toTopOf="parent"
     app:srcCompat="@drawable/app_logo" />
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/linear_main_menu"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
-    android:layout_marginBottom="-40dp"
-    android:background="@drawable/rectangle_bg"
-    android:translationY="-70dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/iv_main_app_logo">
-
-    <TextView
-        android:id="@+id/welcomeText"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linear_main_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="WELCOME!"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/welcomeTextMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/welcomeTextMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-light"
-        android:text="You are logged in as an Attendee"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@id/welcomeImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
-
-    <ImageView
-        android:id="@+id/welcomeImage"
-        android:layout_width="478dp"
-        android:layout_height="254dp"
-        android:layout_marginTop="-10dp"
-        app:layout_constraintBottom_toTopOf="@id/logoffButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTextMessage"
-        app:srcCompat="@drawable/penguin_waving" />
-
-    <Button
-        android:id="@+id/logoffButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="45dp"
-        android:background="@color/dark_blue"
-        android:text="Log off"
+        android:layout_height="0dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rectangle_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeImage" />
+        app:layout_constraintTop_toTopOf="@+id/iv_main_app_logo">
 
-    <Button
-        android:id="@+id/attendee_search_page_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        app:layout_constraintEnd_toEndOf="@+id/logoffButton"
-        app:layout_constraintStart_toStartOf="@+id/logoffButton"
-        app:layout_constraintTop_toBottomOf="@+id/logoffButton" />
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="WELCOME,"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toTopOf="@+id/firstNameText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/firstNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="First"
+            android:textAlignment="viewEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/welcomeTextMessage"
+            app:layout_constraintEnd_toStartOf="@id/lastNameText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcomeText" />
+
+        <TextView
+            android:id="@+id/lastNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Last"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="@+id/firstNameText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/firstNameText"
+            app:layout_constraintTop_toTopOf="@id/firstNameText" />
+
+        <TextView
+            android:id="@+id/welcomeTextMessage"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="sans-serif-light"
+            android:text="You are logged in as an Attendee"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/attendee_view_events_button"
+            app:layout_constraintEnd_toStartOf="@id/welcomeImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstNameText" />
+
+        <ImageView
+            android:id="@+id/welcomeImage"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd = "30dp"
+            app:layout_constraintBottom_toBottomOf="@id/welcomeTextMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toEndOf="@id/welcomeTextMessage"
+            app:layout_constraintTop_toTopOf="@+id/welcomeTextMessage"
+            app:srcCompat="@drawable/penguin_waving" />
+
+        <Button
+            android:id="@+id/attendee_view_events_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/dark_blue"
+            android:text="View Events"
+            app:layout_constraintBottom_toTopOf="@id/attendee_search_page_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeTextMessage" />
+
+        <Button
+            android:id="@+id/attendee_search_page_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/dark_blue"
+            android:text="Search Events"
+            app:layout_constraintBottom_toTopOf="@id/logoffButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attendee_view_events_button" />
+
+        <Button
+            android:id="@+id/logoffButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/dark_blue"
+            android:text="Log off"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attendee_search_page_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
