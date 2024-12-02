@@ -42,7 +42,7 @@ public class AttendeeEventSearchActivity extends AppCompatActivity {
         Button searchButton = findViewById(R.id.event_search_button);
         RecyclerView recyclerView = findViewById(R.id.event_search_rv);
 
-        EventSearchAdapter adapter = new EventSearchAdapter(events);
+        EventSearchAdapter adapter = new EventSearchAdapter(events, getIntent().getStringExtra("UserKey"));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         String userDatabaseKey = getIntent().getStringExtra("userDatabaseKey");
@@ -52,6 +52,7 @@ public class AttendeeEventSearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(v -> {
             String search = String.valueOf(searchText.getText()).trim();
 
+            /* Query for all events */
             db.orderByKey().get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     Log.e("FIREBASE", "Failed to search events");
@@ -64,13 +65,10 @@ public class AttendeeEventSearchActivity extends AppCompatActivity {
                 DataSnapshot curSnap;
                 ArrayList<Event> newEvents = new ArrayList<>();
 
-
-
+                /* Loop through events and find the ones that contain the search and that are not past events */
                 while (eventIterator.hasNext()) {
                     curSnap = eventIterator.next();
                     event = curSnap.getValue(Event.class);
-
-
 
                     if ((event.getTitle().contains(search)
                             || event.getDescription().contains(search))

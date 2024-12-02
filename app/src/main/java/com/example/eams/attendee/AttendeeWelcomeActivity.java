@@ -2,6 +2,7 @@ package com.example.eams.attendee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -53,6 +54,7 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, AttendeeEventSearchActivity.class);
+            intent.putExtra("UserKey", getIntent().getStringExtra("UserKey"));
             startActivity(intent);
         });
 

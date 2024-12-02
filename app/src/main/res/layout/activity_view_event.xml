@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".attendee.ViewEventActivity">
+
+  <TextView
+      android:id="@+id/view_event_search_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:text="TextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view_event_search_title" />
+
+  <TextView
+      android:id="@+id/view_event_date"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:text="TextView"
+      app:layout_constraintStart_toStartOf="@+id/view_event_search_description"
+      app:layout_constraintTop_toBottomOf="@+id/view_event_search_description" />
+
+  <TextView
+      android:id="@+id/view_event_start_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:text="TextView"
+      app:layout_constraintStart_toStartOf="@+id/view_event_date"
+      app:layout_constraintTop_toBottomOf="@+id/view_event_date" />
+
+  <TextView
+      android:id="@+id/view_to"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="To"
+      app:layout_constraintBottom_toBottomOf="@+id/view_event_start_time"
+      app:layout_constraintStart_toEndOf="@+id/view_event_start_time"
+      app:layout_constraintTop_toTopOf="@+id/view_event_start_time" />
+
+  <TextView
+      android:id="@+id/view_event_end_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="TextView"
+      app:layout_constraintBottom_toBottomOf="@+id/view_to"
+      app:layout_constraintStart_toEndOf="@+id/view_to"
+      app:layout_constraintTop_toTopOf="@+id/view_to" />
+
+  <TextView
+      android:id="@+id/view_event_street"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:text="TextView"
+      app:layout_constraintStart_toStartOf="@+id/view_event_start_time"
+      app:layout_constraintTop_toBottomOf="@+id/view_event_start_time" />
+
+  <TextView
+      android:id="@+id/view_event_city"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="TextView"
+      app:layout_constraintBottom_toBottomOf="@+id/view_event_street"
+      app:layout_constraintStart_toEndOf="@+id/view_event_street"
+      app:layout_constraintTop_toTopOf="@+id/view_event_street" />
+
+  <TextView
+      android:id="@+id/view_event_province"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="TextView"
+      app:layout_constraintBottom_toBottomOf="@+id/view_event_city"
+      app:layout_constraintStart_toEndOf="@+id/view_event_city"
+      app:layout_constraintTop_toTopOf="@+id/view_event_city" />
+
+  <TextView
+      android:id="@+id/view_event_postal_code"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="4dp"
+      android:text="TextView"
+      app:layout_constraintBottom_toBottomOf="@+id/view_event_province"
+      app:layout_constraintStart_toEndOf="@+id/view_event_province"
+      app:layout_constraintTop_toTopOf="@+id/view_event_province" />
+
+  <Button
+      android:id="@+id/view_event_register_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="Button"
+      app:layout_constraintStart_toStartOf="@+id/view_event_street"
+      app:layout_constraintTop_toBottomOf="@+id/view_event_street" />
+
+  <TextView
+      android:id="@+id/view_event_search_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:text="TextView"
+      android:textSize="24sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

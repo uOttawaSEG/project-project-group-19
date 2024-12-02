@@ -283,6 +283,10 @@ public class Event {
         return true; // this statement is reached if every test is passed
     }
 
+    /**
+     * checks if this is a past event
+     * @return True if the event is in the past, false otherwise
+     */
     public boolean isPastEvent() {
         Calendar c = Calendar.getInstance();
         Calendar.Builder calendarBuilder = new Calendar.Builder();
