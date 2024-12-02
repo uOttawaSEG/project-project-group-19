@@ -36,7 +36,7 @@ public class ViewEventActivity extends AppCompatActivity {
         });
 
         String eventKey = getIntent().getStringExtra("EventKey");
-        String attendeeKey = getIntent().getStringExtra("UserKey");
+        String attendeeKey = getIntent().getStringExtra("userDatabaseKey");
 
         TextView title = findViewById(R.id.view_event_search_title);
         TextView desc = findViewById(R.id.view_event_search_description);

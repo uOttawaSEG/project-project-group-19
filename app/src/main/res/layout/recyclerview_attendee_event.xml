@@ -140,10 +140,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Pending"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:fontFamily="@font/roboto_medium"
                 app:layout_constraintBottom_toBottomOf="@+id/approval_indicator"
                 app:layout_constraintStart_toEndOf="@+id/approval_indicator"
                 app:layout_constraintTop_toTopOf="@+id/approval_indicator" />
@@ -153,10 +153,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Cancel Registration"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:fontFamily="@font/roboto_medium"
                 app:layout_constraintBottom_toBottomOf="@+id/approval_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/approval_indicator" />

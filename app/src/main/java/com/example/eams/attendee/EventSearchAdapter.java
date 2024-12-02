@@ -77,7 +77,7 @@ public class EventSearchAdapter extends RecyclerView.Adapter<EventSearchAdapter.
             Context context = v.getContext();
             Intent intent = new Intent(context, ViewEventActivity.class);
             intent.putExtra("EventKey", event.getDatabaseKey());
-            intent.putExtra("UserKey", attendeeKey);
+            intent.putExtra("userDatabaseKey", attendeeKey);
             context.startActivity(intent);
         });
     }

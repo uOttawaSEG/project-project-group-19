@@ -42,10 +42,11 @@ public class AttendeeEventSearchActivity extends AppCompatActivity {
         Button searchButton = findViewById(R.id.event_search_button);
         RecyclerView recyclerView = findViewById(R.id.event_search_rv);
 
-        EventSearchAdapter adapter = new EventSearchAdapter(events, getIntent().getStringExtra("UserKey"));
+        String userDatabaseKey = getIntent().getStringExtra("userDatabaseKey");
+        Log.i("DATABASEKEY", " " +userDatabaseKey);
+        EventSearchAdapter adapter = new EventSearchAdapter(events, userDatabaseKey);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        String userDatabaseKey = getIntent().getStringExtra("userDatabaseKey");
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("events");
 
