@@ -126,7 +126,6 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
     private void checkForConflict(Event event, String attendeeKey, ConflictCheckCallback callback) {
-        Log.e("AHHHHHHHHHHHHHHHHHH", "128");
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
         // get the attendee's registered events
@@ -150,7 +149,6 @@ public class ViewEventActivity extends AppCompatActivity {
 
                     // there is no conflict if the attendee has no other registered events
                     if (registeredEvents == null) {
-                        Log.e("AHHHHHHHHHHHHHHHHHH", "146");
                         callback.onConflictDetected(false);
                         return;
                     }
@@ -175,13 +173,10 @@ public class ViewEventActivity extends AppCompatActivity {
                                     Event registeredEvent = task2.getResult().getValue(Event.class);
 
                                     DataSnapshot snapshot2 = task2.getResult();
-                                    Log.d("AHHHHHHHHHH", "Raw Event Data: " + snapshot2.getValue());
-
 
                                     // TODO: this should go outside of this loop because here it is bascially returning the result multiple times
                                     // now we compare event to registeredEvent to check if we can register
                                     if (event.getDate().equals(registeredEvent.getDate())) {
-                                        Log.e("AHHHHHHHHHHHHHHHHHH", "events are the same day");
 
                                         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault());
 
@@ -195,14 +190,12 @@ public class ViewEventActivity extends AppCompatActivity {
                                         if (registeredEventStartTime.isBefore(eventEndTime) && eventStartTime.isBefore(registeredEventEndTime)) {
                                             conflict.set(true);
                                             callback.onConflictDetected(true);
-                                            Log.e("AHHHHHHHHHHHHHHHHHH", "time overlap");
                                         }
                                         else {
                                             conflict.set(false);
                                         }
                                     } else {
                                         conflict.set(false);
-                                        Log.e("AHHHHHHHHHHHHHHHHHH", "events are different days");
                                     }
 
                                     // Decrement remaining events and check if comparing is done
