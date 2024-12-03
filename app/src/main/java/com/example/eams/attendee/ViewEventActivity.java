@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.example.eams.R;
 import com.example.eams.event.Event;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -140,12 +139,7 @@ public class ViewEventActivity extends AppCompatActivity {
                         return;
                     }
 
-
                     Map<String, Event> registeredEvents = (Map<String, Event>) task1.getResult().getValue();
-
-                    DataSnapshot snapshot = task1.getResult();
-                    Log.d("FIREBASE", "Raw registeredEvent Data: " + snapshot.getValue());
-                    Log.d("FIREBASE", "Raw registeredEvent Data: " + registeredEvents);
 
                     // there is no conflict if the attendee has no other registered events
                     if (registeredEvents == null) {
@@ -172,9 +166,7 @@ public class ViewEventActivity extends AppCompatActivity {
 
                                     Event registeredEvent = task2.getResult().getValue(Event.class);
 
-                                    DataSnapshot snapshot2 = task2.getResult();
 
-                                    // TODO: this should go outside of this loop because here it is bascially returning the result multiple times
                                     // now we compare event to registeredEvent to check if we can register
                                     if (event.getDate().equals(registeredEvent.getDate())) {
 
