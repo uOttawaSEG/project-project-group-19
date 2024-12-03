@@ -24,13 +24,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class AttendeeEventViewAdapter extends FirebaseRecyclerAdapter<Event, AttendeeEventViewAdapter.AttendeeEventViewHolder> {
 
     private String userDatabaseKey;
+    private List<Event> eventList;
 
 
     /**
@@ -41,10 +44,16 @@ public class AttendeeEventViewAdapter extends FirebaseRecyclerAdapter<Event, Att
     public AttendeeEventViewAdapter(@NonNull FirebaseRecyclerOptions<Event> options, String userDatabaseKey) {
         super(options);
         this.userDatabaseKey = userDatabaseKey;
+        eventList = new ArrayList<>();
     }
 
     @Override
     protected void onBindViewHolder(@NonNull AttendeeEventViewHolder holder, int position, @NonNull Event model) {
+
+        // add each event to eventList
+        if (position == eventList.size()) {
+            eventList.add(model);
+        }
 
         DatabaseReference eventsRegisteredToRef = FirebaseDatabase.getInstance()
                 .getReference()
@@ -63,6 +72,7 @@ public class AttendeeEventViewAdapter extends FirebaseRecyclerAdapter<Event, Att
                 } else {
                     holder.itemView.setVisibility(View.GONE);
                 }
+
             }
 
             @Override
@@ -102,9 +112,8 @@ public class AttendeeEventViewAdapter extends FirebaseRecyclerAdapter<Event, Att
                         DatabaseReference eventRefFromEvent = databaseRef.child("events/" + eventDatabaseKey + "/registeredAttendees/" + userDatabaseKey);
                         eventRefFromEvent.removeValue();
 
-                        // Remove from RecyclerView
-                        getSnapshots().remove(position);
-                        notifyItemRemoved(position);
+                        // Remove from eventList
+                        eventList.remove(model);
                     } else{
                         Toast.makeText(v.getContext(), "Event registration cannot be cancelled within 24 hours of the event.", Toast.LENGTH_LONG).show();
                     }
