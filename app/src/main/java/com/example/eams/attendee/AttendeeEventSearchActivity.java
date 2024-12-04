@@ -81,5 +81,7 @@ public class AttendeeEventSearchActivity extends AppCompatActivity {
                 adapter.setEvents(newEvents);
             });
         });
+
+        searchButton.performClick();
     }
 }
