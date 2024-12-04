@@ -3,6 +3,7 @@ package com.example.eams;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -62,8 +63,8 @@ public class MainActivityTest {
         onView(withId(R.id.spinner_main_user_select)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(USER_TYPE_ATTENDEE))).perform(click());
 
-        onView(withId(R.id.et_main_email)).perform(typeText("attendee@eams.com"));
-        onView(withId(R.id.et_main_password)).perform(typeText("Attendee123!"));
+        onView(withId(R.id.et_main_email)).perform(typeText("attendee@eams.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_main_password)).perform(typeText("Attendee123!"), closeSoftKeyboard());
         onView(withId(R.id.btn_main_login)).perform(click());
 
         onView(withId(R.id.cl_activity_welcome_attendee)).check(matches(isDisplayed()));
@@ -74,8 +75,8 @@ public class MainActivityTest {
         onView(withId(R.id.spinner_main_user_select)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(USER_TYPE_ORGANIZER))).perform(click());
 
-        onView(withId(R.id.et_main_email)).perform(typeText("organizer@eams.com"));
-        onView(withId(R.id.et_main_password)).perform(typeText("Organizer123!"));
+        onView(withId(R.id.et_main_email)).perform(typeText("organizer@eams.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_main_password)).perform(typeText("Organizer123!"), closeSoftKeyboard());
         onView(withId(R.id.btn_main_login)).perform(click());
 
         onView(withId(R.id.cl_activity_welcome_organizer)).check(matches(isDisplayed()));
@@ -86,8 +87,8 @@ public class MainActivityTest {
         onView(withId(R.id.spinner_main_user_select)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(USER_TYPE_ADMINISTRATOR))).perform(click());
 
-        onView(withId(R.id.et_main_email)).perform(typeText("admin@eams.com"));
-        onView(withId(R.id.et_main_password)).perform(typeText("Admin123!"));
+        onView(withId(R.id.et_main_email)).perform(typeText("admin@eams.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_main_password)).perform(typeText("Admin123!"), closeSoftKeyboard());
         onView(withId(R.id.btn_main_login)).perform(click());
 
         onView(withId(R.id.cl_activity_welcome_admin)).check(matches(isDisplayed()));
