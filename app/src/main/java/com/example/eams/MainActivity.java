@@ -50,6 +50,10 @@ import java.util.Iterator;
  */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String NO_USER_TYPE_SELECTED_MSG = "Please select a user type.";
+    private static final String USER_NOT_FOUND_MSG = "User not found, please try again.";
+    private static final String ADMIN_REGISTER_MSG = "No registration needed. Proceed to login.";
+
     // INSTANCE VARIABLES
     // Possible user types
     private enum UserType {
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     pathStr = "users/administrators";
                     break;
                 default: // If no user type is selected
-                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
+                    error = Toast.makeText(this, NO_USER_TYPE_SELECTED_MSG, Toast.LENGTH_SHORT);
                     error.show();
                     // Exit lambda expression or onClick()
                     return;
@@ -162,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
 
                     // Reached if user not found
-                    Toast.makeText(this, "User not found, please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, USER_NOT_FOUND_MSG, Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -184,11 +188,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     startActivity(registerIntent);
                     break;
                 case ADMINISTRATOR:
-                    error = Toast.makeText(this, "No registration needed. Proceed to login.", Toast.LENGTH_SHORT);
+                    error = Toast.makeText(this, ADMIN_REGISTER_MSG, Toast.LENGTH_SHORT);
                     error.show();
                     break;
                 default: // If the user has not selected a user type yet
-                    error = Toast.makeText(this, "Please select a user type.", Toast.LENGTH_SHORT);
+                    error = Toast.makeText(this, NO_USER_TYPE_SELECTED_MSG, Toast.LENGTH_SHORT);
                     error.show();
             }
         });
