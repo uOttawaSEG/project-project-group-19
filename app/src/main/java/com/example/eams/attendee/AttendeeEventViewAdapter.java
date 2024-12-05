@@ -22,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,7 +98,7 @@ public class AttendeeEventViewAdapter extends FirebaseRecyclerAdapter<Event, Att
                     Date currentDate = new Date();
 
                     long timeDiffInMillis = eventDateTime.getTime() - currentDate.getTime();
-                    int timeDiffInHours = (int) timeDiffInMillis / (60 * 60 * 1000);
+                    int timeDiffInHours = (int) (timeDiffInMillis / (60 * 60 * 1000));
 
                     if(timeDiffInHours > 24){
                         // Delete the event from the database

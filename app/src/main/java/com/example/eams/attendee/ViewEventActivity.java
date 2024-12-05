@@ -166,9 +166,13 @@ public class ViewEventActivity extends AppCompatActivity {
 
                                     Event registeredEvent = task2.getResult().getValue(Event.class);
 
+                                    // skip over any null events
+                                    if (registeredEvent == null) {
+                                        conflict.set(false); // we say that there is no conflict for this event because it does not exist
+                                    }
 
                                     // now we compare event to registeredEvent to check if we can register
-                                    if (event.getDate().equals(registeredEvent.getDate())) {
+                                    else if (event.getDate().equals(registeredEvent.getDate())) {
 
                                         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault());
 

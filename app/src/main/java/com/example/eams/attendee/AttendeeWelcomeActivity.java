@@ -56,8 +56,7 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
         Button logoffButton = findViewById(R.id.logoffButton);
         Button searchButton = findViewById(R.id.attendee_search_page_button);
         Button viewEventsButton = findViewById(R.id.attendee_view_events_button);
-        TextView firstNameText = findViewById(R.id.firstNameText);
-        TextView lastNameText = findViewById(R.id.lastNameText);
+        TextView nameText = findViewById(R.id.nameText);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users/attendees/approved/" + userDatabaseKey);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -66,10 +65,10 @@ public class AttendeeWelcomeActivity extends AppCompatActivity {
                 String firstName = snapshot.child("firstName").getValue(String.class);
                 String lastName = snapshot.child("lastName").getValue(String.class);
                 if (firstName != null) {
-                    firstNameText.setText(firstName);
+                    nameText.setText(firstName);
                 }
                 if(lastName != null){
-                    lastNameText.setText(lastName);
+                    nameText.append(" " + lastName);
                 }
             }
 
