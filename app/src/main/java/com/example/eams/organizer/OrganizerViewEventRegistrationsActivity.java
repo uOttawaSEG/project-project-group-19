@@ -65,20 +65,10 @@ public class OrganizerViewEventRegistrationsActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
+                Query eventAttendeesQuery = FirebaseDatabase.getInstance().getReference("events" + "/" + eventKey + "/registeredAttendees");
 
-                Query eventAttendeesQuery = FirebaseDatabase.getInstance()
-                        .getReference("events")
-                        .child(eventKey)
-                        .child("registeredAttendees");
-
-                switch (position) {
-                    case 0:
-                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("pending"), eventKey);
-                    case 1:
-                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("approved"), eventKey);
-                    default:
-                        return new EventRegistrationsListFragment(eventAttendeesQuery.orderByValue().equalTo("pending"), eventKey);
-                }
+                String requestType = position == 1 ? "approved" : "pending";
+                return new EventRegistrationsListFragment(requestType, eventAttendeesQuery.orderByValue().equalTo(requestType), eventKey);
             }
 
             @Override

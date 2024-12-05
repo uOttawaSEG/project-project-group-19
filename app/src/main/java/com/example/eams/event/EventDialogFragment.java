@@ -21,15 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EventDialogFragment extends DialogFragment {
 
+    private String requestType;
     // The attendee who has the info to be shown
     private Attendee attendee;
     private String eventKey;
 
-    public EventDialogFragment(Attendee attendee, String eventKey) {
-
+    public EventDialogFragment(String requestType, Attendee attendee, String eventKey) {
+        this.requestType = requestType;
         this.attendee = attendee;
         this.eventKey = eventKey;
-
     }
 
     @NonNull
@@ -64,42 +64,31 @@ public class EventDialogFragment extends DialogFragment {
         tvPostalCode.setText(attendee.getPostalCode());
 
         builder.setView(eventDialogView);
+
+        // Database variables
         String attendeeKey = attendee.getDatabaseKey();
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference attendeeReference = databaseReference.child("events/" + eventKey + "/registeredAttendees/"+ attendeeKey);
-        DatabaseReference eventReference = databaseReference.child("users/attendees/approved/" + attendeeKey + "/eventsRegisteredTo/" + eventKey);
+        DatabaseReference eventReference = databaseReference.child("events/" + eventKey + "/registeredAttendees/" + attendeeKey);
+        DatabaseReference attendeeReference = databaseReference.child("users/attendees/approved/" + attendeeKey + "/eventsRegisteredTo/" + eventKey);
 
-        eventReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                DataSnapshot snapshot = task.getResult();
+        // Setup buttons for pending
+        if (requestType.equals("pending")) {
+            // Accept the request
+            builder.setPositiveButton("Accept", (dialog, id) -> {
+                attendeeReference.setValue("approved");
+                eventReference.setValue("approved");
 
-                if(snapshot.exists() && snapshot.getValue(String.class).equals("pending")){
-                    builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(getActivity(), attendee.getFirstName() + " " + attendee.getLastName() + " has been approved.", Toast.LENGTH_SHORT).show();
+            });
 
-                            eventReference.setValue("approved");
-                            attendeeReference.setValue("approved");
+            // Reject the request
+            builder.setNegativeButton("Reject", (dialog, id) -> {
+                eventReference.removeValue();
+                attendeeReference.removeValue();
 
-                            Toast.makeText(getActivity(), attendee.getFirstName() + " " + attendee.getLastName() + " has been approved.", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                    // Reject the request
-                    builder.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            eventReference.removeValue();
-                            attendeeReference.removeValue();
-
-                            Toast.makeText(getActivity(), attendee.getFirstName() + " " + attendee.getLastName() + " has been rejected.", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                }
-            }
-        });
+                Toast.makeText(getActivity(), attendee.getFirstName() + " " + attendee.getLastName() + " has been rejected.", Toast.LENGTH_SHORT).show();
+            });
+        }
 
         // Create and return
         return builder.create();

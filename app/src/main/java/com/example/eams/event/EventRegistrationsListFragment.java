@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,14 +17,9 @@ import com.example.eams.organizer.WrapContentLinearLayoutManager;
 import com.example.eams.users.Attendee;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 /**
  * A Fragment for the Attendee pending request tab.
@@ -39,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class EventRegistrationsListFragment extends Fragment {
 
-
+    private String requestType;
     private final Query eventAttendeesReference;
     private String eventKey;
 
@@ -48,7 +42,8 @@ public class EventRegistrationsListFragment extends Fragment {
      *
      * @param eventAttendeesReference a reference to the node representing the event
      */
-    public EventRegistrationsListFragment(Query eventAttendeesReference, String eventKey) {
+    public EventRegistrationsListFragment(String requestType, Query eventAttendeesReference, String eventKey) {
+        this.requestType = requestType;
         this.eventAttendeesReference = eventAttendeesReference;
         this.eventKey = eventKey;
     }
@@ -68,7 +63,7 @@ public class EventRegistrationsListFragment extends Fragment {
     /**
      * Creates FirebaseRecyclerOptions to retrieve data from Firebase
      *
-     * @param eventAttendeesReference
+     * @param eventAttendeesReference the Query to use
      */
     public FirebaseRecyclerOptions<String> getFirebaseRecyclerOptions(Query eventAttendeesReference) {
         return new FirebaseRecyclerOptions.Builder<String>()
@@ -99,6 +94,7 @@ public class EventRegistrationsListFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull EventRegistrationAttendeeViewHolder holder, int position, @NonNull String attendeeKey) {
                 String attendeeKeyCorrect = getRef(position).getKey();
+
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                 ref.child("users/attendees/approved").child(attendeeKeyCorrect).get().addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -109,7 +105,7 @@ public class EventRegistrationsListFragment extends Fragment {
                     Attendee attendee = task.getResult().getValue(Attendee.class);
                     if (attendee != null) {
                         holder.setBtnViewAttendeeDetailsOnClickListener(v -> {
-                            EventDialogFragment dialog = new EventDialogFragment(attendee, eventKey);
+                            EventDialogFragment dialog = new EventDialogFragment(requestType, attendee, eventKey);
                             dialog.show(requireActivity().getSupportFragmentManager(), "attendeeDetails");
                         });
                         holder.bind(attendee);
